@@ -66,12 +66,27 @@ public class SLList {
     traverse.next = null;
   }
 
+  // prints elements of list
+  public void printList(SLList list) {
+    Node traverse = list.head;
+
+    // traverses list without checking ahead
+    /* this traversal method is useful when you only need to process the current node
+       and the next node is not important */
+    while (traverse != null) {
+      System.out.print(traverse.data + " -> ");
+      traverse = traverse.next;
+    }
+    System.out.println("null");
+  }
+
   public static void main(String[] args) {
     // instantiate and build list
     SLList aList = new SLList();
     aList.insertEnd(aList, 1);
     aList.insertEnd(aList, 3);
     aList.insertEnd(aList, 5);
+    aList.printList(aList);
 
     // test calls on list
     System.out.println(aList.head.data); // 1
