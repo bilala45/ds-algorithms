@@ -67,8 +67,21 @@ public class SLList {
   }
 
   // prints elements of list
-  public void printList(SLList list) {
-    Node traverse = list.head;
+  public void printList() {
+    // Node traverse = list.head;
+    //
+    // // traverses list without checking ahead
+    // /* this traversal method is useful when you only need to process the current node
+    //    and the next node is not important */
+    // while (traverse != null) {
+    //   System.out.print(traverse.data + " -> ");
+    //   traverse = traverse.next;
+    // }
+    // System.out.println("null");
+
+    // since we call printList() on an object, we can reference the field's objects WITHOUT using the this keyword
+    // We don't need the this keyword unless there is a naming conflict
+    Node traverse = head;
 
     // traverses list without checking ahead
     /* this traversal method is useful when you only need to process the current node
@@ -78,6 +91,8 @@ public class SLList {
       traverse = traverse.next;
     }
     System.out.println("null");
+
+
   }
 
   public static void main(String[] args) {
@@ -86,7 +101,7 @@ public class SLList {
     aList.insertEnd(aList, 1);
     aList.insertEnd(aList, 3);
     aList.insertEnd(aList, 5);
-    aList.printList(aList);
+    aList.printList();
 
     // test calls on list
     System.out.println(aList.head.data); // 1

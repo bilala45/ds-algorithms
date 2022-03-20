@@ -12,7 +12,7 @@ public class QueueImp {
     because it'll give you access to methods that violate the FIFO principle of a queue */
     Queue<Integer> queue = new LinkedList<>();
 
-    // adds item to tail of queue
+    // adds item to tail of queuecd
     // queue.add(val) also works
     queue.offer(5);
 
