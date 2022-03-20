@@ -50,7 +50,12 @@ public class SLList {
   }
 
   // remove node from start of list
-  public void removeStart(SLList list) {
+  /* If we set removeStart to be a static method, then we don't have to call removeStart on an object (we PASS IN an object instead)
+     If we set removeStart to be non-static, it needs to be called on an object (even if we're not actually using that object in our method)
+     However, it doesn't make much sense to call a method that "acts in a static manner" in a non-static way (by calling it on an object)
+     In LeetCode problems, it's weird becuse our objects are passed in, but the methods are defined non-statically (doesn't seem like best practice)
+     Note -> you can still access a static method from a non-static context (but not the other way around) */
+  public static void removeStart(SLList list) {
     list.head = list.head.next;
   }
 
@@ -113,7 +118,7 @@ public class SLList {
     System.out.println(aList.head.next.data); // 1
 
     // remove element from start of list
-    aList.removeStart(aList);
+    removeStart(aList);
     System.out.println(aList.head.data); // 1
 
     // remove element from end of list
