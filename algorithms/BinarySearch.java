@@ -5,6 +5,7 @@ public class BinarySearch {
     int end = searchArr.length - 1;
 
     while (start <= end) {
+      // int will truncate so we take the floor of the calculated value
       int mid = start + (end - start)/2;
 
       if (searchArr[mid] == value){
