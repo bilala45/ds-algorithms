@@ -11,6 +11,9 @@ public class MinHeap {
   }
 
   // returns the minimum item in the heap without removing it
+  /* it doesn't make sense to return an int value (such as -1) in the case that our heap is empty.
+     What if the min value of the heap is -1? We would never be sure if the min value of the heap is -1 or if the heap is empty. */
+  // To solve this, we set the return type as an Integer object
   public Integer find_min() {
     //
     if (arr.isEmpty()) {
