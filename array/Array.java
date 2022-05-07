@@ -74,14 +74,49 @@ public class Array {
     length--;
   }
 
+  // get value at index
+  public int get(int index) {
+    return this.elems[index];
+  }
+
+  // set value at index
+  public void set(int index, int updateVal) {
+    this.elems[index] = updateVal;
+  }
+
+  // // linear search
+  // public int linSearch(int searchVal) {
+  //
+  // }
+  //
+  // // binary search
+  // public int binSearch(int searchVal) {
+  //
+  // }
+  //
+  // // find max in array
+  // public int max() {
+  //
+  // }
+  //
+  // // find min in array
+  // public int min() {
+  //
+  // }
+  //
+  // // reverse array
+  // public void reverse() {
+  //
+  // }
+
   public static void main (String[] args) {
     Array arr = new Array(5);
-    System.out.println(arr.getSize());
+    System.out.println(arr.getSize()); // 5
     arr.append(9);
     arr.append(7);
     arr.append(5);
-    arr.display();
+    arr.display(); // Elements in array: 9 7 5
     arr.insert(1, 8);
-    arr.display();
+    arr.display(); // Elements in array: 9 8 7 5
   }
 }
