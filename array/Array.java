@@ -11,7 +11,7 @@ public class Array {
   public Array(int size) {
     this.size = size;
     // initialize elems with size passed into Array
-    this.elems = new int[size];
+    elems = new int[size];
   }
 
   // displays size of array
@@ -39,7 +39,7 @@ public class Array {
     if (length != 0) {
       System.out.print("Elements in array: ");
       for(int i = 0 ; i < length ; i++) {
-        System.out.print(this.elems[i] + " ");
+        System.out.print(elems[i] + " ");
       }
       System.out.println("");
     } else {
@@ -54,10 +54,10 @@ public class Array {
       // iterate backwards through array up to index
       for (int i = length ; i > index ; i--) {
         // shift array elements to the right by one
-        this.elems[i] = this.elems[i-1];
+        elems[i] = elems[i-1];
       }
       // insert insertVal at index
-      this.elems[index] = insertVal;
+      elems[index] = insertVal;
       // update length
       length++;
     }
@@ -68,7 +68,7 @@ public class Array {
     // iterate through array up to index
     for (int i = index ; i < length ; i++) {
       // shift array elements to the left by one
-      this.elems[i] = this.elems[i+1];
+      elems[i] = elems[i+1];
     }
     // update length
     length--;
@@ -76,12 +76,12 @@ public class Array {
 
   // get value at index
   public int get(int index) {
-    return this.elems[index];
+    return elems[index];
   }
 
   // set value at index
   public void set(int index, int updateVal) {
-    this.elems[index] = updateVal;
+    elems[index] = updateVal;
   }
 
   // // linear search
@@ -118,5 +118,6 @@ public class Array {
     arr.display(); // Elements in array: 9 7 5
     arr.insert(1, 8);
     arr.display(); // Elements in array: 9 8 7 5
+    System.out.println(arr.get(2)); // 7
   }
 }
