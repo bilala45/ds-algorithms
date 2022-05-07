@@ -66,7 +66,7 @@ public class Array {
   // delete from array
   public void delete(int index) {
     // iterate through array up to index
-    for (int i = index ; i < length ; i++) {
+    for (int i = index ; i < length - 1 ; i++) {
       // shift array elements to the left by one
       elems[i] = elems[i+1];
     }
@@ -84,11 +84,16 @@ public class Array {
     elems[index] = updateVal;
   }
 
-  // // linear search
-  // public int linSearch(int searchVal) {
-  //
-  // }
-  //
+  // linear search
+  public int linSearch(int searchVal) {
+    for (int i = 0 ; i < length ; i++) {
+      if (elems[i] == searchVal) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   // // binary search
   // public int binSearch(int searchVal) {
   //
@@ -117,7 +122,9 @@ public class Array {
     arr.append(5);
     arr.display(); // Elements in array: 9 7 5
     arr.insert(1, 8);
-    arr.display(); // Elements in array: 9 8 7 5
-    System.out.println(arr.get(2)); // 7
+    arr.append(2);
+    arr.display(); // Elements in array: 9 8 7 5 2
+    System.out.println(arr.getLength()); // 5
+    System.out.println(arr.linSearch(6));
   }
 }
