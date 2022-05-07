@@ -76,12 +76,16 @@ public class Array {
 
   // get value at index
   public int get(int index) {
-    return elems[index];
+    if (index >= 0 && index < length) {
+      return elems[index];
+    }
   }
 
   // set value at index
   public void set(int index, int updateVal) {
-    elems[index] = updateVal;
+    if (index >= 0 && index < length) {
+      elems[index] = updateVal;
+    }
   }
 
   // linear search
