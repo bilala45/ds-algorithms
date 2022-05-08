@@ -75,10 +75,11 @@ public class Array {
   }
 
   // get value at index
-  public int get(int index) {
+  public Integer get(int index) {
     if (index >= 0 && index < length) {
       return elems[index];
     }
+    return null;
   }
 
   // set value at index
@@ -100,7 +101,8 @@ public class Array {
 
   // find max in array
   public int max() {
-    int max = 0;
+    // set integer max (0 doesn't work if our array contains negative values)
+    int max = Integer.MIN_VALUE;
     for (int i = 0 ; i < length ; i++) {
       if (elems[i] > max) {
         max = elems[i];
@@ -110,14 +112,24 @@ public class Array {
   }
 
   // find min in array
-  public int max() {
-    int min = 0;
+  public int min() {
+    // set integer min
+    int min = Integer.MAX_VALUE;
     for (int i = 0 ; i < length ; i++) {
       if (elems[i] < min) {
         min = elems[i];
       }
     }
     return min;
+  }
+
+  // find sum of elements in array
+  public int sum() {
+    int sum = 0;
+    for (int i = 0 ; i < length ; i++) {
+      sum += elems[i];
+    }
+    return sum;
   }
 
   public static void main (String[] args) {
@@ -130,7 +142,9 @@ public class Array {
     arr.insert(1, 8);
     arr.append(2);
     arr.display(); // Elements in array: 9 8 7 5 2
-    System.out.println(arr.getLength()); // 5
-    System.out.println(arr.linSearch(6));
+    System.out.println(arr.linSearch(6)); // -1
+    System.out.println(arr.sum()); // 31
+    System.out.println(arr.max()); // 9
+    System.out.println(arr.min()); // 2
   }
 }
