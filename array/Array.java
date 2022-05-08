@@ -98,25 +98,27 @@ public class Array {
     return -1;
   }
 
-  // // binary search
-  // public int binSearch(int searchVal) {
-  //
-  // }
-  //
-  // // find max in array
-  // public int max() {
-  //
-  // }
-  //
-  // // find min in array
-  // public int min() {
-  //
-  // }
-  //
-  // // reverse array
-  // public void reverse() {
-  //
-  // }
+  // find max in array
+  public int max() {
+    int max = 0;
+    for (int i = 0 ; i < length ; i++) {
+      if (elems[i] > max) {
+        max = elems[i];
+      }
+    }
+    return max;
+  }
+
+  // find min in array
+  public int max() {
+    int min = 0;
+    for (int i = 0 ; i < length ; i++) {
+      if (elems[i] < min) {
+        min = elems[i];
+      }
+    }
+    return min;
+  }
 
   public static void main (String[] args) {
     Array arr = new Array(5);
