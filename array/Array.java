@@ -132,8 +132,25 @@ public class Array {
     return sum;
   }
 
+  // reverse elements of array
+  public void reverse() {
+    int start = 0;
+    // use length field to swap actual elements of array (not garbage values)
+    int end = length - 1;
+
+    while (start < end) {
+      // swap start and end values
+      int temp = elems[start];
+      elems[start] = elems[end];
+      elems[end] = temp;
+      // update start and end pointers
+      start++;
+      end--;
+    }
+  }
+
   public static void main (String[] args) {
-    Array arr = new Array(5);
+    Array arr = new Array(8);
     System.out.println(arr.getSize()); // 5
     arr.append(9);
     arr.append(7);
@@ -141,10 +158,13 @@ public class Array {
     arr.display(); // Elements in array: 9 7 5
     arr.insert(1, 8);
     arr.append(2);
+    arr.append(11);
     arr.display(); // Elements in array: 9 8 7 5 2
     System.out.println(arr.linSearch(6)); // -1
     System.out.println(arr.sum()); // 31
     System.out.println(arr.max()); // 9
     System.out.println(arr.min()); // 2
+    arr.reverse();
+    arr.display(); // Elements in array: 9 8 7 5 2
   }
 }
