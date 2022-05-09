@@ -149,22 +149,31 @@ public class Array {
     }
   }
 
+  // check if array is sorted (ascending)
+  public boolean isSorted() {
+    int start = 0;
+
+    // iterate to second last value (to prevent ArrayIndexOutOfBounds exception)
+    while (start < length - 1) {
+      if (elems[start] > elems[start + 1]) {
+        return false;
+      }
+      start++;
+    }
+    return true;
+  }
+
+
   public static void main (String[] args) {
     Array arr = new Array(8);
-    System.out.println(arr.getSize()); // 5
-    arr.append(9);
-    arr.append(7);
-    arr.append(5);
-    arr.display(); // Elements in array: 9 7 5
-    arr.insert(1, 8);
+    System.out.println(arr.getSize()); // 8
     arr.append(2);
+    arr.append(3);
+    arr.append(4);
+    arr.append(9);
     arr.append(11);
-    arr.display(); // Elements in array: 9 8 7 5 2
-    System.out.println(arr.linSearch(6)); // -1
-    System.out.println(arr.sum()); // 31
-    System.out.println(arr.max()); // 9
-    System.out.println(arr.min()); // 2
-    arr.reverse();
-    arr.display(); // Elements in array: 9 8 7 5 2
+    arr.append(13);
+    arr.display(); // Elements in array: 2 3 4 11 9
+    System.out.println(arr.isSorted()); // False
   }
 }
