@@ -210,6 +210,24 @@ public class Array {
     return true;
   }
 
+  // insert into sorted array
+  public void insertIntoSorted(int insertVal) {
+    // check that array is sorted and there is enough space to insert an element
+    if (this.isSorted() && length < size) {
+      int index = length;
+
+      // start iterating from the end and move toward 0
+      while (index != 0 && elems[index - 1] > insertVal) {
+        elems[index] = elems[index - 1];
+        index--;
+      }
+      elems[index] = insertVal;
+      length++;
+    } else {
+      System.out.println(insertVal + " cannot be inserted into the list.");
+    }
+  }
+
 
   public static void main (String[] args) {
     Array arr = new Array(8);
@@ -221,7 +239,10 @@ public class Array {
     arr.append(11);
     arr.append(13);
     arr.display(); // Elements in array: 2 3 4 9 11 13
-    arr.leftRotate();
-    arr.display(); // Elements in array: 3 4 9 11 13 2
+    arr.insertIntoSorted(15);
+    arr.display(); // Elements in array: 2 3 4 7 9 11 13
+    arr.insertIntoSorted(13);
+    arr.display();
+    arr.insertIntoSorted(11);
   }
 }
