@@ -198,14 +198,11 @@ public class Array {
 
   // check if array is sorted (ascending)
   public boolean isSorted() {
-    int start = 0;
-
     // iterate to second last value (to prevent ArrayIndexOutOfBounds exception)
-    while (start < length - 1) {
-      if (elems[start] > elems[start + 1]) {
+    for (int i = 0 ; i < length - 1; i++) {
+      if (elems[i] > elems[i + 1]) {
         return false;
       }
-      start++;
     }
     return true;
   }
@@ -228,21 +225,37 @@ public class Array {
     }
   }
 
+  public void negToPos() {
+    int start = 0;
+    int end = length - 1;
+
+    while (start < end) {
+      while (elems[start] < 0) {
+        start++;
+      }
+      while (elems[end] >= 0) {
+        end--;
+      }
+      if (start < end) {
+        // swap start and end values
+        int temp = elems[start];
+        elems[start] = elems[end];
+        elems[end] = temp;
+      }
+    }
+  }
 
   public static void main (String[] args) {
     Array arr = new Array(8);
     System.out.println(arr.getSize()); // 8
     arr.append(2);
-    arr.append(3);
+    arr.append(-5);
     arr.append(4);
-    arr.append(9);
-    arr.append(11);
+    arr.append(30);
+    arr.append(-1);
     arr.append(13);
     arr.display(); // Elements in array: 2 3 4 9 11 13
-    arr.insertIntoSorted(15);
-    arr.display(); // Elements in array: 2 3 4 7 9 11 13
-    arr.insertIntoSorted(13);
+    arr.negToPos();
     arr.display();
-    arr.insertIntoSorted(11);
   }
 }
