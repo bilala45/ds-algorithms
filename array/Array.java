@@ -182,6 +182,19 @@ public class Array {
     }
   }
 
+  // left-rotate elements of array
+  public void leftRotate() {
+    // store first value (this will disappear after a left shift)
+    int rotatedVal = elems[0];
+
+    // call leftShift method to shift elements by 1
+    this.leftShift();
+
+    // assign first value to end of array
+    elems[length] = rotatedVal;
+    // update length to reflect added element
+    length++;
+  }
 
   // check if array is sorted (ascending)
   public boolean isSorted() {
@@ -208,7 +221,7 @@ public class Array {
     arr.append(11);
     arr.append(13);
     arr.display(); // Elements in array: 2 3 4 9 11 13
-    arr.rightShift();
-    arr.display(); // Elements in array: 0 2 3 4 9 11 13
+    arr.leftRotate();
+    arr.display(); // Elements in array: 3 4 9 11 13 2
   }
 }
