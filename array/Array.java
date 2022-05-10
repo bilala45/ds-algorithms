@@ -149,6 +149,40 @@ public class Array {
     }
   }
 
+  // left-shift elements of array
+  public void leftShift() {
+    int start = 0;
+
+    // update element with element to the right
+    while (start < length - 1) {
+      elems[start] = elems[start + 1];
+      start++;
+    }
+    length--;
+  }
+
+  // right-shift elements of array
+  public void rightShift() {
+
+    if (length + 1 <= size) {
+      int end = length;
+
+      // update element with element to the left
+      while (end > 0) {
+        elems[end] = elems[end - 1];
+        end--;
+      }
+
+      // update length to reflect added value
+      length++;
+      // set 0th index to null value
+      elems[0] = 0;
+    } else {
+      System.out.println("Array is not big enough to accommodate right shift.");
+    }
+  }
+
+
   // check if array is sorted (ascending)
   public boolean isSorted() {
     int start = 0;
@@ -173,7 +207,8 @@ public class Array {
     arr.append(9);
     arr.append(11);
     arr.append(13);
-    arr.display(); // Elements in array: 2 3 4 11 9
-    System.out.println(arr.isSorted()); // False
+    arr.display(); // Elements in array: 2 3 4 9 11 13
+    arr.rightShift();
+    arr.display(); // Elements in array: 0 2 3 4 9 11 13
   }
 }
