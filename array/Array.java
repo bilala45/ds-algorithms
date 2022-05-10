@@ -225,6 +225,7 @@ public class Array {
     }
   }
 
+  // separate negative and positive array elements
   public void negToPos() {
     int start = 0;
     int end = length - 1;
@@ -245,6 +246,44 @@ public class Array {
     }
   }
 
+  // merge two sorted arrays into one sorted array
+  public static int[] merge(int[] arr1, int[] arr2) {
+    int[] mergeList = new int[arr1.length + arr2.length];
+
+    int arr1Ptr = 0;
+    int arr2Ptr = 0;
+    int mergePtr = 0;
+
+    // use two pointers to iterate through arr1 and arr2 until you reach the end of one of the arrays
+    while (arr1Ptr < arr1.length && arr2Ptr < arr2.length) {
+      // compare elements that arr1Ptr and arr2Ptr are pointing to
+      if (arr1[arr1Ptr] <= arr2[arr2Ptr]) {
+        mergeList[mergePtr] = arr1[arr1Ptr];
+        arr1Ptr++;
+      } else {
+        mergeList[mergePtr] = arr2[arr2Ptr];
+        arr2Ptr++;
+      }
+      mergePtr++;
+    }
+
+    // if the loop variable is already initialized, leave the first part blank
+    // iterate through the first array starting at wherever arr1Ptr is
+    // we do this in case arr1 has not been completed yet
+    for ( ; arr1Ptr < arr1.length ; arr1Ptr++) {
+      mergeList[mergePtr] = arr1[arr1Ptr];
+      mergePtr++;
+    }
+
+    // repeat for arr2 in case arr2 has not been completed
+    for ( ; arr2Ptr < arr2.length ; arr2Ptr++) {
+      mergeList[mergePtr] = arr2[arr2Ptr];
+      mergePtr++;
+    }
+
+    return mergeList;
+  }
+
   public static void main (String[] args) {
     Array arr = new Array(8);
     System.out.println(arr.getSize()); // 8
@@ -257,5 +296,12 @@ public class Array {
     arr.display(); // Elements in array: 2 3 4 9 11 13
     arr.negToPos();
     arr.display();
+
+    int[] arr1 = {1, 2, 4, 10, 17};
+    int[] arr2 = {3, 9, 20};
+    int[] merged = merge(arr1, arr2);
+    for (int i = 0 ; i < merged.length ; i++) {
+      System.out.print(merged[i] + ",");
+    }
   }
 }
