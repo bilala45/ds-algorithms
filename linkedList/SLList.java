@@ -37,6 +37,17 @@ public class SLList {
       System.out.print(trav.data + " -> ");
       trav = trav.next;
     }
+    System.out.print("null");
+  }
+
+  // display list recursively
+  public static void recurDisplay(Node trav) {
+    if (trav == null) {
+      System.out.print("null");
+    } else {
+      System.out.print(trav.data + " -> ")
+      recurDisplay(trav.next);
+    }
   }
 
   public static void main(String[] args) {
