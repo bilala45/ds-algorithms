@@ -50,25 +50,27 @@ public class SLList {
     }
   }
 
-  // count list nodes
-  public int count() {
+  // count list nodes (length of linked list)
+  public int length() {
     Node trav = this;
     int numNodes = 0;
 
     while (trav != null) {
       numNodes += 1;
+      trav = trav.next;
     }
 
     return numNodes;
   }
 
   // sum list nodes
-  public int sum() {
+  public int sumData() {
     Node trav = this;
     int sum = 0;
 
     while (trav != null) {
       sum += trav.data;
+      trav = trav.next;
     }
 
     return sum;
