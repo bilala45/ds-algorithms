@@ -40,7 +40,7 @@ public class SLList {
     System.out.print("null");
   }
 
-  // display list recursively
+  // display list (recursive)
   public static void recurDisplay(Node trav) {
     if (trav == null) {
       System.out.print("null");
@@ -51,7 +51,7 @@ public class SLList {
   }
 
   // count list nodes (length of linked list)
-  public int length() {
+  public int count() {
     Node trav = this;
     int numNodes = 0;
 
@@ -61,6 +61,15 @@ public class SLList {
     }
 
     return numNodes;
+  }
+
+  // count list nodes (recursive)
+  public static int count(Node trav) {
+    if (trav != null) {
+      return 1 + count(trav.next);
+    } else {
+      return 0;
+    }
   }
 
   // sum list nodes
@@ -74,6 +83,15 @@ public class SLList {
     }
 
     return sum;
+  }
+
+  // sum list nodes (recursive)
+  public static int sumData(Node trav) {
+    if (trav != null) {
+      return trav.data + sumData(trav.next);
+    } else {
+      return 0;
+    }
   }
 
   public static void main(String[] args) {
