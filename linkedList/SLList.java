@@ -50,6 +50,30 @@ public class SLList {
     }
   }
 
+  // count list nodes
+  public int count() {
+    Node trav = this;
+    int numNodes = 0;
+
+    while (trav != null) {
+      numNodes += 1;
+    }
+
+    return numNodes;
+  }
+
+  // sum list nodes
+  public int sum() {
+    Node trav = this;
+    int sum = 0;
+
+    while (trav != null) {
+      sum += trav.data;
+    }
+
+    return sum;
+  }
+
   public static void main(String[] args) {
   }
 }
