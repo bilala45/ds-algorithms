@@ -125,12 +125,20 @@ public class SLList {
     return true;
   }
 
-  // // delete node at specified index in list
-  // public void delete(int index) {
-  //   Node trav = head;
-  //
-  //
-  // }
+  // delete node at specified index in list
+  public void delete(int index) {
+    Node trav = head;
+
+    if (index == 0) {
+      head = trav.next;
+    } else {
+      for (int i = 0 ; i < index - 1 ; i++) {
+        trav = trav.next;
+      }
+      // point current node two nodes ahead
+      trav.next = trav.next.next;
+    }
+  }
 
   // display list
   public void display() {
@@ -254,6 +262,8 @@ public class SLList {
     methodTest.insertEnd(7);
     methodTest.display();
     methodTest.insertSorted(0);
+    methodTest.display();
+    methodTest.delete(0);
     methodTest.display();
   }
 }
