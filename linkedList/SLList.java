@@ -125,6 +125,20 @@ public class SLList {
     return true;
   }
 
+  // remove duplicates from sorted list
+  public void removeDuplicates() {
+    Node trav = head;
+
+    // traverse linked list by checking ahead
+    while (trav.next != null) {
+      // once a duplicate is found, iterate until all duplicates are found
+      while (trav.data == trav.next.data) {
+        trav.next = trav.next.next;
+      }
+      trav = trav.next;
+    }
+  }
+
   // delete node at specified index in list
   // returns data stored in deleted node
   public Integer delete(int index) {
@@ -292,9 +306,12 @@ public class SLList {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
     methodTest.insertEnd(2);
+    methodTest.insertEnd(2);
+    methodTest.insertEnd(2);
+    methodTest.insertEnd(2);
     methodTest.insertEnd(3);
     methodTest.display();
-    System.out.println(methodTest.delete(1));
+    methodTest.removeDuplicates();
     methodTest.display();
   }
 }
