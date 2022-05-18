@@ -45,14 +45,14 @@ public class SLList {
     if (trav == null) {
       System.out.print("null");
     } else {
-      System.out.print(trav.data + " -> ")
+      System.out.print(trav.data + " -> ");
       recurDisplay(trav.next);
     }
   }
 
   // count list nodes (length of linked list)
   public int count() {
-    Node trav = this;
+    Node trav = head;
     int numNodes = 0;
 
     while (trav != null) {
@@ -74,7 +74,7 @@ public class SLList {
 
   // sum list nodes
   public int sumData() {
-    Node trav = this;
+    Node trav = head;
     int sum = 0;
 
     while (trav != null) {
@@ -93,6 +93,44 @@ public class SLList {
       return 0;
     }
   }
+
+  // find max in list
+  public int findMax() {
+    Node trav = head;
+    // set to min value so that any value in list will update
+    // we use this instead of 0 in case our list contains negative integers
+    int max = Integer.MIN_VALUE;
+
+    while (trav != null) {
+      if (trav.data > max) {
+        max = trav.data;
+      }
+      trav = trav.next;
+    }
+    return max;
+  }
+
+  // find min in list (recursive)
+  public static int findMin(Node trav) {
+    int min = 0;
+
+    if (trav == null) {
+      return Integer.MIN_VALUE;
+    } else {
+      // make recursive call on next node of list and store in min
+      min = findMin(trav.next);
+      // compare returned value to data at current node
+      // example: we have list 1 -> 5 -> 11 -> 8 -> null
+      // if we're on node 5, we recursively call the function on 11 -> 8 -> null
+      // compare the returned value from calling the function on 11 -> 8 -> null against value at current node (5)
+      return Math.min(trav.data, min);
+    }
+  }
+
+  // // search for value in list
+  // public int search(int searchVal) {
+  //
+  // }
 
   public static void main(String[] args) {
   }
