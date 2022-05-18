@@ -84,6 +84,43 @@ public class SLList {
     }
   }
 
+  // insert an element into a sorted list
+  public void insertSorted(int insertVal) {
+    // check that list is sorted
+    if (this.isSorted()) {
+      Node trav = head;
+
+      // traverse as long as next node isn't null and the data in the next node is less than the value being inserted
+      while (trav.next != null && trav.next.data < insertVal) {
+        trav = trav.next;
+      }
+
+      // insert new node
+      Node insertNode = new Node(insertVal);
+      insertNode.next = trav.next;
+      trav.next = insertNode;
+    }
+  }
+
+  // check if list is sorted
+  public boolean isSorted() {
+    Node trav = head;
+    // stores data at current node
+    int currData = head.data;
+
+    while (trav != null) {
+      // compares data at current node against previous node
+      if (trav.data < currData) {
+        return false;
+      }
+      // update currData with data at current node and then update traversal pointer
+      currData = trav.data;
+      trav = trav.next;
+    }
+
+    return true;
+  }
+
   // // delete node at specified index in list
   // public void delete(int index) {
   //   Node trav = head;
@@ -208,10 +245,11 @@ public class SLList {
 
   public static void main(String[] args) {
     SLList methodTest = new SLList();
-    methodTest.insertEnd(3);
     methodTest.insertEnd(1);
+    methodTest.insertEnd(3);
     methodTest.insertEnd(7);
     methodTest.display();
-    System.out.println(methodTest.linSearch(11));
+    methodTest.insertSorted(9);
+    methodTest.display();
   }
 }
