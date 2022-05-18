@@ -29,6 +29,27 @@ public class SLList {
   // head field is null (since it's not instantiated with a value)
   public SLList() {};
 
+  public Node insertStart(int insertVal) {
+    // create new node with and pass insertVal as data for node
+    Node insertNode = new Node(insertVal);
+
+    // assign next field of newly created node to be the head node of list that insertStart is called on
+    insertNode.next = head;
+    // return insertNode
+    return insertNode;
+  }
+
+  public void insertEnd(int insertVal) {
+    Node trav = head;
+
+    // check next node instead of current node to avoid losing access to prev node
+    while (trav.next != null) {
+      trav = trav.next;
+    }
+    // set next field of last node to be new node with data field set to insertVal
+    trav.next = new Node(insertVal);
+  }
+
   // display list
   public void display() {
     Node trav = head;
@@ -140,7 +161,6 @@ public class SLList {
       index += 1;
       trav = trav.next;
     }
-
     // return -1 if searchVal is not in list
     return -1;
   }
