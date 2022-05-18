@@ -29,25 +29,30 @@ public class SLList {
   // head field is null (since it's not instantiated with a value)
   public SLList() {};
 
-  public Node insertStart(int insertVal) {
+  public void insertStart(int insertVal) {
     // create new node with and pass insertVal as data for node
     Node insertNode = new Node(insertVal);
 
     // assign next field of newly created node to be the head node of list that insertStart is called on
     insertNode.next = head;
-    // return insertNode
-    return insertNode;
+    // set head to point to insertNode
+    head = insertNode;
   }
 
   public void insertEnd(int insertVal) {
-    Node trav = head;
-
-    // check next node instead of current node to avoid losing access to prev node
-    while (trav.next != null) {
-      trav = trav.next;
+    // condition if list is empty
+    if (head == null) {
+      head = new Node(insertVal);
+    // condition if list is not empty (traverse first)
+    } else {
+      Node trav = head;
+      // check next node instead of current node to avoid losing access to prev node
+      while (trav.next != null) {
+        trav = trav.next;
+      }
+      // set next field of last node to be new node with data field set to insertVal
+      trav.next = new Node(insertVal);
     }
-    // set next field of last node to be new node with data field set to insertVal
-    trav.next = new Node(insertVal);
   }
 
   // display list
@@ -58,13 +63,13 @@ public class SLList {
       System.out.print(trav.data + " -> ");
       trav = trav.next;
     }
-    System.out.print("null");
+    System.out.println("null");
   }
 
   // display list (recursive)
   public static void recurDisplay(Node trav) {
     if (trav == null) {
-      System.out.print("null");
+      System.out.println("null");
     } else {
       System.out.print(trav.data + " -> ");
       recurDisplay(trav.next);
@@ -166,5 +171,12 @@ public class SLList {
   }
 
   public static void main(String[] args) {
+    SLList methodTest = new SLList();
+    methodTest.insertEnd(3);
+    methodTest.insertEnd(5);
+    methodTest.insertEnd(7);
+    methodTest.display();
+    methodTest.insertStart(1);
+    methodTest.display();
   }
 }
