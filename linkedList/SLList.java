@@ -112,7 +112,8 @@ public class SLList {
 
   // find min in list (recursive)
   public static int findMin(Node trav) {
-    int min = 0;
+    // leave variable uninitialized
+    int min;
 
     if (trav == null) {
       return Integer.MIN_VALUE;
@@ -127,10 +128,22 @@ public class SLList {
     }
   }
 
-  // // search for value in list
-  // public int search(int searchVal) {
-  //
-  // }
+  // linear search for value in list (returns index in list)
+  public int linSearch(int searchVal) {
+    Node trav = head;
+    int index = 0;
+
+    while (trav != null) {
+      if (trav.data == searchVal) {
+        return index;
+      }
+      index += 1;
+      trav = trav.next;
+    }
+
+    // return -1 if searchVal is not in list
+    return -1;
+  }
 
   public static void main(String[] args) {
   }
