@@ -148,9 +148,9 @@ public class SLList {
   }
 
   // sum list nodes (recursive)
-  public static int sumData(Node trav) {
+  public static int recurSumData(Node trav) {
     if (trav != null) {
-      return trav.data + sumData(trav.next);
+      return trav.data + recurSumData(trav.next);
     } else {
       return 0;
     }
@@ -178,7 +178,7 @@ public class SLList {
     int min;
 
     if (trav == null) {
-      return Integer.MIN_VALUE;
+      return Integer.MAX_VALUE;
     } else {
       // make recursive call on next node of list and store in min
       min = findMin(trav.next);
@@ -209,12 +209,9 @@ public class SLList {
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(3);
-    methodTest.insertEnd(5);
+    methodTest.insertEnd(1);
     methodTest.insertEnd(7);
     methodTest.display();
-    methodTest.insertStart(1);
-    methodTest.display();
-    methodTest.insert(4, 4);
-    methodTest.display();
+    System.out.println(methodTest.linSearch(11));
   }
 }
