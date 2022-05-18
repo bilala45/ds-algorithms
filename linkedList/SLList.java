@@ -89,16 +89,21 @@ public class SLList {
     // check that list is sorted
     if (this.isSorted()) {
       Node trav = head;
-
-      // traverse as long as next node isn't null and the data in the next node is less than the value being inserted
-      while (trav.next != null && trav.next.data < insertVal) {
-        trav = trav.next;
-      }
-
-      // insert new node
       Node insertNode = new Node(insertVal);
-      insertNode.next = trav.next;
-      trav.next = insertNode;
+
+      if (insertVal < trav.data) {
+        insertNode.next = head;
+        head = insertNode;
+      } else {
+        // traverse as long as next node isn't null and the data in the next node is less than the value being inserted
+        while (trav.next != null && trav.next.data < insertVal) {
+          trav = trav.next;
+        }
+
+        // insert new node
+        insertNode.next = trav.next;
+        trav.next = insertNode;
+      }
     }
   }
 
@@ -117,7 +122,6 @@ public class SLList {
       currData = trav.data;
       trav = trav.next;
     }
-
     return true;
   }
 
@@ -249,7 +253,7 @@ public class SLList {
     methodTest.insertEnd(3);
     methodTest.insertEnd(7);
     methodTest.display();
-    methodTest.insertSorted(9);
+    methodTest.insertSorted(0);
     methodTest.display();
   }
 }
