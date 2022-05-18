@@ -29,31 +29,67 @@ public class SLList {
   // head field is null (since it's not instantiated with a value)
   public SLList() {};
 
+  // insert node at start of list
   public void insertStart(int insertVal) {
-    // create new node with and pass insertVal as data for node
+    // create new node with insertVal as node's data
     Node insertNode = new Node(insertVal);
 
-    // assign next field of newly created node to be the head node of list that insertStart is called on
+    // assign next field of new node to point to head node of list
     insertNode.next = head;
-    // set head to point to insertNode
+    // move head to point to insertNode
     head = insertNode;
   }
 
+  // insert node at end of list
   public void insertEnd(int insertVal) {
-    // condition if list is empty
+    // list is empty
+    // necessary because we traverse by checking ahead which would cause a null pointer exception in an empty list
     if (head == null) {
       head = new Node(insertVal);
-    // condition if list is not empty (traverse first)
+    // list contains elements
     } else {
       Node trav = head;
-      // check next node instead of current node to avoid losing access to prev node
+      // check one node ahead to prevent losing access to last node
       while (trav.next != null) {
         trav = trav.next;
       }
-      // set next field of last node to be new node with data field set to insertVal
+      // point next field of last node to new node initialized with insertVal as data
       trav.next = new Node(insertVal);
     }
   }
+
+  // insert at specified index of list
+  public void insert(int insertVal, int index) {
+    // node inserted at start
+    if (index == 0) {
+      this.insertStart(insertVal);
+    // index greater than length of list
+    } else if (index > this.count()) {
+      System.out.println("Index is outside of list.");
+    } else {
+      Node trav = head;
+
+      // iterate so that i is one less than the index
+      // we do this to maintain access to the node JUST BEFORE where we want to insert
+      for (int i = 0 ; i < index - 1 ; i++) {
+        trav = trav.next;
+      }
+
+      // initialize node with insertVal as data
+      Node insertNode = new Node(insertVal);
+      // point insertNode to next node
+      insertNode.next = trav.next;
+      // point current node ot insertNode
+      trav.next = insertNode;
+    }
+  }
+
+  // // delete node at specified index in list
+  // public void delete(int index) {
+  //   Node trav = head;
+  //
+  //
+  // }
 
   // display list
   public void display() {
@@ -177,6 +213,8 @@ public class SLList {
     methodTest.insertEnd(7);
     methodTest.display();
     methodTest.insertStart(1);
+    methodTest.display();
+    methodTest.insert(4, 4);
     methodTest.display();
   }
 }
