@@ -63,24 +63,24 @@ public class SLList {
     // node inserted at start
     if (index == 0) {
       this.insertStart(insertVal);
-    // index greater than length of list
-    } else if (index > this.count()) {
-      System.out.println("Index is outside of list.");
     } else {
       Node trav = head;
 
       // iterate so that i is one less than the index
       // we do this to maintain access to the node JUST BEFORE where we want to insert
-      for (int i = 0 ; i < index - 1 ; i++) {
+      for (int i = 0 ; i < index - 1 && trav != null ; i++) {
         trav = trav.next;
       }
 
-      // initialize node with insertVal as data
-      Node insertNode = new Node(insertVal);
-      // point insertNode to next node
-      insertNode.next = trav.next;
-      // point current node ot insertNode
-      trav.next = insertNode;
+      // insert node if current node is not null
+      if (trav != null) {
+        // initialize node with insertVal as data
+        Node insertNode = new Node(insertVal);
+        // point insertNode to next node
+        insertNode.next = trav.next;
+        // point current node ot insertNode
+        trav.next = insertNode;
+      }
     }
   }
 
@@ -126,17 +126,28 @@ public class SLList {
   }
 
   // delete node at specified index in list
-  public void delete(int index) {
+  // returns data stored in deleted node
+  public Integer delete(int index) {
     Node trav = head;
 
     if (index == 0) {
+      int nodeData = trav.data;
       head = trav.next;
+      return nodeData;
     } else {
-      for (int i = 0 ; i < index - 1 ; i++) {
+      for (int i = 0 ; i < index - 1 && trav != null ; i++) {
         trav = trav.next;
       }
-      // point current node two nodes ahead
-      trav.next = trav.next.next;
+
+      // deletes node if trav is not null
+      if (trav != null) {
+        // store data in next node
+        int nodeData = trav.next.data;
+        // point current node two nodes ahead
+        trav.next = trav.next.next;
+        return nodeData;
+      }
+      return null;
     }
   }
 
@@ -273,7 +284,7 @@ public class SLList {
       curr = ahead;
     }
 
-    // set head as last node in list
+    // set head as previous node in list
     head = prev;
   }
 
@@ -281,8 +292,9 @@ public class SLList {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
     methodTest.insertEnd(2);
+    methodTest.insertEnd(3);
     methodTest.display();
-    methodTest.reverse();
+    System.out.println(methodTest.delete(1));
     methodTest.display();
   }
 }
