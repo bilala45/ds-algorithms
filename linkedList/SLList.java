@@ -255,15 +255,34 @@ public class SLList {
     return -1;
   }
 
+  // reverse list
+  public void reverse() {
+    Node prev = null;
+    Node ahead = null;
+    Node curr = head;
+
+    // loop exits when you reach the last node on the list
+    while (curr != null) {
+      // place ahead at next node
+      ahead = curr.next;
+      // point current node to previous node
+      curr.next = prev;
+      // move previous pointer to current node
+      prev = curr;
+      // move current pointer to next node
+      curr = ahead;
+    }
+
+    // set head as last node in list
+    head = prev;
+  }
+
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
-    methodTest.insertEnd(3);
-    methodTest.insertEnd(7);
+    methodTest.insertEnd(2);
     methodTest.display();
-    methodTest.insertSorted(0);
-    methodTest.display();
-    methodTest.delete(0);
+    methodTest.reverse();
     methodTest.display();
   }
 }
