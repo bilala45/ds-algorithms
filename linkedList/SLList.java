@@ -1,9 +1,3 @@
-/* If we set removeStart to be a static method, then we don't have to call removeStart on an object (we PASS IN an object instead)
-   If we set removeStart to be non-static, it needs to be called on an object (even if we're not actually using that object in our method)
-   However, it doesn't make much sense to call a method that "acts in a static manner" in a non-static way (by calling it on an object)
-   In LeetCode problems, it's weird becuse our objects are passed in, but the methods are defined non-statically (doesn't seem like best practice)
-   Note -> you can still access a static method from a non-static context (but not the other way around) */
-
 public class SLList {
 
   // pointer to head node
@@ -302,16 +296,31 @@ public class SLList {
     head = prev;
   }
 
+  // reverse list (recursive)
+  public void recurReverse(Node prev, Node curr) {
+    // check if at end of list
+    if (curr == null) {
+      // update head to point to last node in list
+      head = prev;
+    } else {
+      // slide pointers
+      // update prev with curr pointer
+      // update curr with curr.next pointer
+      recurReverse(curr, curr.next);
+      // point curr at prev on the way back
+      curr.next = prev;
+    }
+  }
+
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
     methodTest.insertEnd(2);
-    methodTest.insertEnd(2);
-    methodTest.insertEnd(2);
-    methodTest.insertEnd(2);
     methodTest.insertEnd(3);
+    methodTest.insertEnd(4);
+    methodTest.insertEnd(5);
     methodTest.display();
-    methodTest.removeDuplicates();
+    methodTest.recurReverse(null, methodTest.head);
     methodTest.display();
   }
 }
