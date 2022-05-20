@@ -312,15 +312,31 @@ public class SLList {
     }
   }
 
+  // concatenate two lists
+  public void concat(SLList addList) {
+    Node trav = head;
+
+    while (trav.next != null) {
+      trav = trav.next;
+    }
+    // point last node of list at head node of addList
+    trav.next = addList.head;
+  }
+
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
     methodTest.insertEnd(2);
     methodTest.insertEnd(3);
-    methodTest.insertEnd(4);
-    methodTest.insertEnd(5);
+
+    SLList methodTest2 = new SLList();
+    methodTest2.insertEnd(4);
+    methodTest2.insertEnd(5);
+
     methodTest.display();
-    methodTest.recurReverse(null, methodTest.head);
+    methodTest2.display();
+
+    methodTest.concat(methodTest2);
     methodTest.display();
   }
 }
