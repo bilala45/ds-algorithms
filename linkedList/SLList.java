@@ -78,6 +78,27 @@ public class SLList {
     }
   }
 
+  // insert node at head of circular list
+  public void circInsertStart(int insertVal) {
+    // pointer to traverse list
+    Node trav = head;
+
+    // update trav while trav.next doesn't point back to head
+    // retains access to "last" node in list
+    while (trav.next != head) {
+      trav = trav.next;
+    }
+
+    // set last node to point to inserted node
+    trav.next = new Node(insertVal);
+    insertedNode = trav.next;
+    // point inserted node at head to maintain circle
+    insertedNode.next = head;
+  }
+
+  // insert node in circular list
+
+
   // insert an element into a sorted list
   public void insertSorted(int insertVal) {
     // check that list is sorted
