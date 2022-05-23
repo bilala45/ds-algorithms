@@ -381,6 +381,41 @@ public class SLList {
     return null;
   }
 
+  // check if list has loop
+  public boolean containsLoop() {
+    // traversal pointers that move at different speeds
+    Node single = head;
+    Node skip = head;
+
+    // check skip because if the list doesn't contain a loop, skip will reach the end first
+    while (skip != null) {
+      /* we update before checking our condition because single and skip point at the same
+         location on the first iteration */
+      // update single to the next node
+      single = single.next;
+      // update skip to skip one node in between
+      skip = skip.next;
+      // we place the second update in a condition in case skip reaches the end of the list
+      // if so, return false to indicate that a loop is present
+      if (skip != null) {
+        skip = skip.next;
+      } else {
+        return false;
+      }
+
+      // single and skip move at different speeds so if they point at the same node, a loop is present
+      // think of a circular track with one runner going at twice the speed of another runner
+      // (faster runner will lap slower runner)
+      if (single == skip) {
+        return true;
+      }
+    }
+
+    // if skip reaches null, then no loop is present
+    return false;
+  }
+
+  // main method
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
@@ -394,6 +429,7 @@ public class SLList {
 
     methodTest.display();
     methodTest2.display();
+    System.out.println(methodTest.containsLoop());
 
     SLList mergedList = merge(methodTest, methodTest2);
     mergedList.display();
