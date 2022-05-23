@@ -170,6 +170,26 @@ public class SLList {
     System.out.println("null");
   }
 
+  // display circular list
+  public void circDisplay() {
+    if (this.containsLoop()) {
+      // traversal pointer (starts at head)
+      Node trav = head;
+
+      // update trav on first iteration because while loop checks that trav is not head
+      do {
+        System.out.print(trav.data + " -> ")
+        trav = trav.next;
+        // if our pointer is at head, then we've looped back
+      } while (trav != head)
+
+      // adds next line to display
+      System.out.println("");
+    } else {
+      System.out.println("List is not circular.");
+    }
+  }
+
   // display list (recursive)
   public static void recurDisplay(Node trav) {
     if (trav == null) {
