@@ -395,13 +395,10 @@ public class SLList {
       single = single.next;
       // update skip to skip one node in between
       skip = skip.next;
-      // we place the second update in a condition in case skip reaches the end of the list
-      // if so, return false to indicate that a loop is present
-      if (skip != null) {
-        skip = skip.next;
-      } else {
-        return false;
-      }
+      // we use a condition to update skip again in case skip has reached the end of the list and is null
+      // ternary operator: check that skip is not null. If so, assign skip.next to skip. If so, assign null to skip
+      // we can assign null to skip because then the while loop won't run on the next iteration and exit
+      skip = (skip != null) ? skip.next : null;
 
       // single and skip move at different speeds so if they point at the same node, a loop is present
       // think of a circular track with one runner going at twice the speed of another runner
