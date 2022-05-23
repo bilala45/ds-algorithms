@@ -80,24 +80,54 @@ public class SLList {
 
   // insert node at head of circular list
   public void circInsertStart(int insertVal) {
-    // pointer to traverse list
-    Node trav = head;
+    // condition if list is empty
+    if (head == null) {
+      Node insertNode = new Node(insertVal);
+      // point insertNode back at itself
+      insertNode.next = insertNode;
+      // set head at insertNode
+      head = insertNode;
+    } else {
+      // pointer to traverse list
+      Node trav = head;
 
-    // update trav while trav.next doesn't point back to head
-    // retains access to "last" node in list
-    while (trav.next != head) {
-      trav = trav.next;
+      // update trav while trav.next doesn't point back to head
+      // retains access to "last" node in list
+      while (trav.next != head) {
+        trav = trav.next;
+      }
+
+      // initialize node with insertVal data
+      Node insertNode = new Node(insertVal);
+      // set last node to point to inserted node
+      trav.next = insertNode;
+      // point inserted node at head to maintain circle
+      insertNode.next = head;
     }
-
-    // set last node to point to inserted node
-    trav.next = new Node(insertVal);
-    insertedNode = trav.next;
-    // point inserted node at head to maintain circle
-    insertedNode.next = head;
   }
 
   // insert node in circular list
+  public void circInsert(int insertVal, int index) {
+    // call method to insert at start if index is 0
+    if (index == 0) {
+      this.circInsertStart(insertVal);
+    } else {
+      // pointer to traverse list
+      Node trav = head;
 
+      // traverse as far as index - 1 to retain access to previous node
+      for (int indexTracker = 0 ; indexTracker < index - 1; indexTracker++) {
+        trav = trav.next;
+      }
+
+      // initialize node with insertVal data
+      Node insertNode = new Node(insertVal);
+      // point insertNode at the node after trav
+      insertNode.next = trav.next;
+      // point trav at insertNode
+      trav.next = insertNode;
+    }
+  }
 
   // insert an element into a sorted list
   public void insertSorted(int insertVal) {
@@ -199,10 +229,10 @@ public class SLList {
 
       // update trav on first iteration because while loop checks that trav is not head
       do {
-        System.out.print(trav.data + " -> ")
+        System.out.print(trav.data + " -> ");
         trav = trav.next;
         // if our pointer is at head, then we've looped back
-      } while (trav != head)
+      } while (trav != head);
 
       // adds next line to display
       System.out.println("");
@@ -456,21 +486,12 @@ public class SLList {
   // main method
   public static void main(String[] args) {
     SLList methodTest = new SLList();
-    methodTest.insertEnd(1);
-    methodTest.insertEnd(2);
-    methodTest.insertEnd(7);
+    methodTest.circInsertStart(1);
+    methodTest.circInsert(2, 1);
+    methodTest.circInsert(7, 2);
+    methodTest.circInsert(9, 3);
 
-    SLList methodTest2 = new SLList();
-    methodTest2.insertEnd(3);
-    methodTest2.insertEnd(11);
-    methodTest2.insertEnd(11);
-
-    methodTest.display();
-    methodTest2.display();
     System.out.println(methodTest.containsLoop());
-
-    SLList mergedList = merge(methodTest, methodTest2);
-    mergedList.display();
-
+    methodTest.circDisplay();
   }
 }
