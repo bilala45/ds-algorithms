@@ -210,6 +210,41 @@ public class SLList {
     }
   }
 
+  // delete node in circular list
+  // returns data in deleted node
+  public int circDelete(int index) {
+    // handle deleting head node
+    if (index == 0) {
+      Node trav = head;
+
+      // traverse until last node that points back at head
+      while (trav.next != head) {
+        trav = trav.next;
+      }
+
+      // save data at head node
+      int deletedNodeData = head.data;
+      trav.next = head.next;
+      // update head
+      head = trav.next;
+      return deletedNodeData;
+    } else {
+      Node trav = head;
+
+      // iterate to node before node that will be deleted
+      // retaining access to previous node allows us to point previous node to node after deleted node
+      for (int indexTracker = 0 ; indexTracker < index - 1 ; indexTracker ++) {
+        trav = trav.next;
+      }
+
+      // save data in node that will be deleted
+      int deleteNodeData = trav.next.data;
+      // point trav at node after trav.next
+      trav.next = trav.next.next;
+      return deleteNodeData;
+    }
+  }
+
   // display list
   public void display() {
     Node trav = head;
@@ -491,7 +526,8 @@ public class SLList {
     methodTest.circInsert(7, 2);
     methodTest.circInsert(9, 3);
 
-    System.out.println(methodTest.containsLoop());
+    methodTest.circDisplay();
+    System.out.println(methodTest.circDelete(0));
     methodTest.circDisplay();
   }
 }
