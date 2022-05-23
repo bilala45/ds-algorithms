@@ -323,20 +323,80 @@ public class SLList {
     trav.next = addList.head;
   }
 
+  // merge two lists
+  // make static so method isn't called on a list (we pass both lists in as arguments instead)
+  public static SLList merge(SLList first, SLList second) {
+    // check that both lists are sorted
+    if (first.isSorted() && second.isSorted()) {
+      // list traversal vars
+      Node travFirst = first.head;
+      Node travSecond = second.head;
+      // head of merged list
+      Node merge = null;
+      // trailing var to build merge list
+      Node trail = null;
+
+      // set head of merged list and initialize trail pointer
+      if (travFirst.data <= travSecond.data) {
+        merge = travFirst;
+        trail = travFirst;
+        travFirst = travFirst.next;
+      } else {
+        merge = travSecond;
+        trail = travSecond;
+        travSecond = travSecond.next;
+      }
+
+      // traverse as long as we haven't reached the end of either list
+      while (travFirst != null && travSecond != null) {
+        // compare data at current pointers
+        if (travFirst.data <= travSecond.data) {
+          // point trail at travFirst
+          trail.next = travFirst;
+          // update trail to node that it's pointing at
+          trail = travFirst;
+          // update travFirst to next node on list
+          travFirst = travFirst.next;
+        } else {
+          trail.next = travSecond;
+          trail = travSecond;
+          travSecond = travSecond.next;
+        }
+      }
+
+      // point tail of merge list at remaining list
+      if (travFirst != null) {
+        trail.next = travFirst;
+      } else {
+        trail.next = travSecond;
+      }
+
+      // return head of merged list
+      SLList mergedList = new SLList();
+      mergedList.head = merge;
+      return mergedList;
+    }
+
+    // returns null if either list is not sorted
+    return null;
+  }
+
   public static void main(String[] args) {
     SLList methodTest = new SLList();
     methodTest.insertEnd(1);
     methodTest.insertEnd(2);
-    methodTest.insertEnd(3);
+    methodTest.insertEnd(7);
 
     SLList methodTest2 = new SLList();
-    methodTest2.insertEnd(4);
-    methodTest2.insertEnd(5);
+    methodTest2.insertEnd(3);
+    methodTest2.insertEnd(11);
+    methodTest2.insertEnd(11);
 
     methodTest.display();
     methodTest2.display();
 
-    methodTest.concat(methodTest2);
-    methodTest.display();
+    SLList mergedList = merge(methodTest, methodTest2);
+    mergedList.display();
+
   }
 }
