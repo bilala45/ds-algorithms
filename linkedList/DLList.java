@@ -26,15 +26,15 @@ public class DLList {
 
   // display list
   public void display() {
-    Node trav = head;
+    Node curr = head;
     System.out.print("null <- ");
 
-    while (trav.next != null) {
-      System.out.print(trav.data + " <-> ");
-      trav = trav.next;
+    while (curr.next != null) {
+      System.out.print(curr.data + " <-> ");
+      curr = curr.next;
     }
 
-    System.out.println(trav.data + " -> null");
+    System.out.println(curr.data + " -> null");
   }
 
   // insert node at start
@@ -65,29 +65,29 @@ public class DLList {
       this.insertStart(insertVal);
     } else {
       // node to traverse list
-      Node trav = head;
+      Node curr = head;
 
       // traverse up to index at which you want to insert
-      for (int trackIndex = 0; trackIndex < index - 1 && trav != null; trackIndex++) {
-        trav = trav.next;
+      for (int trackIndex = 0; trackIndex < index - 1 && curr != null; trackIndex++) {
+        curr = curr.next;
       }
 
-      if (trav == null) {
+      if (curr == null) {
         System.out.println("Index is greater than length of list");
       } else {
         // initialize node with insertVal data
         Node insertNode = new Node(insertVal);
         // point insertNode at next node
-        insertNode.next = trav.next;
+        insertNode.next = curr.next;
         // point next node back at insertNode if it's not null
         // if next node is null, then you're at the end of the list
-        if (trav.next != null) {
-          trav.next.prev = insertNode;
+        if (curr.next != null) {
+          curr.next.prev = insertNode;
         }
 
         // point current node at insertNode and insertNode back at current node
-        trav.next = insertNode;
-        insertNode.prev = trav;
+        curr.next = insertNode;
+        insertNode.prev = curr;
       }
     }
   }
@@ -109,30 +109,30 @@ public class DLList {
     // handle delete at all other indices
     } else {
       // traversal node
-      Node trav = head;
+      Node curr = head;
 
       // traverse list to node that will be deleted
       // add condition to check that we haven't reached the end of the list
-      for (int trackIndex = 0 ; trackIndex < index && trav != null ; trackIndex++) {
-        trav = trav.next;
+      for (int trackIndex = 0 ; trackIndex < index && curr != null ; trackIndex++) {
+        curr = curr.next;
       }
 
       // condition for if traversal pointer has exceeded list indices
-      if (trav == null) {
+      if (curr == null) {
         return null;
       } else {
         // save data in current node (we will return this value)
-        int nodeData = trav.data;
+        int nodeData = curr.data;
 
         // check that current node is not the last node in the list
-        if (trav.next != null) {
+        if (curr.next != null) {
           // link current node to node ahead of node to be deleted
-          trav.prev.next = trav.next;
+          curr.prev.next = curr.next;
           // link node ahead of deleteNode to current node
-          trav.next.prev = trav.prev;
+          curr.next.prev = curr.prev;
         // condition if node being deleted is the last node in list
         } else {
-          trav.prev.next = null;
+          curr.prev.next = null;
         }
         return nodeData;
       }
@@ -142,27 +142,23 @@ public class DLList {
   // reverse doubly linked list
   public void reverse() {
     // pointer to traverse list
-    Node trav = head;
-    // pointer to track node ahead of current node
-    Node ahead = null;
+    Node curr = head;
 
-    while (trav.next != null) {
-      // on each node, move ahead to the next node
-      ahead = trav.next;
+    while (curr != null) {
+      // set head upon reaching the last node
+      if (curr.next == null) {
+        head = curr;
+      }
+
+      // on each node, save the address to the next node
+      Node ahead = curr.next;
       // point next back at prev
-      trav.next = trav.prev;
+      curr.next = curr.prev;
       // point prev at ahead
-      trav.prev = ahead;
+      curr.prev = ahead;
       // move trav up to ahead
-      trav = ahead;
+      curr = ahead;
     }
-
-    // point next field of last node to previous node
-    trav.next = trav.prev;
-    // point prev at null
-    trav.prev = null;
-    // set head of list
-    head = trav;
   }
 
   // main method
