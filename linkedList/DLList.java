@@ -141,7 +141,28 @@ public class DLList {
 
   // reverse doubly linked list
   public void reverse() {
+    // pointer to traverse list
+    Node trav = head;
+    // pointer to track node ahead of current node
+    Node ahead = null;
 
+    while (trav.next != null) {
+      // on each node, move ahead to the next node
+      ahead = trav.next;
+      // point next back at prev
+      trav.next = trav.prev;
+      // point prev at ahead
+      trav.prev = ahead;
+      // move trav up to ahead
+      trav = ahead;
+    }
+
+    // point next field of last node to previous node
+    trav.next = trav.prev;
+    // point prev at null
+    trav.prev = null;
+    // set head of list
+    head = trav;
   }
 
   // main method
@@ -152,9 +173,8 @@ public class DLList {
     test.insert(5,2);
     test.insert(7,3);
     test.insert(9,4);
-    test.insert(11,10);
     test.display();
-    System.out.println(test.delete(3));
+    test.reverse();
     test.display();
   }
 }
