@@ -72,7 +72,9 @@ public class DLList {
         trav = trav.next;
       }
 
-      if (trav != null) {
+      if (trav == null) {
+        System.out.println("Index is greater than length of list");
+      } else {
         // initialize node with insertVal data
         Node insertNode = new Node(insertVal);
         // point insertNode at next node
@@ -90,6 +92,66 @@ public class DLList {
     }
   }
 
+  // delete node from list (data in deleted node is returned)
+  public Integer delete(int index) {
+    // delete node at start of list
+    if (index == 0) {
+      int headData = head.data;
+      // condition if list has one node
+      if (head.next == null) {
+        head = null;
+      } else {
+        // set head at next node
+        head = head.next;
+        // delete previous node
+        head.prev.next = null;
+        // set prev field of head node to null
+        head.prev = null;
+      }
+      return headData;
+    // handle delete at all other indices
+    } else {
+      // traversal node
+      Node trav = head;
+
+      // traverse list to node before the node that will be deleted
+      // condition to check that we haven't reached the end of the list
+      for (int trackIndex = 0 ; trackIndex < index - 1 && trav != null ; trackIndex++) {
+        trav = trav.next;
+      }
+
+      // traversal pointer is at end of list or has exceeded list indices
+      // trav.next is included because
+      /* trav is before trav.next in case we've traversed past the end of the list already
+         (if first statement is true, statement in conditional will automatically execute) */
+      if (trav == null || trav.next == null) {
+        return null;
+      } else {
+        // add pointer at node to be deleted
+        Node deleteNode = trav.next;
+        // save data in deleteNode to return
+        int nodeData = deleteNode.data;
+
+        // check that deleteNode is not the last node in the list
+        if (deleteNode.next != null) {
+          // link current node to node ahead of deleteNode
+          trav.next = trav.next.next;
+          // link node ahead of deleteNode to current node
+          trav.next.prev = trav;
+        // condition if delete node is last node in list
+        } else {
+          trav.next = null;
+        }
+
+        // unlink node that will be deleted
+        deleteNode.next = null;
+        deleteNode.prev = null;
+
+        return nodeData;
+      }
+    }
+  }
+
   // main method
   public static void main (String[] args) {
     DLList test = new DLList();
@@ -99,6 +161,8 @@ public class DLList {
     test.insert(7,3);
     test.insert(9,4);
     test.insert(11,10);
+    test.display();
+    System.out.println(test.delete(3));
     test.display();
   }
 }
