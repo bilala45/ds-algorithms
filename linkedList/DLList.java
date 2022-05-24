@@ -30,7 +30,7 @@ public class DLList {
     System.out.print("null <- ");
 
     while (trav.next != null) {
-      System.out.print(trav.data + " <- -> ");
+      System.out.print(trav.data + " <-> ");
       trav = trav.next;
     }
 
@@ -72,19 +72,21 @@ public class DLList {
         trav = trav.next;
       }
 
-      // initialize node with insertVal data
-      Node insertNode = new Node(insertVal);
-      // point insertNode at next node
-      insertNode.next = trav.next;
-      // point next node back at insertNode if it's not null
-      // if next node is null, then you're at the end of the list
-      if (trav.next != null) {
-        trav.next.prev = insertNode;
-      }
+      if (trav != null) {
+        // initialize node with insertVal data
+        Node insertNode = new Node(insertVal);
+        // point insertNode at next node
+        insertNode.next = trav.next;
+        // point next node back at insertNode if it's not null
+        // if next node is null, then you're at the end of the list
+        if (trav.next != null) {
+          trav.next.prev = insertNode;
+        }
 
-      // point current node at insertNode and insertNode back at current node
-      trav.next = insertNode;
-      insertNode.prev = trav;
+        // point current node at insertNode and insertNode back at current node
+        trav.next = insertNode;
+        insertNode.prev = trav;
+      }
     }
   }
 
@@ -96,7 +98,7 @@ public class DLList {
     test.insert(5,2);
     test.insert(7,3);
     test.insert(9,4);
-    test.insert(11,5);
+    test.insert(11,10);
     test.display();
   }
 }
