@@ -24,6 +24,19 @@ public class DLList {
   // constructor
   public DLList() {}
 
+  // display list
+  public void display() {
+    Node trav = head;
+    System.out.print("null <- ");
+
+    while (trav.next != null) {
+      System.out.print(trav.data + " <- -> ");
+      trav = trav.next;
+    }
+
+    System.out.println(trav.data + " -> null");
+  }
+
   // insert node at start
   public void insertStart(int insertVal) {
     // initialize node to store data passed in
@@ -84,5 +97,6 @@ public class DLList {
     test.insert(7,3);
     test.insert(9,4);
     test.insert(11,5);
+    test.display();
   }
 }
