@@ -97,59 +97,51 @@ public class DLList {
     // delete node at start of list
     if (index == 0) {
       int headData = head.data;
-      // condition if list has one node
-      if (head.next == null) {
-        head = null;
-      } else {
-        // set head at next node
-        head = head.next;
-        // delete previous node
-        head.prev.next = null;
-        // set prev field of head node to null
+      // set head at next node
+      head = head.next;
+
+      // handles list with >1 node
+      if (head != null) {
         head.prev = null;
       }
+
       return headData;
     // handle delete at all other indices
     } else {
       // traversal node
       Node trav = head;
 
-      // traverse list to node before the node that will be deleted
-      // condition to check that we haven't reached the end of the list
-      for (int trackIndex = 0 ; trackIndex < index - 1 && trav != null ; trackIndex++) {
+      // traverse list to node that will be deleted
+      // add condition to check that we haven't reached the end of the list
+      for (int trackIndex = 0 ; trackIndex < index && trav != null ; trackIndex++) {
         trav = trav.next;
       }
 
-      // traversal pointer is at end of list or has exceeded list indices
-      // trav.next is included because
-      /* trav is before trav.next in case we've traversed past the end of the list already
-         (if first statement is true, statement in conditional will automatically execute) */
-      if (trav == null || trav.next == null) {
+      // condition for if traversal pointer has exceeded list indices
+      if (trav == null) {
         return null;
       } else {
-        // add pointer at node to be deleted
-        Node deleteNode = trav.next;
-        // save data in deleteNode to return
-        int nodeData = deleteNode.data;
+        // save data in current node (we will return this value)
+        int nodeData = trav.data;
 
-        // check that deleteNode is not the last node in the list
-        if (deleteNode.next != null) {
-          // link current node to node ahead of deleteNode
-          trav.next = trav.next.next;
+        // check that current node is not the last node in the list
+        if (trav.next != null) {
+          // link current node to node ahead of node to be deleted
+          trav.prev.next = trav.next;
           // link node ahead of deleteNode to current node
-          trav.next.prev = trav;
-        // condition if delete node is last node in list
+          trav.next.prev = trav.prev;
+        // condition if node being deleted is the last node in list
         } else {
-          trav.next = null;
+          trav.prev.next = null;
         }
-
-        // unlink node that will be deleted
-        deleteNode.next = null;
-        deleteNode.prev = null;
-
         return nodeData;
       }
     }
+  }
+
+  // reverse doubly linked list
+  public void reverse() {
+
   }
 
   // main method
