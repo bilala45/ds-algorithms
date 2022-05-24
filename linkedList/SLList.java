@@ -197,16 +197,22 @@ public class SLList {
       for (int i = 0 ; i < index - 1 && trav != null ; i++) {
         trav = trav.next;
       }
-
-      // deletes node if trav is not null
-      if (trav != null) {
+      // handles deleting node outside of list
+      if (trav.next == null || trav == null) {
+        return null;
+      } else {
         // store data in next node
         int nodeData = trav.next.data;
-        // point current node two nodes ahead
-        trav.next = trav.next.next;
+
+        if (trav.next.next == null) {
+          trav.next = null;
+        } else {
+          // point current node two nodes ahead
+          trav.next = trav.next.next;
+        }
+        // return data in deleted node
         return nodeData;
       }
-      return null;
     }
   }
 
@@ -521,13 +527,12 @@ public class SLList {
   // main method
   public static void main(String[] args) {
     SLList methodTest = new SLList();
-    methodTest.circInsertStart(1);
-    methodTest.circInsert(2, 1);
-    methodTest.circInsert(7, 2);
-    methodTest.circInsert(9, 3);
-
-    methodTest.circDisplay();
-    System.out.println(methodTest.circDelete(0));
-    methodTest.circDisplay();
+    methodTest.insertEnd(1);
+    methodTest.insertEnd(2);
+    methodTest.insertEnd(3);
+    methodTest.insertEnd(4);
+    methodTest.display();
+    System.out.println(methodTest.delete(3));
+    methodTest.display();
   }
 }
