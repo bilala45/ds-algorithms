@@ -26,17 +26,21 @@ public class StackArr {
       // place newElem at top
       stack[top] = newElem;
     } else {
-      System.out.println("Stack is full");
+      System.out.println("Stack overflow");
     }
   }
 
   // pop elements off the stack
-  public int pop() {
-    // save item at top of stack
-    int popElem = stack[top];
-    // decrement top to reflect popped item
-    top--;
-    return popElem;
+  public Integer pop() {
+    if (!this.isEmpty()) {
+      // save item at top of stack
+      int popElem = stack[top];
+      // decrement top to reflect popped item
+      top--;
+      return popElem;
+    }
+    System.out.println("stack is empty")
+    return null;
   }
 
   // peek at top element of stack
