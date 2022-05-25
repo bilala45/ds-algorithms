@@ -39,11 +39,20 @@ public class StackArr {
   public boolean isEmpty() {
     if (top == -1) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
+  // check if stack is full
+  public boolean isFull() {
+    // compare top against length of data structure containing stack
+    if (top == stack.length - 1) {
+      return true;
+    }
+    return false;
+  }
+
+  // main method
   public static void main (String[] args) {
     StackArr testStack = new StackArr();
 
