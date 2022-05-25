@@ -35,6 +35,12 @@ public class StackArr {
     return popElem;
   }
 
+  // peek at top element of stack
+  public int peek() {
+    // return element at top
+    return stack[top];
+  }
+
   // check if stack is empty
   public boolean isEmpty() {
     if (top == -1) {
