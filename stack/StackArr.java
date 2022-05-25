@@ -35,6 +35,15 @@ public class StackArr {
     return popElem;
   }
 
+  // check if stack is empty
+  public boolean isEmpty() {
+    if (top == -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public static void main (String[] args) {
     StackArr testStack = new StackArr();
 
