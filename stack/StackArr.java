@@ -20,10 +20,14 @@ public class StackArr {
 
   // push elements onto the stack
   public void push(int newElem) {
-    // update top
-    top++;
-    // place newElem at top
-    stack[top] = newElem;
+    if (!this.isFull()) {
+      // update top
+      top++;
+      // place newElem at top
+      stack[top] = newElem;
+    } else {
+      System.out.println("Stack is full");
+    }
   }
 
   // pop elements off the stack
@@ -61,6 +65,16 @@ public class StackArr {
   // main method
   public static void main (String[] args) {
     StackArr testStack = new StackArr();
-
+    System.out.println(testStack.isEmpty());
+    System.out.println(testStack.isFull());
+    testStack.push(2);
+    testStack.push(4);
+    testStack.push(6);
+    testStack.push(8);
+    testStack.push(10);
+    testStack.push(12);
+    System.out.println(testStack.peek());
+    System.out.println(testStack.isEmpty());
+    System.out.println(testStack.isFull());
   }
 }
