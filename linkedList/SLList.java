@@ -519,9 +519,33 @@ public class SLList {
         return true;
       }
     }
-
     // if skip reaches null, then no loop is present
     return false;
+  }
+
+  // find middle of list
+  public Integer middle() {
+    if (head != null) {
+      Node slow = head;
+      Node fast = head;
+
+      // traverse as long as fast doesn't point to null
+      while (fast != null) {
+        // update fast
+        fast = fast.next;
+        // check that fast is not pointing to null before updating again
+        // this is done because we can't access the next property of a null value
+        if (fast != null) {
+          fast = fast.next;
+        } else {
+          break;
+        }
+        // update slow
+        slow = slow.next;
+      }
+      return slow.data;
+    }
+    return null;
   }
 
   // main method
@@ -531,8 +555,8 @@ public class SLList {
     methodTest.insertEnd(2);
     methodTest.insertEnd(3);
     methodTest.insertEnd(4);
+    methodTest.insertEnd(5);
     methodTest.display();
-    System.out.println(methodTest.delete(3));
-    methodTest.display();
+    System.out.println(methodTest.middle());
   }
 }
