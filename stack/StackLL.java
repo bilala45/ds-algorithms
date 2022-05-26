@@ -21,9 +21,12 @@ public class StackLL {
 
   // pop element off stack
   public Integer pop() {
+    // check if stack is empty
     if (!this.isEmpty()) {
+      // removes head element of list and returns it
       return stack.remove();
     }
+    // prints if stack is empty
     System.out.println("Stack is empty");
     return null;
   }
@@ -31,7 +34,7 @@ public class StackLL {
   // peek at top of stack
   public Integer peek() {
     if (!this.isEmpty()) {
-      // retrieves head element of list
+      // retrieves head element of list without removing it
       return stack.getFirst();
     }
     System.out.println("Stack is empty");
@@ -40,14 +43,13 @@ public class StackLL {
 
   // check if stack is empty
   public boolean isEmpty() {
+    // checks first element of stack
+    // if stack is empty, only sentinel node (which has a value of null) should reamin
     if (stack.getFirst() == null) {
       return true;
     }
     return false;
   }
-
-  // check if stack is full
-
 
   // main method
   public static void main (String[] args) {
