@@ -4,8 +4,6 @@ public class StackLL {
 
   // create stack in linked list
   private LinkedList<Integer> stack;
-  // index to track top of stack
-  private int top;
 
   // constructor
   public StackLL() {
@@ -14,7 +12,10 @@ public class StackLL {
   }
 
   // push element onto stack
-
+  public void push(int pushElem) {
+    // append pushElem to start of list
+    stack.addFirst(pushElem);
+  }
 
   // pop element off stack
 
