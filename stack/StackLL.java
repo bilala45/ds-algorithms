@@ -20,17 +20,31 @@ public class StackLL {
   }
 
   // pop element off stack
-  public int pop() {
-    return stack.remove();
+  public Integer pop() {
+    if (!this.isEmpty()) {
+      return stack.remove();
+    }
+    System.out.println("Stack is empty");
+    return null;
   }
 
   // peek at top of stack
-  public int peek() {
-    // retrieves head element of list
-    return stack.getFirst();
+  public Integer peek() {
+    if (!this.isEmpty()) {
+      // retrieves head element of list
+      return stack.getFirst();
+    }
+    System.out.println("Stack is empty");
+    return null;
   }
 
   // check if stack is empty
+  public boolean isEmpty() {
+    if (stack.getFirst() == null) {
+      return true;
+    }
+    return false;
+  }
 
   // check if stack is full
 
@@ -38,10 +52,15 @@ public class StackLL {
   // main method
   public static void main (String[] args) {
     StackLL test = new StackLL();
+    System.out.println(test.isEmpty()); // true
     test.push(3);
     test.push(5);
     test.push(7);
     System.out.println(test.pop()); // 7
-    System.out.println(test.peek()); // 5
+    System.out.println(test.pop()); // 5
+    System.out.println(test.pop()); // 3
+    test.peek();
+    test.pop();
+    System.out.println(test.isEmpty()); // false
   }
 }
