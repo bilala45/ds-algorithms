@@ -33,18 +33,19 @@ public class ParenthesisMatch {
 
     // iterate through characters in input string
     for (int i = 0 ; i < input.length() ; i++) {
+      // store current character in string
       char currChar = input.charAt(i);
 
       // check current position in string against all opening brackets
-      if (currChar == '{' | currChar == '[' | currChar == '(') {
+      if (currChar == '{' || currChar == '[' || currChar == '(') {
         // push opening bracket to stack
         brStack.push(currChar);
-      } else if (currChar == '}' | currChar == ']' | currChar == ')') {
+      } else if (currChar == '}' || currChar == ']' || currChar == ')') {
         // return false if stack is empty (unmatched closing bracket in string)
         if (brStack.empty()) {
           return false;
         }
-        // peek top value of stack
+        // store top value of stack
         char topChar = brStack.peek();
         // compare top value and check that opening bracket matches closing bracket
         if (topChar == '{' && currChar == '}') {
