@@ -61,37 +61,50 @@ public class InToPostfix {
 
   // evaluate a postfix expression
   public static int PostfixEval(String postfix) {
-    // stack to store values from expression
-    Stack<Character> store = new Stack<>();
+    // stack to store integer values from expression
+    Stack<Integer> store = new Stack<>();
 
     // iterate through string
     for (int i = 0 ; i < postfix.length() ; i++) {
-      // check if current index is an operator
-      if (isOperator(postfix.charAt(i))) {
+      // current element in string
+      char curr = postfix.charAt(i);
+      System.out.println("current value: " + curr + " int: " + (int)curr);
+
+      // check if current element is an operator
+      if (isOperator(curr)) {
         // pop two values from stack and apply operator
         // top of stack is second operand
-        char operator = postfix.charAt(i);
-        char operand2 = store.pop();
-        char operand1 = store.pop();
+        // stack stores characters
+        // After popping, ascii value is subtracted from ascii value of 0 which provides the corresponding number
+        int operand2 = store.pop();
+        System.out.println("operand2: " + operand2);
+        int operand1 = store.pop();
+        System.out.println("operand1: " + operand1);
         int result = 0;
 
         // apply operator to operands using switch statements
         // switch statement compares value of "operator" against each case and executes if there's a match
-        switch (operator) {
-          case '*': result = operand1 * operand2;
-          case '/': result = operand1 / operand2;
-          case '+': result = operand1 + operand2;
-          case '-': result = operand1 - operand2;
+        switch ((int)curr) {
+          case 42: result = operand1 * operand2; // *
+                   break;
+          case 43: result = operand1 + operand2; // +
+                   break;
+          case 45: result = operand1 - operand2; // -
+                   break;
+          case 47: result = operand1 / operand2; // /
+                   break;
         }
+        System.out.println("push value: " + (char)(result+48));
 
         // push result of operation to stack
         // type cast result to char since stack stores chars
-        store.push((char)result);
+        store.push(result);
       } else {
-        // push operand to stack
-        store.push(postfix.charAt(i));
+        // push current element to stack
+        store.push(curr - '0');
       }
     }
+    System.out.println("final: " + store.peek());
     // return final remaining value in stack
     return store.pop();
   }
@@ -107,7 +120,9 @@ public class InToPostfix {
 
   // main method
   public static void main (String[] args) {
-    String infix = "a+b*c-d/e";
+    String infix = "3+4/2";
     System.out.println(InfixToPostfix(infix));
+    String postfix = InfixToPostfix(infix);
+    System.out.println(PostfixEval(postfix));
   }
 }
