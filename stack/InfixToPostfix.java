@@ -74,7 +74,6 @@ public class InfixToPostfix {
     for (int i = 0 ; i < postfix.length() ; i++) {
       // current element in string
       char curr = postfix.charAt(i);
-      System.out.println("current value: " + curr + " int: " + (int)curr);
 
       // check if current element is an operator
       if (isOperator(curr)) {
@@ -83,34 +82,31 @@ public class InfixToPostfix {
         // stack stores characters
         // After popping, ascii value is subtracted from ascii value of 0 which provides the corresponding number
         int operand2 = store.pop();
-        System.out.println("operand2: " + operand2);
         int operand1 = store.pop();
-        System.out.println("operand1: " + operand1);
         int result = 0;
 
         // apply operator to operands using switch statements
-        // switch statement compares value of "operator" against each case and executes if there's a match
-        switch ((int)curr) {
-          case 42: result = operand1 * operand2; // *
+        // switch statement compares operator against curr and executes if there's a match
+        // we need a break statement after each condition to exit the switch statements
+        switch (curr) {
+          case '*': result = operand1 * operand2;
                    break;
-          case 43: result = operand1 + operand2; // +
+          case '+': result = operand1 + operand2;
                    break;
-          case 45: result = operand1 - operand2; // -
+          case '-': result = operand1 - operand2;
                    break;
-          case 47: result = operand1 / operand2; // /
+          case '/': result = operand1 / operand2;
                    break;
         }
-        System.out.println("push value: " + (char)(result+48));
 
         // push result of operation to stack
-        // type cast result to char since stack stores chars
         store.push(result);
       } else {
         // push current element to stack
+        // subtracting ascii value of 0 from curr generates int equivalent of curr
         store.push(curr - '0');
       }
     }
-    System.out.println("final: " + store.peek());
     // return final remaining value in stack
     return store.pop();
   }
@@ -126,9 +122,9 @@ public class InfixToPostfix {
 
   // main method
   public static void main (String[] args) {
-    String infix = "a+b*c-d/e";
-    System.out.println(infixToPostfix(infix));
-    String postfix = infixToPostfix(infix);
-    System.out.println(postfixEval(postfix));
+    String infix = "35*62/+4-";
+    //System.out.println(infixToPostfix(infix));
+    //String postfix = infixToPostfix(infix);
+    System.out.println(postfixEval(infix));
   }
 }
