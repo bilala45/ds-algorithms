@@ -10,50 +10,37 @@ public class InToPostfix {
     String postfix = "";
 
     // iterate through characters in string
-    for (int i = 0 ; i < infix.length() ; i++) {
+    int i = 0;
+    // use a while loop to prevent pointer from moving forward on every iteration
+    // while loop is used similarly to for loop (except pointer is controlled with a conditional)
+    while (i < infix.length()) {
       // current character in string
       char curr = infix.charAt(i);
 
-      // repeat as long as stack is non-empty
-      // break conditions are added after pushing current element to stack to exit loop
-      while (!store.empty()) {
-      // store top value of stack for comparison
+      // store top value of stack for comparison (only runs if stack is not empty)
+      if (!store.empty()) {
         char top = store.peek();
 
-        // // ASCII codes -> * 42, + 43, - 45, / 47, numbers 48 - 57
-        // // number at top of stack
-        // if ((int)top >= 48) {
-        //   // append to postfix
-        //   postfix += store.pop();
-        // }
-        // // multiplication/division at the top
-        // else if ((int)top == 42 || (int)top == 47) {
-        //   // if current element is number, push current element
-        //   if ((int)curr >= 48) {
-        //     store.push(curr);
-        //     break;
-        //   } else {
-        //     postfix += store.pop();
-        //   }
-        // }
-        // // addition/subtraction at the top
-        // else if ((int)top == 43 || (int)top == 45) {
-        //   if ((int)curr >= 47 || (int)curr == 42) {
-        //     store.push(curr);
-        //     break;
-        //   } else {
-        //     postfix += store.pop();
-        //   }
-        // }
-
-
-      }
-      // push curr element if all values are removed from stack
-      if (store.empty()) {
+        // compare top of stack with curr element
+        if (setPrecedence(top) <= setPrecedence(curr)) {
+          // append to postfix
+          // if we pop, then we remain on the same element and compare again
+          postfix += store.pop();
+        } else {
+          // push value to stack if lower precedence
+          store.push(curr);
+          // pointer is only updated if value is pushed to stack
+          i++;
+        }
+      // handles an empty stack
+      } else {
+        // push current value to stack if stack is empty and update iterator
         store.push(curr);
+        i++;
       }
     }
-    // empty stack after iterating through string is complete
+
+    // empty stack after iterating through string
     while (!store.empty()) {
       // append to postfix
       postfix += store.pop();
