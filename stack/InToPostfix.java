@@ -59,6 +59,52 @@ public class InToPostfix {
     return postfix;
   }
 
+  // evaluate a postfix expression
+  public static int PostfixEval(String postfix) {
+    // stack to store values from expression
+    Stack<Character> store = new Stack<>();
+
+    // iterate through string
+    for (int i = 0 ; i < postfix.length() ; i++) {
+      // check if current index is an operator
+      if (isOperator(postfix.charAt(i))) {
+        // pop two values from stack and apply operator
+        // top of stack is second operand
+        char operator = postfix.charAt(i);
+        char operand2 = store.pop();
+        char operand1 = store.pop();
+        int result = 0;
+
+        // apply operator to operands using switch statements
+        // switch statement compares value of "operator" against each case and executes if there's a match
+        switch (operator) {
+          case '*': result = operand1 * operand2;
+          case '/': result = operand1 / operand2;
+          case '+': result = operand1 + operand2;
+          case '-': result = operand1 - operand2;
+        }
+
+        // push result of operation to stack
+        // type cast result to char since stack stores chars
+        store.push((char)result);
+      } else {
+        // push operand to stack
+        store.push(postfix.charAt(i));
+      }
+    }
+    // return final remaining value in stack
+    return store.pop();
+  }
+
+  // helper method to check if a value is an operator
+  private static boolean isOperator(char input) {
+    // use ASCII codes
+    if ((int)input >= 48) {
+      return false;
+    }
+    return true;
+  }
+
   // main method
   public static void main (String[] args) {
     String infix = "a+b*c-d/e";
