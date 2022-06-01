@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class InToPostfix {
+public class InfixToPostfix {
 
   // convert infix expression to posfix
   public static String infixToPostfix(String infix) {
@@ -126,7 +126,7 @@ public class InToPostfix {
 
   // main method
   public static void main (String[] args) {
-    String infix = "3+4/2";
+    String infix = "a+b*c-d/e";
     System.out.println(infixToPostfix(infix));
     String postfix = infixToPostfix(infix);
     System.out.println(postfixEval(postfix));
