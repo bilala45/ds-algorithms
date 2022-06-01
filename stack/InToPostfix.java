@@ -3,7 +3,7 @@ import java.util.Stack;
 public class InToPostfix {
 
   // convert infix expression to posfix
-  public static String InfixToPostfix(String infix) {
+  public static String infixToPostfix(String infix) {
     // stack to store elements
     Stack<Character> store = new Stack<>();
     // postfix expression
@@ -20,31 +20,33 @@ public class InToPostfix {
       // store top value of stack for comparison
         char top = store.peek();
 
-        // ASCII codes -> * 42, + 43, - 45, / 47, numbers 48 - 57
-        // number at top of stack
-        if ((int)top >= 48) {
-          // append to postfix
-          postfix += store.pop();
-        }
-        // multiplication/division at the top
-        else if ((int)top == 42 || (int)top == 47) {
-          // if current element is number, push current element
-          if ((int)curr >= 48) {
-            store.push(curr);
-            break;
-          } else {
-            postfix += store.pop();
-          }
-        }
-        // addition/subtraction at the top
-        else if ((int)top == 43 || (int)top == 45) {
-          if ((int)curr >= 47 || (int)curr == 42) {
-            store.push(curr);
-            break;
-          } else {
-            postfix += store.pop();
-          }
-        }
+        // // ASCII codes -> * 42, + 43, - 45, / 47, numbers 48 - 57
+        // // number at top of stack
+        // if ((int)top >= 48) {
+        //   // append to postfix
+        //   postfix += store.pop();
+        // }
+        // // multiplication/division at the top
+        // else if ((int)top == 42 || (int)top == 47) {
+        //   // if current element is number, push current element
+        //   if ((int)curr >= 48) {
+        //     store.push(curr);
+        //     break;
+        //   } else {
+        //     postfix += store.pop();
+        //   }
+        // }
+        // // addition/subtraction at the top
+        // else if ((int)top == 43 || (int)top == 45) {
+        //   if ((int)curr >= 47 || (int)curr == 42) {
+        //     store.push(curr);
+        //     break;
+        //   } else {
+        //     postfix += store.pop();
+        //   }
+        // }
+
+
       }
       // push curr element if all values are removed from stack
       if (store.empty()) {
@@ -59,8 +61,25 @@ public class InToPostfix {
     return postfix;
   }
 
+  // helper method to assign precedence to character
+  // Precedence: operands 1, mult/div 2, add/sub 3
+  // ASCII codes -> * 42, + 43, - 45, / 47, numbers 48 - 57
+  private static int setPrecedence(char element) {
+    // numbers
+    // cast char element to int and compare with ascii code
+    if ((int)element >= 48) {
+      return 1;
+    // mult/div
+    } else if ((int)element == 42 || (int)element == 47) {
+      return 2;
+    // add/sub
+    } else {
+      return 3;
+    }
+  }
+
   // evaluate a postfix expression
-  public static int PostfixEval(String postfix) {
+  public static int postfixEval(String postfix) {
     // stack to store integer values from expression
     Stack<Integer> store = new Stack<>();
 
@@ -121,8 +140,8 @@ public class InToPostfix {
   // main method
   public static void main (String[] args) {
     String infix = "3+4/2";
-    System.out.println(InfixToPostfix(infix));
-    String postfix = InfixToPostfix(infix);
-    System.out.println(PostfixEval(postfix));
+    System.out.println(infixToPostfix(infix));
+    String postfix = infixToPostfix(infix);
+    System.out.println(postfixEval(postfix));
   }
 }
