@@ -16,9 +16,10 @@ public class QueueArray {
   private void getFrontBack() {
     System.out.println("Front: " + front);
     System.out.println("Back: " + back);
+    System.out.println("");
   }
 
-  // enqueue element in queue
+  // enqueue element at back of queue
   public void enqueue(int enqVal) {
     // enqueue at tail of array
     // if tail is at -1 (no elements inserted in queue), update head pointer to 1 too
@@ -37,6 +38,19 @@ public class QueueArray {
       queue[back] = enqVal;
     } else {
       System.out.println("Queue is full.");
+    }
+  }
+
+  // dequeue element at front of queue
+  public Integer dequeue() {
+    // check if queue is empty before dequeuing
+    if (!this.isEmpty()) {
+      int frontVal = queue[front];
+      front += 1;
+      return frontVal;
+    } else {
+      System.out.println("Queue is empty.");
+      return null;
     }
   }
 
@@ -71,6 +85,16 @@ public class QueueArray {
     test.enqueue(30);
     test.getFrontBack(); // f0, b2
 
-    test.enqueue(40); //
+    test.dequeue();
+    test.getFrontBack(); // f1, b2
+
+    test.dequeue();
+    test.getFrontBack(); // f2, b2
+
+    test.dequeue();
+    test.getFrontBack(); // f3, b2
+
+    test.dequeue();
+    test.getFrontBack(); // f3, b2
   }
 }
