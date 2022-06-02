@@ -40,14 +40,30 @@ public class QueueArray {
     }
   }
 
+  // check if queue is empty
+  public boolean isEmpty() {
+    // front pointer surpasses back pointer
+    // front and back are at original position
+    if (front > back || (front == -1 && back == -1)) {
+      return true;
+    }
+    return false;
+  }
+
+  // check if queue is full
+  public boolean isFull() {
+    if (back == queue.length - 1) {
+      return true;
+    }
+    return false;
+  }
+
   public static void main (String[] args) {
     QueueArray test = new QueueArray();
     test.getFrontBack(); // f-1, b-1
-    System.out.println(test.isEmpty());
 
     test.enqueue(10);
     test.getFrontBack(); // f0, b0
-    System.out.println(test.isEmpty());
 
     test.enqueue(20);
     test.getFrontBack(); // f0, b1
