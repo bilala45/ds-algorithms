@@ -104,6 +104,5 @@ public class QueueArray {
 
     test.dequeue();
     test.getFrontBack(); // f
-
   }
 }
