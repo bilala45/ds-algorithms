@@ -1,4 +1,4 @@
-// Queue is the interface, LinkedList is the class that implements it
+// Queue is the interface, LinkedList is the implementing class
 // To use LinkedList as an implementation of the Queue interface, you need to import both
 import java.util.Queue;
 import java.util.LinkedList;
