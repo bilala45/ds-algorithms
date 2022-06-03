@@ -16,6 +16,16 @@ public class QueueLL {
     back = back.next;
   }
 
+  // return value at front of queue
+  public int front() {
+    return front.data;
+  }
+
+  // return value at back of queue
+  public int back() {
+    return back.data;
+  }
+
   // main method
   public static void main(String[] args) {
 
