@@ -46,7 +46,19 @@ public class Deque {
 
   // dequeue from front of deque
   public int dequeueFront() {
+<<<<<<< HEAD
 
+=======
+    if (front == deque.length) {
+      System.out.println("Queue is empty");
+    } else {
+      // store front val for return
+      int frontVal = deque[front];
+      // update front
+      front += 1;
+      return frontVal;
+    }
+>>>>>>> d81599b (add methods to dequeue from front and back of deque)
   }
 
   // dequeue from back of deque
@@ -55,7 +67,15 @@ public class Deque {
     if (back == -1) {
       System.out.println("Queue is empty");
     } else {
+<<<<<<< HEAD
       
+=======
+      // store value that back is pointing to
+      int backVal = deque[back];
+      // update back
+      back -= 1;
+      return backVal;
+>>>>>>> d81599b (add methods to dequeue from front and back of deque)
     }
   }
 
