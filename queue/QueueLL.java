@@ -1,12 +1,20 @@
-import java.util.LinkedList;
-
 public class QueueLL {
 
   // linked list field to store queue
-  private LinkedList<Integer> queue;
+  private LinkedList queue;
   // front and back node pointers
-  private ListIterator<Integer> front;
-  private ListIterator<Integer> back;
+  private Node front;
+  private Node back;
+
+  // add element to back of queue
+  public void enqueue(int val) {
+    // initialize node with value to be enqueued
+    Node enqNode = new Node(val);
+    // insert node after back node
+    back.next = enqNode;
+    // update back to point to enqueued node
+    back = back.next;
+  }
 
   // main method
   public static void main(String[] args) {
