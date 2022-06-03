@@ -27,7 +27,7 @@ public class Deque {
 
   // enqueue at back of deque
   public void enqueueBack(int val) {
-    // empty list condition
+    // empty deque condition
     if (front == -1) {
       // update front and back pointer to first index
       front = 0;
@@ -41,6 +41,21 @@ public class Deque {
       front += 1;
       // insert value
       deque[front] = val;
+    }
+  }
+
+  // dequeue from front of deque
+  public int dequeueFront() {
+
+  }
+
+  // dequeue from back of deque
+  public int dequeueBack() {
+    // handle empty deque
+    if (back == -1) {
+      System.out.println("Queue is empty");
+    } else {
+      
     }
   }
 
