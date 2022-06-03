@@ -10,19 +10,32 @@ public class QueueLL {
   public void enqueue(int val) {
     // initialize node with value to be enqueued
     Node enqNode = new Node(val);
-    // insert node after back node
-    back.next = enqNode;
-    // update back to point to enqueued node
-    back = back.next;
+    // condition if queue is empty
+    if (this.isEmpty()) {
+      // point front and back at enqNode
+      front = enqNode;
+      back = enqNode;
+    } else {
+      // insert node after back node
+      back.next = enqNode;
+      // update back to point to enqueued node
+      back = back.next;
+    }
   }
 
   // remove element from front of queue
-  public int dequeue() {
-    // store value at front
-    int deqVal = front.data;
-    // update front to point to next node
-    front = front.next;
-    return deqVal;
+  public Integer dequeue() {
+    // condition for dequeue from empty queue
+    if (this.isEmpty()) {
+      System.out.println("Queue is empty");
+      return null;
+    } else {
+      // store value at front
+      int deqVal = front.data;
+      // update front to point to next node
+      front = front.next;
+      return deqVal;
+    }
   )
 
   // check if queue is empty
@@ -35,17 +48,22 @@ public class QueueLL {
   }
 
   // return value at front of queue
-  public int front() {
-    return front.data;
+  public Integer front() {
+    if (!this.isEmpty()) {
+      return front.data;
+    }
+    return null;
   }
 
   // return value at back of queue
-  public int back() {
-    return back.data;
+  public Integer back() {
+    if (!this.isEmpty()) {
+      return back.data;
+    }
+    return null;
   }
 
   // main method
   public static void main(String[] args) {
-
   }
 }
