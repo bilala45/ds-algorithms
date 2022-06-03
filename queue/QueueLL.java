@@ -16,6 +16,15 @@ public class QueueLL {
     back = back.next;
   }
 
+  // remove element from front of queue
+  public int dequeue() {
+    // store value at front
+    int deqVal = front.data;
+    // update front to point to next node
+    front = front.next;
+    return deqVal;
+  )
+
   // check if queue is empty
   public boolean isEmpty() {
     // no sentinel node used
