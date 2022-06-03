@@ -16,6 +16,15 @@ public class QueueLL {
     back = back.next;
   }
 
+  // check if queue is empty
+  public boolean isEmpty() {
+    // no sentinel node used
+    if (front == null && back == null) {
+      return true;
+    }
+    return false;
+  }
+
   // return value at front of queue
   public int front() {
     return front.data;
