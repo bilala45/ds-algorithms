@@ -14,7 +14,8 @@ public class Queue2Stack {
 
   // insert value in queue
   public void enqueue(int val) {
-
+    // push value to enq stack
+    enq.push(val);
   }
 
   // dequeue value from queue
