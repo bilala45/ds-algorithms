@@ -36,7 +36,7 @@ public class QueueLL {
       front = front.next;
       return deqVal;
     }
-  )
+  }
 
   // check if queue is empty
   public boolean isEmpty() {
