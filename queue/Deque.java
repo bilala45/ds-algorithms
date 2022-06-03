@@ -38,19 +38,17 @@ public class Deque {
       System.out.println("Back of deque is full");
     } else {
       // update front pointer
-      front += 1;
+      back += 1;
       // insert value
-      deque[front] = val;
+      deque[back] = val;
     }
   }
 
   // dequeue from front of deque
-  public int dequeueFront() {
-<<<<<<< HEAD
-
-=======
+  public Integer dequeueFront() {
     if (front == deque.length) {
       System.out.println("Queue is empty");
+      return null;
     } else {
       // store front val for return
       int frontVal = deque[front];
@@ -58,28 +56,37 @@ public class Deque {
       front += 1;
       return frontVal;
     }
->>>>>>> d81599b (add methods to dequeue from front and back of deque)
   }
 
   // dequeue from back of deque
-  public int dequeueBack() {
+  public Integer dequeueBack() {
     // handle empty deque
     if (back == -1) {
       System.out.println("Queue is empty");
+      return null;
     } else {
-<<<<<<< HEAD
-      
-=======
       // store value that back is pointing to
       int backVal = deque[back];
       // update back
       back -= 1;
       return backVal;
->>>>>>> d81599b (add methods to dequeue from front and back of deque)
     }
   }
 
   public static void main(String[] args) {
-
+    Deque test = new Deque();
+    test.enqueueBack(1);
+    test.enqueueBack(3);
+    test.enqueueBack(5);
+    test.enqueueBack(7);
+    test.enqueueBack(9);
+    System.out.println(test.dequeueFront());
+    System.out.println(test.dequeueFront());
+    test.enqueueFront(4);
+    test.enqueueFront(2);
+    test.enqueueFront(1);
+    System.out.println(test.dequeueFront());
+    test.enqueueFront(1);
+    System.out.println(test.dequeueFront());
   }
 }
