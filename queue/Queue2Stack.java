@@ -20,12 +20,13 @@ public class Queue2Stack {
 
   // dequeue value from queue
   public Integer dequeue() {
-    // handles empty queue
-    if (deq.empty() && enq.empty()) {
-      System.out.println("Queue is empty");
-      return null;
     // pop from enq stack and push into deq stack until enq stack is empty
-    } else if (deq.empty()) {
+    if (deq.empty()) {
+      // handles empty queue by checking if enq stack is empty
+      if (enq.empty()) {
+        System.out.println("Queue is empty");
+        return null;
+      }
       // iterate through enq stack until empty
       while (!enq.empty()) {
         // pop from enq stack and push into deq stack
@@ -43,6 +44,8 @@ public class Queue2Stack {
     test.enqueue(4);
     test.enqueue(2);
     System.out.println(test.dequeue());
+    System.out.println(test.dequeue());
+    test.enqueue(10);
     System.out.println(test.dequeue());
     System.out.println(test.dequeue());
   }
