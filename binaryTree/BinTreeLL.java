@@ -71,11 +71,39 @@ public class BinTreeLL {
     }
   }
 
+  // recursive preorder traversal of binary tree
+  // static method because we're not changing the state of an object
+  public static void recurPreOrder(Node curr) {
+    // function returns if curr is null
+    if (curr != null) {
+      // print data in current node
+      System.out.println(curr.data);
+      // recursive call on left and right node
+      recurPreOrder(curr.left);
+      recurPreOrder(curr.right);
+    }
+  }
+
+  // recursive inorder traversal of binary tree
+  public void recurInOrder() {
+
+  }
+
+  // recursive postorder traversal of binary tree
+  public void recurPostOrder() {
+
+  }
+
   // main method
   public static void main(String[] args) {
     BinTreeLL test = new BinTreeLL();
     test.addNode(1);
     test.addNode(2);
     test.addNode(3);
+    test.addNode(4);
+    test.addNode(5);
+    test.addNode(6);
+    test.addNode(7);
+    recurPreOrder(test.root);
   }
 }
