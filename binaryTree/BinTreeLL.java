@@ -46,24 +46,24 @@ public class BinTreeLL {
       // iterate until nodeQueue is empty
       while (nodeQueue.peek() != null) {
         // initialize traversal pointer to point to dequeued node
-        Node trav = nodeQueue.poll();
+        Node curr = nodeQueue.poll();
 
         // we assume that our binary tree can't have empty spaces (must be complete)
         // enqueue left child if present
-        if (trav.left != null) {
-          nodeQueue.offer(trav.left);
+        if (curr.left != null) {
+          nodeQueue.offer(curr.left);
         // add new node as left child if null
         } else {
-          trav.left = new Node(nodeData);
+          curr.left = new Node(nodeData);
           // break condition to exit loop
           break;
         }
 
         // repeat for right child
-        if (trav.right != null) {
-          nodeQueue.offer(trav.right);
+        if (curr.right != null) {
+          nodeQueue.offer(curr.right);
         } else {
-          trav.right = new Node(nodeData);
+          curr.right = new Node(nodeData);
           // break condition to exit loop
           break;
         }
