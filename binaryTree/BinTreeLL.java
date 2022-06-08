@@ -85,13 +85,26 @@ public class BinTreeLL {
   }
 
   // recursive inorder traversal of binary tree
-  public void recurInOrder() {
-
+  public static void recurInOrder(Node curr) {
+    if (curr != null) {
+      // recursive call on left node first
+      recurInOrder(curr.left);
+      // print data in current node
+      System.out.println(curr.data);
+      // recursive call on right node
+      recurInOrder(curr.right);
+    }
   }
 
   // recursive postorder traversal of binary tree
-  public void recurPostOrder() {
-
+  public static void recurPostOrder(Node curr) {
+    if (curr != null) {
+      // recursive call on left and right node
+      recurPostOrder(curr.left);
+      recurPostOrder(curr.right);
+      // print data in current node
+      System.out.println(curr.data);
+    }
   }
 
   // main method
@@ -104,6 +117,11 @@ public class BinTreeLL {
     test.addNode(5);
     test.addNode(6);
     test.addNode(7);
+    System.out.println("preorder:");
     recurPreOrder(test.root);
+    System.out.println("inorder:");
+    recurInOrder(test.root);
+    System.out.println("postorder:");
+    recurPostOrder(test.root);
   }
 }
