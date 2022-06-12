@@ -72,6 +72,34 @@ public class BinTreeLL {
     }
   }
 
+  // level order traversal of tree
+  public static void levelOrder(BinTreeLL tree) {
+    // pointer to track current tree node (initialize as root of tree)
+    Node curr = tree.root;
+
+    // initialize queue to track nodes in order of traversal
+    Queue<Node> nodeQ = new LinkedList<Node>();
+    // add root to nodeQ
+    nodeQ.offer(curr);
+
+    // iterate while queue is non-empty
+    while (nodeQ.peek() != null) {
+      // dequeue current node from queue
+      curr = nodeQ.poll();
+
+      // process data at current node
+      System.out.println(curr.data);
+
+      // add left and right child to queue
+      if (curr.left != null) {
+        nodeQ.offer(curr.left);
+      }
+      if (curr.right != null) {
+        nodeQ.offer(curr.right);
+      }
+    }
+  }
+
   // recursive preorder traversal of binary tree
   // static method because we're not changing the state of an object
   public static void recurPreOrder(Node curr) {
@@ -173,6 +201,37 @@ public class BinTreeLL {
     }
   }
 
+  // iterative postorder traversal of binary tree
+  // come back to this
+  public static void iterPostOrder(BinTreeLL tree) {
+    // pointer to current node in tree (initialize to root)
+    Node curr = tree.root;
+
+    // initialize stack to hold parent nodes
+    Stack<Node> parentStack = new Stack<>();
+
+    // iterate through tree nodes
+    // stop when stack is empty and curr points to null
+    while (!(parentStack.isEmpty() && curr == null)) {
+      if (curr != null) {
+        // store current node in stack
+        parentStack.push(curr);
+
+        // move to left child
+        curr = curr.left;
+      } else {
+        // pop parent node from stack
+        curr = parentStack.pop();
+
+        // push current node in stack again (to process current node)
+        parentStack.push(curr);
+
+        // move to right child
+        curr = curr.right;
+      }
+    }
+  }
+
   // main method
   public static void main(String[] args) {
     BinTreeLL test = new BinTreeLL();
@@ -185,7 +244,7 @@ public class BinTreeLL {
     test.addNode(7);
     System.out.println("recur inorder:");
     recurInOrder(test.root);
-    System.out.println("iterative inorder:");
-    iterInOrder(test);
+    System.out.println("level-order:");
+    levelOrder(test);
   }
 }
