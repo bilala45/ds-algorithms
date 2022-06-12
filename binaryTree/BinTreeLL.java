@@ -1,5 +1,6 @@
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class BinTreeLL {
 
@@ -84,6 +85,40 @@ public class BinTreeLL {
     }
   }
 
+  // iterative preorder traversal of binary tree
+  public static void iterPreOrder(BinTreeLL tree) {
+    // initialize traversal pointer at tree rooot
+    Node curr = tree.root;
+
+    // stack to store nodes in tree
+    Stack<Node> parentStack = new Stack<Node>();
+    // push current node to stack so that stack is non-empty
+    parentStack.push(curr);
+
+    // iterate as long as stack is non-empty
+    while (!parentStack.empty()) {
+      // check if current node is equal to null
+      // if null, pop parent from stack and move to the right
+      // otherwise, process current node, push its address to stack, move to left child
+      if (curr == null) {
+        // pop parent node from top of stack
+        curr = parentStack.pop();
+
+        // update current node to right child
+        curr = curr.right;
+      } else {
+        // process data at current node
+        System.out.println(curr.data);
+
+        // push current node to stack
+        parentStack.push(curr);
+
+        // update current node to left child
+        curr = curr.left;
+      }
+    }
+  }
+
   // recursive inorder traversal of binary tree
   public static void recurInOrder(Node curr) {
     if (curr != null) {
@@ -117,11 +152,9 @@ public class BinTreeLL {
     test.addNode(5);
     test.addNode(6);
     test.addNode(7);
-    System.out.println("preorder:");
+    System.out.println("recur preorder:");
     recurPreOrder(test.root);
-    System.out.println("inorder:");
-    recurInOrder(test.root);
-    System.out.println("postorder:");
-    recurPostOrder(test.root);
+    System.out.println("iterative preorder:");
+    iterPreOrder(test);
   }
 }
