@@ -92,11 +92,12 @@ public class BinTreeLL {
 
     // stack to store nodes in tree
     Stack<Node> parentStack = new Stack<Node>();
-    // push current node to stack so that stack is non-empty
-    parentStack.push(curr);
 
-    // iterate as long as stack is non-empty
-    while (!parentStack.empty()) {
+    // iterate as long as stack is non-empty and curr is not equal to null
+    /* curr != null handles the start of our iteration (when our stack is empty)
+       it also handles our empty stack when we've traversed the entire left side and only the right side remains */
+    // we use the OR operator because our loop should only terminate when both the stack is empty and curr is null
+    while (!parentStack.empty() || curr != null) {
       // check if current node is equal to null
       // if null, pop parent from stack and move to the right
       // otherwise, process current node, push its address to stack, move to left child
@@ -131,6 +132,36 @@ public class BinTreeLL {
     }
   }
 
+  // iterative inorder traversal of binary tree
+  public static void iterInOrder(BinTreeLL tree) {
+    // traversal pointer initialized to tree root
+    Node curr = tree.root;
+
+    // stack to store nodes in tree
+    Stack<Node> parentStack = new Stack<Node>();
+
+    // stop iterating when both curr is null and stack is empty
+    while (!(parentStack.isEmpty() && curr == null)) {
+      // if curr is not pointing to null, store curr in stack and then move to left child of curr
+      if (curr != null) {
+        // push curr to stack
+        parentStack.push(curr);
+
+        // move to left child of curr
+        curr = curr.left;
+      } else {
+        // pop parent of curr pointer
+        curr = parentStack.pop();
+
+        // process parent (since we're returning from null left child)
+        System.out.println(curr.data);
+
+        // move to right child of curr
+        curr = curr.right;
+      }
+    }
+  }
+
   // recursive postorder traversal of binary tree
   public static void recurPostOrder(Node curr) {
     if (curr != null) {
@@ -152,9 +183,9 @@ public class BinTreeLL {
     test.addNode(5);
     test.addNode(6);
     test.addNode(7);
-    System.out.println("recur preorder:");
-    recurPreOrder(test.root);
-    System.out.println("iterative preorder:");
-    iterPreOrder(test);
+    System.out.println("recur inorder:");
+    recurInOrder(test.root);
+    System.out.println("iterative inorder:");
+    iterInOrder(test);
   }
 }
