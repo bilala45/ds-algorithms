@@ -64,10 +64,21 @@ public class BinSearchTree {
     }
   }
 
-  // recursive insert node in BST
-  public static void recurInsert(Node currNode, int nodeData) {
-
-  }
+  // // recursive insert node in BST
+  // public static Node recurInsert(Node curr, int insertData) {
+  //   if (curr == null) {
+  //     // initialize node with nodeData and return
+  //     return new Node(insertData);
+  //   } else {
+  //     if (curr.data == insertData) {
+  //       return;
+  //     } else if (insertData > curr.data) {
+  //       curr.right = recurInsert(curr.right, insertData);
+  //     } else {
+  //       curr.left = recurInsert(curr.left, insertData);
+  //     }
+  //   }
+  // }
 
   // iterative search in BST
   // returns address of node
@@ -96,19 +107,19 @@ public class BinSearchTree {
   }
 
   // recursive search in BST
-  public static Node recurSearchBST(Node currNode, int key) {
+  public static Node recurSearchBST(Node curr, int key) {
     // check for null node
-    if (currNode != null) {
-      // compare key to data in currNode
-      if (currNode.data == key) {
-        return currNode;
-      } else if (key > currNode.data) {
-        recurSearchBST(currNode.right, key);
-      } else {
-        recurSearchBST(currNode.left, key);
-      }
+    if (curr == null) {
+      return null;
     }
-    return null;
+    // compare key to data in curr
+    if (curr.data == key) {
+      return curr;
+    } else if (key > curr.data) {
+      return recurSearchBST(curr.right, key);
+    } else {
+      return recurSearchBST(curr.left, key);
+    }
   }
 
   // in order traversal of BST
@@ -131,5 +142,7 @@ public class BinSearchTree {
     test.iterInsert(11);
     test.iterInsert(15);
     inOrderTrav(test.root);
+    System.out.println(recurSearchBST(test.root, 3));
+    System.out.println(iterSearchBST(test, 3));
   }
 }
