@@ -98,21 +98,26 @@ public class BinSearchTree {
   // recursive search in BST
   public static Node recurSearchBST(Node currNode, int key) {
     // check for null node
-    if (currNode == null) {
-      return null;
+    if (currNode != null) {
+      // compare key to data in currNode
+      if (currNode.data == key) {
+        return currNode;
+      } else if (key > currNode.data) {
+        recurSearchBST(currNode.right, key);
+      } else {
+        recurSearchBST(currNode.left, key);
+      }
     }
-    // compare key to data in currNode
-    if (currNode.data == key) {
-      return currNode;
-    } else if (key > currNode.data) {
-      recurSearchBST(currNode.right, key);
-    } else {
-      recurSearchBST(currNode.left, key);
-    }
+    return null;
   }
 
   // main method
   public static void main(String[] args) {
-
+    BinSearchTree test = new BinSearchTree();
+    test.iterInsert(5);
+    test.iterInsert(9);
+    test.iterInsert(3);
+    test.iterInsert(11);
+    test.iterInsert(15);
   }
 }
