@@ -111,13 +111,25 @@ public class BinSearchTree {
     return null;
   }
 
+  // in order traversal of BST
+  public static void inOrderTrav(Node curr) {
+    if (curr != null) {
+      inOrderTrav(curr.left);
+      System.out.println(curr.data);
+      inOrderTrav(curr.right);
+    }
+  }
+
   // main method
   public static void main(String[] args) {
     BinSearchTree test = new BinSearchTree();
     test.iterInsert(5);
+    test.iterInsert(2);
+    test.iterInsert(7);
     test.iterInsert(9);
     test.iterInsert(3);
     test.iterInsert(11);
     test.iterInsert(15);
+    inOrderTrav(test.root);
   }
 }
