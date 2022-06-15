@@ -13,10 +13,10 @@ public class BinSearchTree {
     private Node right;
 
     // empty constructor
-    private BinSearchTree() {}
+    private Node() {}
 
     // constructor with data passed in
-    private BinSearchTree(int data) {
+    private Node(int data) {
       this.data = data;
     }
   }
@@ -24,13 +24,54 @@ public class BinSearchTree {
   // constructor
   public BinSearchTree() {}
 
-  // insert node in BST
-  public void insertNode(int nodeData) {
+  // iterative insert node in BST
+  public void iterInsert(int nodeData) {
+    // checks for non-empty tree
+    if (root != null) {
+      // initialize node to point at root
+      Node curr = root;
+      // initialize node to point at parent of current node
+      Node parent = null;
+
+      // iterate while current Node pointer is not null
+      while (curr != null) {
+        // no repeats in BST
+        if (nodeData == curr.data) {
+          return;
+        }
+        // insert into tree
+        // move parent node to current node
+        parent = curr;
+        if (nodeData > curr.data) {
+          // move current node to right child
+          curr = curr.right;
+        } else {
+          curr = curr.left;
+        }
+      }
+
+      // initialize new node with nodeData
+      Node insertNode = new Node(nodeData);
+      // assign insertNode to left or right child of parent after comparison
+      if (nodeData > parent.data) {
+        parent.right = insertNode;
+      } else {
+        parent.left = insertNode;
+      }
+    // handles empty tree, initialize node containing nodeData and set as root
+    } else {
+      root = new Node(nodeData);
+    }
+  }
+
+  // recursive insert node in BST
+  public static void recurInsert(Node currNode, int nodeData) {
 
   }
 
   // iterative search in BST
-  public static boolean iterSearchBST(BinSearchTree tree, int key) {
+  // returns address of node
+  public static Node iterSearchBST(BinSearchTree tree, int key) {
     // check that tree contains values
     if (tree.root != null) {
       // initialize curr pointer at tree root
@@ -40,7 +81,7 @@ public class BinSearchTree {
       while (curr != null) {
         // break loop if key matches data at current node
         if (curr.data == key) {
-          return true;
+          return curr;
         // move to right subtree if key is greater than data at current node
         } else if (key > curr.data) {
           curr = curr.right;
@@ -50,18 +91,19 @@ public class BinSearchTree {
         }
       }
     }
-    return false;
+    // return null if value is not found or if tree is empty
+    return null;
   }
 
   // recursive search in BST
-  public static boolean recurSearchBST(Node currNode, int key) {
+  public static Node recurSearchBST(Node currNode, int key) {
     // check for null node
     if (currNode == null) {
-      return false;
+      return null;
     }
     // compare key to data in currNode
     if (currNode.data == key) {
-      return true;
+      return currNode;
     } else if (key > currNode.data) {
       recurSearchBST(currNode.right, key);
     } else {
