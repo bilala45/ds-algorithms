@@ -74,23 +74,28 @@ public class BinTreeLL {
 
   // level order traversal of tree
   public static void levelOrder(BinTreeLL tree) {
-    // pointer to track current tree node (initialize as root of tree)
+    // track current node in tree while traversing
+    // initialize curr as root
     Node curr = tree.root;
 
-    // initialize queue to track nodes in order of traversal
+    // initialize queue to track children of nodes from left to right
+    /* Queue is the interface, LinkedList is the class implementation
+    The methods specified in queue are all that can be accessed by the LinkedList class */
     Queue<Node> nodeQ = new LinkedList<Node>();
-    // add root to nodeQ
+    // enqueue root in nodeQ
     nodeQ.offer(curr);
 
-    // iterate while queue is non-empty
+    // iterate until queue is empty
     while (nodeQ.peek() != null) {
-      // dequeue current node from queue
+      // get current node for iteration by dequeuing from nodeQ
       curr = nodeQ.poll();
 
       // process data at current node
       System.out.println(curr.data);
 
-      // add left and right child to queue
+      // enqueue left and right child of current node
+      // check that each child is not null before enqueuing
+      // don't want to enqueue null objects because we can't access fields of null object - throws null pointer exception
       if (curr.left != null) {
         nodeQ.offer(curr.left);
       }
@@ -107,7 +112,7 @@ public class BinTreeLL {
     if (curr != null) {
       // print data in current node
       System.out.println(curr.data);
-      // recursive call on left and right node
+      // recursive call on left and right child
       recurPreOrder(curr.left);
       recurPreOrder(curr.right);
     }
@@ -115,35 +120,35 @@ public class BinTreeLL {
 
   // iterative preorder traversal of binary tree
   public static void iterPreOrder(BinTreeLL tree) {
-    // initialize traversal pointer at tree rooot
+    // pointer to track current node - initialize as tree root
     Node curr = tree.root;
 
-    // stack to store nodes in tree
+    // stack to store parent node of current node
+    // necessary because tree links only move from parent to child but we need a way to move from child to parent
     Stack<Node> parentStack = new Stack<Node>();
 
     // iterate as long as stack is non-empty and curr is not equal to null
     /* curr != null handles the start of our iteration (when our stack is empty)
        it also handles our empty stack when we've traversed the entire left side and only the right side remains */
     // we use the OR operator because our loop should only terminate when both the stack is empty and curr is null
-    while (!parentStack.empty() || curr != null) {
-      // check if current node is equal to null
-      // if null, pop parent from stack and move to the right
-      // otherwise, process current node, push its address to stack, move to left child
-      if (curr == null) {
-        // pop parent node from top of stack
+    while (!(parentStack.empty() && curr == null)) {
+      // process current node, push its address to stack and move to its left child
+      // execute if node is NOT null (since a null node would not have a data or child field)
+      if (curr != null) {
+        // process data at current node
+        System.out.println(curr.data);
+
+        // store address of node to come back to right child after updating curr to left child
+        parentStack.push(curr);
+        // update current node to left child
+        curr = curr.left;
+      // if current node is null, return to parent node and try the right child
+      } else {
+        // reset curr to parent of null node by retrieving address from stack
         curr = parentStack.pop();
 
         // update current node to right child
         curr = curr.right;
-      } else {
-        // process data at current node
-        System.out.println(curr.data);
-
-        // push current node to stack
-        parentStack.push(curr);
-
-        // update current node to left child
-        curr = curr.left;
       }
     }
   }
@@ -151,11 +156,11 @@ public class BinTreeLL {
   // recursive inorder traversal of binary tree
   public static void recurInOrder(Node curr) {
     if (curr != null) {
-      // recursive call on left node first
+      // recursive call on left child
       recurInOrder(curr.left);
       // print data in current node
       System.out.println(curr.data);
-      // recursive call on right node
+      // recursive call on right child
       recurInOrder(curr.right);
     }
   }
@@ -193,7 +198,7 @@ public class BinTreeLL {
   // recursive postorder traversal of binary tree
   public static void recurPostOrder(Node curr) {
     if (curr != null) {
-      // recursive call on left and right node
+      // recursive call on left then right child
       recurPostOrder(curr.left);
       recurPostOrder(curr.right);
       // print data in current node
