@@ -267,6 +267,24 @@ public class BinTreeLL {
     }
   }
 
+  // count nodes with degree 2
+  public static int countDegreeTwo(Node treeNode) {
+    // base case: null node
+    if (treeNode == null) {
+      return 0;
+    } else {
+      int leftSubtree = countDegreeTwo(treeNode.left);
+      int rightSubtree = countDegreeTwo(treeNode.right);
+      // add 1 if both children are present
+      if (treeNode.left != null && treeNode.right != null) {
+        return leftSubtree + rightSubtree + 1;
+      // return sum from descendants if missing both children
+      } else {
+        return leftSubtree + rightSubtree;
+      }
+    }
+  }
+
   // main method
   public static void main(String[] args) {
     BinTreeLL test = new BinTreeLL();
@@ -276,8 +294,8 @@ public class BinTreeLL {
     test.addNode(4);
     test.addNode(5);
     test.addNode(6);
-    test.addNode(7);
     System.out.println("sum: " + sumNodes(test.root));
     System.out.println("count: " + count(test.root));
+    System.out.println("degree two: " + countDegreeTwo(test.root));
   }
 }
