@@ -237,6 +237,22 @@ public class BinTreeLL {
     }
   }
 
+  // count nodes
+  public static int count(Node treeNode) {
+    // base case: null node
+    if (treeNode == null) {
+      return 0;
+    } else {
+      int leftSubtree = count(treeNode.left);
+      int rightSubtree = count(treeNode.right);
+      // add 1 to count the current node
+      /* Think of an example tree with only a root node (tree with one node)
+         Both the left and right subtree evaluate to 0
+         We need a way to count the single root node, so we add 1 */
+      return leftSubtree + rightSubtree + 1;
+    }
+  }
+
   // main method
   public static void main(String[] args) {
     BinTreeLL test = new BinTreeLL();
@@ -247,9 +263,7 @@ public class BinTreeLL {
     test.addNode(5);
     test.addNode(6);
     test.addNode(7);
-    System.out.println("recur inorder:");
-    recurInOrder(test.root);
-    System.out.println("level-order:");
-    levelOrder(test);
+    //System.out.println("sum: " + sumNodes(test.root));
+    System.out.println("count: " + count(test.root));
   }
 }
