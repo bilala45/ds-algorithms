@@ -237,6 +237,20 @@ public class BinTreeLL {
     }
   }
 
+  // sum node data
+  public static int sumNodes(Node treeNode) {
+    // base case: null node
+    if (treeNode == null) {
+      return 0;
+    } else {
+      // recurse to left and right subtree and sum nodes
+      int leftSubtree = sumNodes(treeNode.left);
+      int rightSubtree = sumNodes(treeNode.right);
+      // sum subtree with data in current node
+      return leftSubtree + rightSubtree + treeNode.data;
+    }
+  }
+
   // count nodes
   public static int count(Node treeNode) {
     // base case: null node
@@ -263,7 +277,7 @@ public class BinTreeLL {
     test.addNode(5);
     test.addNode(6);
     test.addNode(7);
-    //System.out.println("sum: " + sumNodes(test.root));
+    System.out.println("sum: " + sumNodes(test.root));
     System.out.println("count: " + count(test.root));
   }
 }
