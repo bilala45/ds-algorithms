@@ -85,6 +85,94 @@ public class BinSearchTree {
     return curr;
   }
 
+  // iterative delete node in BST
+  public void iterDelete(int deleteVal) {
+    // node to track current node
+    Node curr = root;
+    // node to track parent of current node
+    Node parent = null;
+
+    // stop iterating when curr is null
+    while (curr != null) {
+      if (curr.data == deleteVal) {
+        replaceCurr(curr, parent);
+      }
+      // continue traversing if deleteVal doesn't match current node
+      parent = curr;
+      if (deleteVal > curr.data) {
+        curr = curr.right;
+      } else {
+        curr = curr.left;
+      }
+    }
+  }
+
+  // helper function to replace value at curr with inorder predecessor or successor (if present)
+  private static void replaceCurr(Node curr, Node parent) {
+    // find inorder predecessor or successor
+    // initialize node to store replacement
+    Node replace = curr;
+    // initialize node to track parent of replacement
+    Node repParent = pred;
+    // move pred to inorder predecessor
+    if (replace.left != null) {
+      inPre(replace, repParent, curr);
+    // move pred to inorder successor if left is null
+    } else if (replace.right != null) {
+      inSuc(replace, repParent, curr);
+    } else {
+      if (parent.right == curr) {
+        parent.right = null;
+      } else {
+        parent.left = null;
+      }
+    }
+  }
+
+  // helper function to find inorder predecessor of node
+  private static void inPre(Node pred, Node predParent, Node curr) {
+    pred = pred.left;
+
+    if (pred.right != null) {
+      // iterate to inorder predecessor
+      while (pred.right != null) {
+        predParent = pred;
+        pred = pred.right;
+      }
+      // set data in curr to data in pred
+      curr.data = pred.data;
+      // set parent of pred to null
+      predParent.right = null;
+    } else {
+      // set data in curr to data in pred
+      curr.data = pred.data;
+      // set parent of pred to null
+      predParent.left = null;
+    }
+  }
+
+  // helper function to find inorder successor of node
+  private static void inSuc(Node suc, Node sucParent, Node curr) {
+    suc = suc.right;
+
+    if (suc.left != null) {
+      // iterate to inorder predecessor
+      while (suc.left != null) {
+        sucParent = suc;
+        suc = suc.left;
+      }
+      // set data in curr to data in pred
+      curr.data = suc.data;
+      // set parent of pred to null
+      sucParent.left = null;
+    } else {
+      // set data in curr to data in pred
+      curr.data = suc.data;
+      // set parent of pred to null
+      sucParent.right = null;
+    }
+  }
+
   // iterative search in BST
   // returns address of node
   public static Node iterSearchBST(BinSearchTree tree, int key) {
@@ -142,9 +230,13 @@ public class BinSearchTree {
     test.root = test.recurInsert(test.root, 5);
     test.recurInsert(test.root, 7);
     test.recurInsert(test.root, 6);
+    test.recurInsert(test.root, 11);
+    test.recurInsert(test.root, 9);
     test.recurInsert(test.root, 3);
+    System.out.println("Traversal");
     inOrderTrav(test.root);
-    System.out.println(recurSearchBST(test.root, 3));
-    System.out.println(iterSearchBST(test, 3));
+    test.iterDelete(7);
+    System.out.println("Traversal after delete");
+    inOrderTrav(test.root);
   }
 }
