@@ -238,52 +238,69 @@ public class BinTreeLL {
   }
 
   // sum node data
-  public static int sumNodes(Node treeNode) {
+  public static int sumNodes(Node curr) {
     // base case: null node
-    if (treeNode == null) {
+    if (curr == null) {
       return 0;
-    } else {
-      // recurse to left and right subtree and sum nodes
-      int leftSubtree = sumNodes(treeNode.left);
-      int rightSubtree = sumNodes(treeNode.right);
-      // sum subtree with data in current node
-      return leftSubtree + rightSubtree + treeNode.data;
     }
+    // recurse to left and right subtree and sum nodes
+    int leftSubtree = sumNodes(curr.left);
+    int rightSubtree = sumNodes(curr.right);
+    // sum subtree with data in current node
+    return leftSubtree + rightSubtree + curr.data;
   }
 
   // count nodes
-  public static int count(Node treeNode) {
+  public static int count(Node curr) {
     // base case: null node
-    if (treeNode == null) {
+    if (curr == null) {
       return 0;
-    } else {
-      int leftSubtree = count(treeNode.left);
-      int rightSubtree = count(treeNode.right);
-      // add 1 to count the current node
-      /* Think of an example tree with only a root node (tree with one node)
-         Both the left and right subtree evaluate to 0
-         We need a way to count the single root node, so we add 1 */
-      return leftSubtree + rightSubtree + 1;
     }
+    int leftSubtree = count(curr.left);
+    int rightSubtree = count(curr.right);
+    // add 1 to count the current node
+    /* Think of an example tree with only a root node (tree with one node)
+       Both the left and right subtree evaluate to 0
+       We need a way to count the single root node, so we add 1 */
+    return leftSubtree + rightSubtree + 1;
   }
 
   // count nodes with degree 2
-  public static int countDegreeTwo(Node treeNode) {
+  public static int countDegreeTwo(Node curr) {
     // base case: null node
-    if (treeNode == null) {
+    if (curr == null) {
       return 0;
-    } else {
-      int leftSubtree = countDegreeTwo(treeNode.left);
-      int rightSubtree = countDegreeTwo(treeNode.right);
-      // add 1 if both children are present
-      if (treeNode.left != null && treeNode.right != null) {
-        return leftSubtree + rightSubtree + 1;
-      // return sum from descendants if missing both children
-      } else {
-        return leftSubtree + rightSubtree;
-      }
     }
+    // recursive call of subtrees
+    int leftSubtree = countDegreeTwo(curr.left);
+    int rightSubtree = countDegreeTwo(curr.right);
+    // add 1 if both children are present
+    if (curr.left != null && curr.right != null) {
+      return leftSubtree + rightSubtree + 1;
+    }
+    // return sum from descendants if missing both children
+    return leftSubtree + rightSubtree;
   }
+
+  // count the number of leaf nodes
+  public static int countLeaf(Node curr) {
+    // base case: null node or tree
+    if (curr == null) {
+      return 0;
+    }
+    // recursive calls on left and right subtrees
+    int leftSubtree = countLeaf(curr.left);
+    int rightSubtree = countLeaf(curr.right);
+    if (curr.left == null && curr.right == null) {
+      return leftSubtree + rightSubtree + 1;
+    }
+    return leftSubtree + rightSubtree;
+  }
+
+  // // height of binary tree
+  // public static int treeHeight(Node treeNode) {
+  //
+  // }
 
   // main method
   public static void main(String[] args) {
@@ -297,5 +314,6 @@ public class BinTreeLL {
     System.out.println("sum: " + sumNodes(test.root));
     System.out.println("count: " + count(test.root));
     System.out.println("degree two: " + countDegreeTwo(test.root));
+    System.out.println("leaves: " + countLeaf(test.root));
   }
 }
