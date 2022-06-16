@@ -64,21 +64,26 @@ public class BinSearchTree {
     }
   }
 
-  // // recursive insert node in BST
-  // public static Node recurInsert(Node curr, int insertData) {
-  //   if (curr == null) {
-  //     // initialize node with nodeData and return
-  //     return new Node(insertData);
-  //   } else {
-  //     if (curr.data == insertData) {
-  //       return;
-  //     } else if (insertData > curr.data) {
-  //       curr.right = recurInsert(curr.right, insertData);
-  //     } else {
-  //       curr.left = recurInsert(curr.left, insertData);
-  //     }
-  //   }
-  // }
+  // recursive insert node in BST
+  public Node recurInsert(Node curr, int insertData) {
+    if (curr == null) {
+      // initialize node with insertData
+      Node insertNode = new Node(insertData);
+      return insertNode;
+    }
+    // conditions for node that is not null
+    // duplicate node data not allowed
+    if (curr.data == insertData) {
+      return null;
+    } else if (insertData > curr.data) {
+      curr.right = recurInsert(curr.right, insertData);
+    } else {
+      curr.left = recurInsert(curr.left, insertData);
+    }
+    // return curr so that previous node points to curr
+    // maintains links up the tree from the newly inserted node
+    return curr;
+  }
 
   // iterative search in BST
   // returns address of node
@@ -134,13 +139,10 @@ public class BinSearchTree {
   // main method
   public static void main(String[] args) {
     BinSearchTree test = new BinSearchTree();
-    test.iterInsert(5);
-    test.iterInsert(2);
-    test.iterInsert(7);
-    test.iterInsert(9);
-    test.iterInsert(3);
-    test.iterInsert(11);
-    test.iterInsert(15);
+    test.root = test.recurInsert(test.root, 5);
+    test.recurInsert(test.root, 7);
+    test.recurInsert(test.root, 6);
+    test.recurInsert(test.root, 3);
     inOrderTrav(test.root);
     System.out.println(recurSearchBST(test.root, 3));
     System.out.println(iterSearchBST(test, 3));
