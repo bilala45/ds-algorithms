@@ -282,7 +282,7 @@ public class BinTreeLL {
     return leftSubtree + rightSubtree;
   }
 
-  // count the number of leaf nodes
+  // count number of leaf nodes
   public static int countLeaf(Node curr) {
     // base case: null node or tree
     if (curr == null) {
@@ -297,10 +297,19 @@ public class BinTreeLL {
     return leftSubtree + rightSubtree;
   }
 
-  // // height of binary tree
-  // public static int treeHeight(Node treeNode) {
-  //
-  // }
+  // height of binary tree
+  public static int treeHeight(Node curr) {
+    // return -1 for null node to offset adding 1 on non-null nodes
+    // a null node doesn't having an edge linking it to its parent -> should have a height of 0 (-1 + 1 = 0)
+    if (curr == null) {
+      return -1;
+    }
+    // recursive call on left and right subtree
+    int leftSubtree = treeHeight(curr.left);
+    int rightSubtree = treeHeight(curr.right);
+    // select subtree with greater height and add 1 to account for edge connecting current node to child
+    return Math.max(leftSubtree, rightSubtree) + 1;
+  }
 
   // main method
   public static void main(String[] args) {
@@ -310,10 +319,10 @@ public class BinTreeLL {
     test.addNode(3);
     test.addNode(4);
     test.addNode(5);
-    test.addNode(6);
     System.out.println("sum: " + sumNodes(test.root));
     System.out.println("count: " + count(test.root));
     System.out.println("degree two: " + countDegreeTwo(test.root));
     System.out.println("leaves: " + countLeaf(test.root));
+    System.out.println("height: " + treeHeight(test.root));
   }
 }
