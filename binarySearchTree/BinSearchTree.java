@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class BinSearchTree {
 
   // root node
@@ -113,7 +115,7 @@ public class BinSearchTree {
     // initialize node to store replacement
     Node replace = curr;
     // initialize node to track parent of replacement
-    Node repParent = pred;
+    Node repParent = replace;
     // move pred to inorder predecessor
     if (replace.left != null) {
       inPre(replace, repParent, curr);
