@@ -29,7 +29,7 @@ public class AVLTree {
   // recursive node insertion in AVL tree according to BST properties
   // balancing is done as necessary after each insertion
   // node height is calculated after insertion upon return
-  private static Node BSTInsert(Node curr, int data) {
+  private static Node insert(Node curr, int data) {
     // base case: check for null node in tree (insertion location of new node)
     if (curr == null) {
       // initialize new node with input data
@@ -47,20 +47,42 @@ public class AVLTree {
 
     // recursive call on left or right child after comparing curr's data to input data
     if (data < curr.data) {
-      Node child = recursiveBSTInsert(curr.left, data);
+      Node child = insert(curr.left, data);
       // link curr to returned child node
       curr.left = child;
     } else {
-      Node child = recursiveBSTInsert(curr.right, data);
+      Node child = insert(curr.right, data);
       curr.right = child;
     }
-    
-    // these procedures are common to both children
+
+    // the following procedures are common to both children
     // calculate height of curr node and set as height field
+    // recursive so heights are updated from the inserted child up to the root node
     curr.height = height(curr);
-    // balance curr node
-    balance(curr);
+    // calculate curr balance factor
+    balanceFactor(curr);
     return curr;
+  }
+
+  // calculate height of node
+  private static int height(Node curr) {
+    //  height of left and right child
+    int leftSubtree = curr.left != null ? curr.left.height : -1;
+    int rightSubtree = curr.right != null ? curr.right.height : -1;
+    // select max of left and right subtree heights and add 1
+    return Math.max(leftSubtree, rightSubtree) + 1;
+  }
+
+  // calculate balance factor of node
+  private static int balanceFactor(Node curr) {
+    if (curr.left == null && curr.right == null) {
+      return 0;
+    } else if (curr.left == null) {
+      return 0 - curr.right.height;
+    } else if (curr.right == null) {
+      return curr.left.height;
+    }
+    return curr.left.height - curr.right.height;
   }
 
   // LL rotation
@@ -93,47 +115,6 @@ public class AVLTree {
   // RL rotation
   private void RLRotate(Node unbalanced) {
 
-  }
-
-  // calculate height of node
-  private static int height(Node curr) {
-    // perform a postorder traversal starting at curr
-    // leaf node = 0 because we're counting edges below the node
-    // null tree = -1;
-
-    // return -1 for null node
-    // we add 1 when returning from a leaf node so the height of a leaf node ends up being 0
-    if (curr == null) {
-      return -1;
-    }
-    // recursive call on left and right child
-    int leftSubtree = height(curr.left);
-    int rightSubtree = height(curr.right);
-    // calculate max of left and right subtree heights and add 1
-    return Math.max(leftSubtree, rightSubtree) + 1;
-  }
-
-  // calculate balance factor of node
-  private static int balanceFactor(Node curr) {
-    if (curr.left == null) {
-      return curr.right.height;
-    } else if (curr.right == null) {
-      return curr.left.height;
-    }
-    return curr.left.height - curr.right.height;
-  }
-
-  // balance node
-  private static int balance(Node curr) {
-    // calculate balance factor of curr node
-    int bf = balanceFactor(curr);
-
-    // left rotation
-    if (bf == -2) {
-      LLRotate(curr);
-    } else if (bf == 2) {
-      RRRotate(curr);
-    }
   }
 
   // main method
