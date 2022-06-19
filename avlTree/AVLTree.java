@@ -32,10 +32,29 @@ public class AVLTree {
     // calculate height of each node during insertion
     BSTInsert(root);
 
+    // store address of unbalanced node
+    Node unbalanced = null;
+    Node curr = root;
 
+    // iterate through tree to inserted node
+    while (curr != null) {
+      // break loop if curr node is unbalanced and store address
+      if ((unbalanced(curr)) > 1 || unbalanced(curr) < -1) {
+        unbalanced = curr;
+        break;
+      }
+      // update curr to traverse to left or right child
+      if (data < curr.left) {
+        curr = curr.left;
+      } else {
+        curr = curr.right;
+      }
+    }
 
+    // call appropriate rotation on unbalanced node
+    if (unbalanced != null) {
 
-
+    }
   }
 
   // recursive node insertion according to BST properties
@@ -72,12 +91,24 @@ public class AVLTree {
 
   // LL rotation
   private void LLRotate(Node unbalanced) {
-
+    // balance factor of -2
+    // move subtree root to right child
+    Node newRoot = unbalanced.right;
+    // point left node of right child back at unbalanced node
+    newRoot.left = unbalanced;
+    // point unbalanced right child to null;
+    unbalanced.right = null;
   }
 
   // RR rotation
   private void RRRotate(Node unbalanced) {
-
+    // balance factor of 2
+    // move subtree root to left child
+    Node newRoot = unbalanced.left;
+    // point right node of left child back at unbalanced node
+    newRoot.right = unbalanced;
+    // point unbalanced left child to null;
+    unbalanced.left = null;
   }
 
   // LR rotation
@@ -114,9 +145,8 @@ public class AVLTree {
       return curr.right.height;
     } else if (curr.right == null) {
       return curr.left.height;
-    } else {
-      curr.left.height - curr.right.height;
     }
+    return curr.left.height - curr.right.height;
   }
 
   // main method
