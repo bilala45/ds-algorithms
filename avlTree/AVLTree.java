@@ -29,8 +29,10 @@ public class AVLTree {
   // insert node in AVL tree
   public void insert(int data) {
     // insert data into AVL tree according to BST properties
-    // calculate height and balance factor of each node during insertion
+    // calculate height of each node during insertion
     BSTInsert(root);
+
+
 
 
 
@@ -91,7 +93,7 @@ public class AVLTree {
   // calculate height of node
   private static int height(Node curr) {
     // perform a postorder traversal starting at curr
-    // leaf node = 0
+    // leaf node = 0 because we're counting edges below the node
     // null tree = -1;
 
     // return -1 for null node
@@ -104,6 +106,17 @@ public class AVLTree {
     int rightSubtree = height(curr.right);
     // calculate max of left and right subtree heights and add 1
     return Math.max(leftSubtree, rightSubtree) + 1;
+  }
+
+  // calculate balance factor of node
+  private static int balanceFactor(Node curr) {
+    if (curr.left == null) {
+      return curr.right.height;
+    } else if (curr.right == null) {
+      return curr.left.height;
+    } else {
+      curr.left.height - curr.right.height;
+    }
   }
 
   // main method
