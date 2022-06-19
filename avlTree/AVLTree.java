@@ -120,10 +120,10 @@ public class AVLTree {
     // balance factor of -2
     // move subtree root to right child
     Node newRoot = unbalanced.right;
-    // point left node of right child back at unbalanced node
+    // point unbalanced right child to left subtree of newRoot;
+    unbalanced.right = newRoot.left;
+    // point left node of newRoot back at unbalanced node
     newRoot.left = unbalanced;
-    // point unbalanced right child to null;
-    unbalanced.right = null;
   }
 
   // RR rotation
@@ -131,10 +131,10 @@ public class AVLTree {
     // balance factor of 2
     // move subtree root to left child
     Node newRoot = unbalanced.left;
+    // point unbalanced left child to right subtree of newRoot;
+    unbalanced.left = newRoot.right;
     // point right node of left child back at unbalanced node
     newRoot.right = unbalanced;
-    // point unbalanced left child to null;
-    unbalanced.left = null;
   }
 
   // LR rotation
