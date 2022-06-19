@@ -59,8 +59,15 @@ public class AVLTree {
     // calculate height of curr node and set as height field
     // recursive so heights are updated from the inserted child up to the root node
     curr.height = height(curr);
+
+    // balance nodes
     // calculate curr balance factor
-    balanceFactor(curr);
+    int bf = balanceFactor(curr);
+    // balance curr if node is unbalanced
+    if (Math.abs(bf) > 1) {
+      balance(curr);
+    }
+
     return curr;
   }
 
@@ -83,6 +90,29 @@ public class AVLTree {
       return curr.left.height;
     }
     return curr.left.height - curr.right.height;
+  }
+
+  // balance node
+  private static void balance(int balanceFactor, Node unbalanced) {
+    // left skewed
+    if (balanceFactor == 2) {
+      // LR rotation - double rotation
+      if (balanceFactor(curr.left) == -1) {
+        LRRotate(curr);
+      // RR - single rotation
+      } else {
+        RRRotate(curr);
+      }
+    // right skewed
+    } else if (balanceFactor == -2) {
+      // RL rotation - double rotation
+      if (balanceFactor(curr.right) == 1) {
+        RLRotate(curr);
+      // LL - single rotation
+      } else {
+        LLRotate(curr);
+      }
+    }
   }
 
   // LL rotation
