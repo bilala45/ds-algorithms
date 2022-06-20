@@ -65,7 +65,8 @@ public class AVLTree {
     int bf = balanceFactor(curr);
     // balance curr if node is unbalanced
     if (Math.abs(bf) > 1) {
-      balance(curr);
+      // update curr with new root of balanced subtree
+      curr = balance(curr);
     }
 
     return curr;
@@ -93,30 +94,30 @@ public class AVLTree {
   }
 
   // balance node
-  private static void balance(int balanceFactor, Node unbalanced) {
+  private static Node balance(int balanceFactor, Node unbalanced) {
     // left skewed
     if (balanceFactor == 2) {
       // LR rotation - double rotation
       if (balanceFactor(curr.left) == -1) {
-        LRRotate(curr);
+        return LRRotate(curr);
       // RR - single rotation
       } else {
-        RRRotate(curr);
+        return RRRotate(curr);
       }
-    // right skewed
-    } else if (balanceFactor == -2) {
+    // right skewed (balance factor == -2)
+    } else {
       // RL rotation - double rotation
       if (balanceFactor(curr.right) == 1) {
-        RLRotate(curr);
+        return RLRotate(curr);
       // LL - single rotation
       } else {
-        LLRotate(curr);
+        return LLRotate(curr);
       }
     }
   }
 
   // LL rotation
-  private void LLRotate(Node unbalanced) {
+  private static Node LLRotate(Node unbalanced) {
     // balance factor of -2
     // move subtree root to right child
     Node newRoot = unbalanced.right;
@@ -124,10 +125,11 @@ public class AVLTree {
     unbalanced.right = newRoot.left;
     // point left node of newRoot back at unbalanced node
     newRoot.left = unbalanced;
+    return newRoot;
   }
 
   // RR rotation
-  private void RRRotate(Node unbalanced) {
+  private static Node RRRotate(Node unbalanced) {
     // balance factor of 2
     // move subtree root to left child
     Node newRoot = unbalanced.left;
@@ -135,16 +137,40 @@ public class AVLTree {
     unbalanced.left = newRoot.right;
     // point right node of left child back at unbalanced node
     newRoot.right = unbalanced;
+    return newRoot;
   }
 
   // LR rotation
-  private void LRRotate(Node unbalanced) {
+  private static Node LRRotate(Node unbalanced) {
+    // first rotation
+    // store pointer to lowest node and left child of lowest node for first rotation
+    Node lowest = unbalanced.left.right;
+    Node tempLeft = lowest.left;
 
+    // first rotation
+    lowest.left = unbalanced.left;
+    unbalanced.left.right = tempLeft;
+    unbalanced.left = lowest;
+
+    // second rotation
+    return RRRotate(unbalanced);
   }
 
   // RL rotation
   private void RLRotate(Node unbalanced) {
+    // first rotation
+    // store lowest node
+    Node lowest = unbalanced.right.left;
+    // store right child of lowest node
+    Node tempRight = lowest.right;
 
+    // first rotation
+    lowest.right = unbalanced.right;
+    unbalanced.right.left = tempRight;
+    unbalanced.right = lowest;
+
+    // second rotation
+    return LLRotate(unbalanced);
   }
 
   // main method
