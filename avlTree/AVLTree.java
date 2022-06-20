@@ -208,6 +208,10 @@ public class AVLTree {
     test.root = test.insert(test.root, 10);
     test.insert(test.root, 20);
     test.insert(test.root, 30);
+    test.insert(test.root, 25);
+    test.insert(test.root, 28);
+    test.insert(test.root, 27);
+    test.insert(test.root, 5);
     postOrder(test.root);
   }
 }
