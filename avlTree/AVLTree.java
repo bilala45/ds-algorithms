@@ -29,7 +29,7 @@ public class AVLTree {
   // recursive node insertion in AVL tree according to BST properties
   // balancing is done as necessary after each insertion
   // node height is calculated after insertion upon return
-  private static Node insert(Node curr, int data) {
+  public Node insert(Node curr, int data) {
     // base case: check for null node in tree (insertion location of new node)
     if (curr == null) {
       // initialize new node with input data
@@ -65,10 +65,15 @@ public class AVLTree {
     int bf = balanceFactor(curr);
     // balance curr if node is unbalanced
     if (Math.abs(bf) > 1) {
-      // update curr with new root of balanced subtree
-      curr = balance(curr);
+      // update root if curr is also your root node
+      if (root == curr) {
+        // update curr with new root of balanced subtree
+        curr = balance(bf, curr);
+        root = curr;
+      } else {
+        curr = balance(bf, curr);
+      }
     }
-
     return curr;
   }
 
@@ -83,12 +88,13 @@ public class AVLTree {
 
   // calculate balance factor of node
   private static int balanceFactor(Node curr) {
+    // height of null is -1
     if (curr.left == null && curr.right == null) {
       return 0;
     } else if (curr.left == null) {
-      return 0 - curr.right.height;
+      return -1 - curr.right.height;
     } else if (curr.right == null) {
-      return curr.left.height;
+      return curr.left.height - (-1);
     }
     return curr.left.height - curr.right.height;
   }
@@ -96,16 +102,16 @@ public class AVLTree {
   // balance node
   private static Node balance(int balanceFactor, Node unbalanced) {
     // LR rotation - double rotation (left skewed)
-    if (balanceFactor == 2 && balanceFactor(curr.left) == -1) {
-      return LRRotate(curr);
+    if (balanceFactor == 2 && balanceFactor(unbalanced.left) == -1) {
+      return LRRotate(unbalanced);
     // RR - single rotation (left skewed)
-    } else if (balanceFactor == 2 && balanceFactor(curr.left) == 1) {
-      return RRRotate(curr);
+    } else if (balanceFactor == 2 && balanceFactor(unbalanced.left) == 1) {
+      return RRRotate(unbalanced);
     // RL - double rotation (right skewed)
-    } else if (balanceFactor == -2 && balanceFactor(curr.left) == 1) {
-      return RLRotate(curr);
+  } else if (balanceFactor == -2 && balanceFactor(unbalanced.right) == 1) {
+      return RLRotate(unbalanced);
     } else {
-      return LLRotate(curr);
+      return LLRotate(unbalanced);
     }
   }
 
@@ -114,10 +120,16 @@ public class AVLTree {
     // balance factor of -2
     // move subtree root to right child
     Node newRoot = unbalanced.right;
+
     // point unbalanced right child to left subtree of newRoot;
     unbalanced.right = newRoot.left;
     // point left node of newRoot back at unbalanced node
     newRoot.left = unbalanced;
+
+    // calculate new heights
+    unbalanced.height = height(unbalanced);
+    newRoot.height = height(newRoot);
+
     return newRoot;
   }
 
@@ -130,6 +142,11 @@ public class AVLTree {
     unbalanced.left = newRoot.right;
     // point right node of left child back at unbalanced node
     newRoot.right = unbalanced;
+
+    // calculate new heights
+    unbalanced.height = height(unbalanced);
+    newRoot.height = height(newRoot);
+
     return newRoot;
   }
 
@@ -145,12 +162,17 @@ public class AVLTree {
     unbalanced.left.right = tempLeft;
     unbalanced.left = lowest;
 
+    // calculate heights
+    lowest.left.height = height(lowest.left);
+    lowest.height = height(lowest);
+    unbalanced.height = height(unbalanced);
+
     // second rotation
     return RRRotate(unbalanced);
   }
 
   // RL rotation
-  private void RLRotate(Node unbalanced) {
+  private static Node RLRotate(Node unbalanced) {
     // first rotation
     // store lowest node
     Node lowest = unbalanced.right.left;
@@ -162,12 +184,30 @@ public class AVLTree {
     unbalanced.right.left = tempRight;
     unbalanced.right = lowest;
 
+    // calculate heights
+    lowest.right.height = height(lowest.right);
+    lowest.height = height(lowest);
+    unbalanced.height = height(unbalanced);
+
     // second rotation
     return LLRotate(unbalanced);
   }
 
+  // post order traversal of tree to check if insertion is performed properly
+  public static void postOrder(Node curr) {
+    if (curr != null) {
+      postOrder(curr.left);
+      postOrder(curr.right);
+      System.out.println("data: " + curr.data + ", height: " + curr.height);
+    }
+  }
+
   // main method
   public static void main(String[] args) {
-
+    AVLTree test = new AVLTree();
+    test.root = test.insert(test.root, 10);
+    test.insert(test.root, 20);
+    test.insert(test.root, 30);
+    postOrder(test.root);
   }
 }
