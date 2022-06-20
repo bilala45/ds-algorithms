@@ -95,24 +95,17 @@ public class AVLTree {
 
   // balance node
   private static Node balance(int balanceFactor, Node unbalanced) {
-    // left skewed
-    if (balanceFactor == 2) {
-      // LR rotation - double rotation
-      if (balanceFactor(curr.left) == -1) {
-        return LRRotate(curr);
-      // RR - single rotation
-      } else {
-        return RRRotate(curr);
-      }
-    // right skewed (balance factor == -2)
+    // LR rotation - double rotation (left skewed)
+    if (balanceFactor == 2 && balanceFactor(curr.left) == -1) {
+      return LRRotate(curr);
+    // RR - single rotation (left skewed)
+    } else if (balanceFactor == 2 && balanceFactor(curr.left) == 1) {
+      return RRRotate(curr);
+    // RL - double rotation (right skewed)
+    } else if (balanceFactor == -2 && balanceFactor(curr.left) == 1) {
+      return RLRotate(curr);
     } else {
-      // RL rotation - double rotation
-      if (balanceFactor(curr.right) == 1) {
-        return RLRotate(curr);
-      // LL - single rotation
-      } else {
-        return LLRotate(curr);
-      }
+      return LLRotate(curr);
     }
   }
 
