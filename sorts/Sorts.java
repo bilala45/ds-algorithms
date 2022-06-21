@@ -27,16 +27,43 @@ public class Sorts {
     for (int i = 1 ; i < arr.length ; i++) {
       // store element at start of unsorted group
       int curr = arr[i];
+      // track end of sorted group
       int sortedElem = i - 1;
 
-      // shift while element at j (from sorted group) is greater than curr
-      while (sortedElem != -1 && arr[sortedElem] > curr) {
+      // shift while sortedElem (element from sorted group) is greater than curr
+      while (sortedElem > -1 && arr[sortedElem] > curr) {
+        // shift sortedElem over by 1
         arr[sortedElem+1] = arr[sortedElem];
         // decrement j on each iteration
         sortedElem--;
       }
-      // update next element with curr
+      // set index to the right of sortedElem as curr
       arr[sortedElem+1] = curr;
+      display(arr);
+    }
+    return arr;
+  }
+
+  // selection sort
+  public static int[] selectionSort(int[] arr) {
+    for (int i = 0 ; i < arr.length ; i++) {
+      // initialize min and iterator at i
+      // min stops at the smallest value in the array
+      int min = i;
+
+      // iterate through the array and compares with value stored in min
+      for (int j = i ; j < arr.length ; j++) {
+        if (arr[j] < arr[min]) {
+          // move min to j pointer
+          min = j;
+        }
+      }
+
+      // swap value at i with value at min
+      int temp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = temp;
+
       display(arr);
     }
     return arr;
@@ -54,7 +81,8 @@ public class Sorts {
   // main method
   public static void main(String[] args) {
     int[] unsorted = {3,6,4,2,1};
-    //int[] bubble = bubbleSort(unsorted);
-    int[] insertion = insertionSort(unsorted);
+    //bubbleSort(unsorted);
+    //insertionSort(unsorted);
+    selectionSort(unsorted);
   }
 }
