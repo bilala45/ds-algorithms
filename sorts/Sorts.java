@@ -10,9 +10,7 @@ public class Sorts {
         // swap array elements if element at j is greater than element at j+1
         if (arr[j] > arr[j+1]) {
           // swap
-          int temp = arr[j];
-          arr[j] = arr[j+1];
-          arr[j+1] = temp;
+          swap(arr, j, j+1);
         }
       }
       display(arr);
@@ -60,13 +58,60 @@ public class Sorts {
       }
 
       // swap value at i with value at min
-      int temp = arr[i];
-      arr[i] = arr[min];
-      arr[min] = temp;
+      swap(arr, i, min);
 
       display(arr);
     }
     return arr;
+  }
+
+  // quick sort
+  public static int[] quickSort(int[] arr, int start, int end) {
+    // return empty input arrays or arrays of size 1
+    if (end - start < 1) {
+      display(arr);
+      return arr;
+    }
+    // partition input array with start and end arguments
+    int partitionIndex = partition(arr, start, end);
+    // call quicksort on left and right partition with new partition index
+    quickSort(arr, start, partitionIndex - 1);
+    quickSort(arr, partitionIndex + 1, end);
+    display(arr);
+    return arr;
+  }
+
+  // partition helper for quick sort
+  private static int partition(int[] arr, int start, int end) {
+    // set pivot at start
+    int pivot = start;
+
+    // iterate through array using two pointers
+    while (start < end) {
+      // check that start < end on each
+      // update start pointer until start points to value greater than pivot
+      while (arr[start] <= arr[pivot] && start < end) {
+        start++;
+      }
+      // decrement end until end points at value less than pivot
+      // don't need to check start < end here because end never surpasses pivot, so its index never goes out of bounds
+      // end never surpasses pivot because we check that arr[end] is >, not >=
+      while (arr[end] > arr[pivot]) {
+        end--;
+      }
+      // swap elements at start and end
+      // we only do this while start < end because this swap is not the final swap we perform to place our pivot at the correct index
+      if ((arr[start] > arr[pivot] && arr[end] < arr[pivot]) && start < end) {
+        swap(arr, start, end);
+      }
+    }
+
+    // swap element that end is pointing to with pivot to place pivot in its sorted location in the array
+    // pivot is now sorted in the correct place -> return this index to serve as a partition
+    swap(arr, pivot, end);
+
+    // return index of pivot to serve as partition for array
+    return end;
   }
 
   // display elements of array
@@ -78,11 +123,20 @@ public class Sorts {
     System.out.println(arr[arr.length - 1] + "]");
   }
 
+  // swap elements of array
+  private static void swap(int[] swapArr, int first, int second) {
+    int temp = swapArr[first];
+    swapArr[first] = swapArr[second];
+    swapArr[second] = temp;
+  }
+
   // main method
   public static void main(String[] args) {
-    int[] unsorted = {3,6,4,2,1};
-    //bubbleSort(unsorted);
-    //insertionSort(unsorted);
-    selectionSort(unsorted);
+    int[] unsorted = {13, 5};
+    // bubbleSort(unsorted);
+    // insertionSort(unsorted);
+    // selectionSort(unsorted);
+    quickSort(unsorted, 0, unsorted.length - 1);
+
   }
 }
