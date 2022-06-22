@@ -1,5 +1,7 @@
 public class Sorts {
 
+  /********************* COMPARISON BASED SORTING *********************/
+
   // bubble sort
   public static int[] bubbleSort(int[] arr) {
     // on each iteration, the largest element in the array is moved to the end
@@ -65,6 +67,8 @@ public class Sorts {
     return arr;
   }
 
+  // heap sort is located in heap directory
+
   // quick sort
   public static int[] quickSort(int[] arr, int start, int end) {
     // return empty input arrays or arrays of size 1
@@ -114,6 +118,35 @@ public class Sorts {
     return end;
   }
 
+  // merge sort
+  public static int[] mergeSort(int[] arr) {
+
+  }
+
+  // shell sort
+  public static int[] shellSort(int[] arr) {
+
+  }
+
+  /********************* INDEX BASED SORTING *********************/
+
+  // count sort
+  public static int[] countSort(int[] arr) {
+
+  }
+
+  // bucket/bin sort
+  public static int[] bucketSort(int[] arr) {
+
+  }
+
+  // radix sort
+  public static int[] radixSort(int[] arr) {
+
+  }
+
+  /********************* HELPER METHODS *********************/
+
   // display elements of array
   private static void display(int[] arr) {
     System.out.print("[");
@@ -132,11 +165,11 @@ public class Sorts {
 
   // main method
   public static void main(String[] args) {
-    int[] unsorted = {13, 5};
+    int[] unsorted = {5, 1, 7, 4, 9, 6, 2};
     // bubbleSort(unsorted);
     // insertionSort(unsorted);
     // selectionSort(unsorted);
-    quickSort(unsorted, 0, unsorted.length - 1);
+    //quickSort(unsorted, 0, unsorted.length - 1);
 
   }
 }
