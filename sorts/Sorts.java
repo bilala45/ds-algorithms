@@ -118,34 +118,79 @@ public class Sorts {
     return end;
   }
 
-  // merge sort
-  public static int[] mergeSort(int[] arr) {
+  // // merge sort
+  // public static int[] mergeSort(int[] arr) {
+  //
+  // }
 
-  }
-
-  // shell sort
-  public static int[] shellSort(int[] arr) {
-
-  }
+  // // shell sort
+  // public static int[] shellSort(int[] arr) {
+  //
+  // }
 
   /********************* INDEX BASED SORTING *********************/
 
   // count sort
+  // value must be a positive integer
   public static int[] countSort(int[] arr) {
+    // initialize array to count occurrence of each value in arr
+    // count size is max of arr + 1 (add 1 because indexing starts at 0 in arr and we want numbers to match up with their index)
+    int[] count = new int[arrayMax(arr) + 1];
 
+    // iterate through arr and tally occurrence of each value in arr
+    for (int i = 0 ; i < arr.length ; i++) {
+      // value at arr[i] is index in count
+      int index = arr[i];
+      // increment value at count
+      count[index]++;
+    }
+
+    // pointer to track index in input arr
+    int arrPtr = 0;
+
+    // iterate through count and place index in original arr
+    for (int i = 0 ; i < count.length ; i++) {
+      // stop and iterate at indices with non-zero values
+      while (count[i] > 0) {
+        // store index in count as value in arr
+        arr[arrPtr] = i;
+        // decrement tally at i in count
+        count[i]--;
+        // update arrPtr
+        arrPtr++;
+      }
+    }
+
+    display(arr);
+    return arr;
   }
 
-  // bucket/bin sort
-  public static int[] bucketSort(int[] arr) {
+  // // bucket/bin sort
+  // public static int[] bucketSort(int[] arr) {
+  //
+  // }
 
-  }
-
-  // radix sort
-  public static int[] radixSort(int[] arr) {
-
-  }
+  // // radix sort
+  // public static int[] radixSort(int[] arr) {
+  //
+  // }
 
   /********************* HELPER METHODS *********************/
+
+  // find max element in array
+  private static int arrayMax(int[] arr) {
+    // set initial value of max as minimum possible value
+    int max = Integer.MIN_VALUE;
+
+    // iterate through arr
+    for (int i = 0 ; i < arr.length ; i++) {
+      if (arr[i] > max) {
+        max = arr[i];
+      }
+    }
+
+    return max;
+  }
 
   // display elements of array
   private static void display(int[] arr) {
@@ -165,7 +210,8 @@ public class Sorts {
 
   // main method
   public static void main(String[] args) {
-    int[] unsorted = {5, 1, 7, 4, 9, 6, 2};
+    int[] unsorted = {5, 2, 7, 4, 9, 6, 2};
+    countSort(unsorted);
     // bubbleSort(unsorted);
     // insertionSort(unsorted);
     // selectionSort(unsorted);
