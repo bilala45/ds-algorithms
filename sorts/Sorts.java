@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class Sorts {
 
   /********************* COMPARISON BASED SORTING *********************/
@@ -165,10 +167,42 @@ public class Sorts {
     return arr;
   }
 
-  // // bucket/bin sort
-  // public static int[] bucketSort(int[] arr) {
-  //
-  // }
+  // bucket/bin sort
+  public static int[] bucketSort(int[] arr) {
+    // initialize array to store buckets for input array values
+    // array of linked lists
+    // add one to size of array so indices match up
+    LinkedList<Integer>[] buckets = new LinkedList[arrayMax(arr) + 1];
+
+    // iterate through input arr and place values in buckets linked list array
+    for (int i = 0 ; i < arr.length ; i++) {
+      // store value in arr as index
+      int index = arr[i];
+
+      // create new linked list if index at buckets is null
+      if (buckets[index] == null) {
+        buckets[index] = new LinkedList<Integer>();
+      }
+      // append index to list at buckets[index]
+      buckets[index].add(index);
+    }
+
+    // pointer to track position in original input arr
+    int arrPtr = 0;
+
+    // iterate through buckets array and place data from list nodes back in arr
+    for (int i = 0 ; i < buckets.length ; i++) {
+      // iterate through linked list at each array index until end of list
+      while (buckets[i] != null && buckets[i].peek() != null) {
+        // remove value at head of list and update arrPtr
+        arr[arrPtr] = buckets[i].remove();
+        arrPtr++;
+      }
+    }
+
+    display(arr);
+    return arr;
+  }
 
   // // radix sort
   // public static int[] radixSort(int[] arr) {
@@ -211,7 +245,8 @@ public class Sorts {
   // main method
   public static void main(String[] args) {
     int[] unsorted = {5, 2, 7, 4, 9, 6, 2};
-    countSort(unsorted);
+    bucketSort(unsorted);
+
     // bubbleSort(unsorted);
     // insertionSort(unsorted);
     // selectionSort(unsorted);
