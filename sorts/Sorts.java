@@ -120,15 +120,67 @@ public class Sorts {
     return end;
   }
 
-  // // merge sort
-  // public static int[] mergeSort(int[] arr) {
-  //
-  // }
+  // merge sort
+  public static int[] mergeSort(int[] arr, int start, int end) {
+    // base case: subarray of size 1
+    if (end - start < 1) {
+      return arr;
+    }
+    // calculate middle index of subarray
+    int middle = start + (end-start)/2;
+    // call mergeSort on both halves of array
+    mergeSort(arr, start, middle);
+    mergeSort(arr, middle + 1, end);
+    // both of the lists we want to merge are in the same array
+    // middle + 1 because the start of the second list is at middle + 1
+    return merge(arr, start, middle + 1, end);
+  }
 
-  // // shell sort
-  // public static int[] shellSort(int[] arr) {
-  //
-  // }
+  // merges two lists (for merge sort)
+  private static int[] merge(int[] arr, int start, int middle, int end) {
+    // start and end mark the beginning/end of the subarray
+    // middle marks the beginning of the second list that will be merged
+
+    // create array to hold values during sorting
+    int[] sortArr = new int[end - start + 1];
+    // pointer to track index in sortArr
+    int sortPtr = 0;
+
+    // pointer to first and second list
+    int ptr1 = start;
+    int ptr2 = middle;
+
+    // iterate through arr and fill sortArr
+    while (ptr1 < middle && ptr2 < end + 1) {
+      if (arr[ptr1] < arr[ptr2]) {
+        sortArr[sortPtr] = arr[ptr1];
+        ptr1++;
+      } else {
+        sortArr[sortPtr] = arr[ptr2];
+        ptr2++;
+      }
+      sortPtr++;
+    }
+
+    // iterate through remaining non-empty
+    while (ptr1 < middle) {
+      sortArr[sortPtr] = arr[ptr1];
+      ptr1++;
+      sortPtr++;
+    }
+    while (ptr2 < end + 1) {
+      sortArr[sortPtr] = arr[ptr2];
+      ptr2++;
+      sortPtr++;
+    }
+
+    // copy sortArr back to corresponding part of arr
+    for (int i = 0 ; i < sortArr.length ; i++) {
+      arr[start + i] = sortArr[i];
+    }
+
+    return arr;
+  }
 
   /********************* INDEX BASED SORTING *********************/
 
@@ -245,8 +297,7 @@ public class Sorts {
   // main method
   public static void main(String[] args) {
     int[] unsorted = {5, 2, 7, 4, 9, 6, 2};
-    bucketSort(unsorted);
-
+    display(mergeSort(unsorted, 0, unsorted.length - 1));
     // bubbleSort(unsorted);
     // insertionSort(unsorted);
     // selectionSort(unsorted);
