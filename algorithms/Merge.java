@@ -44,6 +44,51 @@ public class Merge {
     return mergeArr;
   }
 
+  // merge list in place
+  public static int[] mergeInPlace(int[] arr, int partition) {
+    // partition gives the index at which the second list starts
+    // create an array with the same size as arr
+    int[] sortArr = new int[arr.length];
+    // pointer to track position in sortArr
+    int sortPtr = 0;
+
+    // add pointers at start of each sorted list
+    int ptr1 = 0;
+    int ptr2 = partition;
+
+    // iterate through both lists until one list is completed
+    while (ptr1 < partition && ptr2 < arr.length) {
+      if (arr[ptr1] < arr[ptr2]) {
+        sortArr[sortPtr] = arr[ptr1];
+        ptr1++;
+      } else {
+        sortArr[sortPtr] = arr[ptr2];
+        ptr2++;
+      }
+      sortPtr++;
+    }
+
+    // copy remaining elements from non-empty list
+    while (ptr1 < partition) {
+      sortArr[sortPtr] = arr[ptr1];
+      ptr1++;
+      sortPtr++;
+    }
+    while (ptr2 < arr.length) {
+      sortArr[sortPtr] = arr[ptr2];
+      ptr2++;
+      sortPtr++;
+    }
+
+    // copy elements from sortArr back to input arr
+    for (int i = 0 ; i < sortArr.length ; i++) {
+      arr[i] = sortArr[i];
+    }
+
+    display(arr);
+    return arr;
+  }
+
   // display elements of array
   private static void display(int[] arr) {
     System.out.print("[");
@@ -55,6 +100,7 @@ public class Merge {
 
   // main method
   public static void main(String[] args) {
-
+    int[] test = {1, 4, 6, 3, 7, 9};
+    mergeInPlace(test, 3);
   }
 }
