@@ -256,10 +256,57 @@ public class Sorts {
     return arr;
   }
 
-  // // radix sort
-  // public static int[] radixSort(int[] arr) {
-  //
-  // }
+  // radix sort
+  public static int[] radixSort(int[] arr) {
+    // find max value in arr and count the number of digits
+    int maxDigits = countDigits(arrayMax(arr));
+    System.out.println(maxDigits);
+    int digitTracker = 0;
+
+    while (digitTracker < maxDigits) {
+      // initialize array of size 10 -> each index corresponds to digit
+      LinkedList<Integer>[] digitArr = new LinkedList[10];
+
+      // iterate through list and calculate mod 10
+      for (int i = 0 ; i < arr.length ; i++) {
+        // extract one's digit of element
+        // use Math.pow function instead of ^ (^ is bitwise XOR operator)
+        // type cast to int since pow returns a double
+        int elemMod = (arr[i] / ((int)Math.pow(10, digitTracker))) % 10;
+        // sort element at index i in digitArr according to ones digit
+        // initialize new linked list if index is null
+        if (digitArr[elemMod] == null) {
+          digitArr[elemMod] = new LinkedList<Integer>();
+          digitArr[elemMod].add(arr[i]);
+        // append to list if linked list is already initialized
+        } else {
+          digitArr[elemMod].add(arr[i]);
+        }
+      }
+
+      // update digits
+      digitTracker++;
+
+      // pointer to track position in input arr
+      int arrPtr = 0;
+
+      // iterate through digitArr and place elements back in input arr
+      for (int i = 0 ; i < digitArr.length ; i++) {
+        // stop at non-null indices (indices with linked list nodes)
+        while (digitArr[i] != null && digitArr[i].peek() != null) {
+          // remove from head of linked list at each index and insert in arr
+          arr[arrPtr] = digitArr[i].remove();
+          // update arrPtr
+          arrPtr++;
+        }
+      }
+    }
+
+
+
+    display(arr);
+    return arr;
+  }
 
   /********************* HELPER METHODS *********************/
 
@@ -276,6 +323,15 @@ public class Sorts {
     }
 
     return max;
+  }
+
+  // count digits of an integer
+  private static int countDigits(int val) {
+    // handles input of 0
+    if (val / 10 == 0) {
+      return 1;
+    }
+    return countDigits(val/10) + 1;
   }
 
   // display elements of array
@@ -296,12 +352,7 @@ public class Sorts {
 
   // main method
   public static void main(String[] args) {
-    int[] unsorted = {5, 2, 7, 4, 9, 6, 2};
-    display(mergeSort(unsorted, 0, unsorted.length - 1));
-    // bubbleSort(unsorted);
-    // insertionSort(unsorted);
-    // selectionSort(unsorted);
-    //quickSort(unsorted, 0, unsorted.length - 1);
-
+    int[] unsorted = {15, 52, 16, 1514, 26, 22, 32, 2423452};
+    radixSort(unsorted);
   }
 }
