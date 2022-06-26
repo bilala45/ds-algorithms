@@ -49,7 +49,7 @@ public class MaxHeap {
     arr[ind2] = temp;
   }
 
-  // helper method to display elements in array
+  // helper method to display elements in heap
   private static void display(MaxHeap displayHeap) {
     int[] heapArr = displayHeap.heap;
 
@@ -138,17 +138,27 @@ public class MaxHeap {
     return heapArr;
   }
 
+  // create a heap (using insertion)
+  public static MaxHeap createHeap(int[] heapVals) {
+    // initialize heap to store values in heapVals
+    MaxHeap newHeap = new MaxHeap();
+
+    // iterate through elements in heapVal and call insert method on each element
+    for (int i = 0 ; i < heapVals.length ; i++) {
+      newHeap.insert(heapVals[i]);
+    }
+
+    return newHeap;
+  }
+
+  // // create a heap (using heapify procedure)
+  // public static MaxHeap heapify(int[] heapVals) {
+  //
+  // }
+
   // main method
   public static void main(String[] args) {
-    MaxHeap test = new MaxHeap();
-    test.insert(10);
-    test.insert(20);
-    test.insert(30);
-    test.insert(25);
-    test.insert(5);
-    test.insert(40);
-    test.insert(35);
-    display(test);
-    heapSort(test);
+    int[] heapVals = {5, 10, 30, 20, 35, 40, 15};
+    display(createHeap(heapVals));
   }
 }
