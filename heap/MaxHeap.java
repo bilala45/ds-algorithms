@@ -124,16 +124,14 @@ public class MaxHeap {
 
   // heap sort
   public static int[] heapSort(MaxHeap inputHeap) {
-    // initialize array as size of heap
-    int[] heapArr = new int[inputHeap.end + 1];
-    // store end pointer for heap
-    int heapEnd = inputHeap.end;
+    // reference to heap array in inputHeap
+    int[] heapArr = inputHeap.heap;
 
     // iterate through heap until heap is empty
-    while (heapEnd > -1) {
+    while (inputHeap.end > -1) {
       // call heap delete operation and assign to index after end of heap
-      heapArr[heapEnd] = inputHeap.delete();
-      heapEnd--;
+      int deletedVal = inputHeap.delete();
+      heapArr[inputHeap.end + 1] = deletedVal;
     }
 
     displayArr(heapArr);
