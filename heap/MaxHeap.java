@@ -151,14 +151,54 @@ public class MaxHeap {
     return newHeap;
   }
 
-  // // create a heap (using heapify procedure)
-  // public static MaxHeap heapify(int[] heapVals) {
-  //
-  // }
+  // create a heap (using heapify procedure)
+  public static MaxHeap createHeapHeapify(int[] heapVals) {
+    // initialize heap to store elements in heapVals
+    MaxHeap newHeap = new MaxHeap();
+
+    // set pointer to end of heap as length of heapVals
+    newHeap.end = heapVals.length - 1;
+
+    // iterate backwards through elements in heapVals and call heapify method on each element
+    for (int i = heapVals.length - 1 ; i >= 0 ; i--) {
+      newHeap.heapify(i, heapVals[i]);
+    }
+
+    return newHeap;
+  }
+
+  // heapify operation
+  private void heapify(int index, int elem) {
+    // place elem in heap at index (given as argument)
+    heap[index] = elem;
+
+    // treat inserted element as subtree and compare with descendants
+    // calculate indices of child
+    int curr = index;
+    int leftChild = 2*index + 1;
+    int rightChild = 2*index + 2;
+
+    // left and right child both before end
+    if (leftChild <= end && rightChild <= end) {
+      if (heap[leftChild] >= heap[rightChild] && heap[leftChild] > heap[curr]) {
+        swap(heap, leftChild, curr);
+        // recursive call on left child
+        this.heapify(leftChild, heap[leftChild]);
+      } else if (heap[rightChild] > heap[leftChild] && heap[rightChild] > heap[curr]) {
+        swap(heap, rightChild, curr);
+        // recursive call on left child
+        this.heapify(rightChild, heap[rightChild]);
+      }
+    // only left child present
+    } else if (leftChild <= end && heap[leftChild] > heap[curr]) {
+      swap(heap, leftChild, curr);
+    }
+  }
 
   // main method
   public static void main(String[] args) {
     int[] heapVals = {5, 10, 30, 20, 35, 40, 15};
     display(createHeap(heapVals));
+    display(createHeapHeapify(heapVals));
   }
 }
