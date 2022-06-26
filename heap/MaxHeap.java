@@ -169,6 +169,13 @@ public class MaxHeap {
 
   // heapify operation
   private void heapify(int index, int elem) {
+    // Creating a heap with heapify is O(n).
+    // For leaf nodes, no swaps are made, which means more than half of the heap is created with O(n*1) operations.
+    // The root is the only element inserted with a O(log(n)) operation.
+    // Every other node is created in < O(log(n)) time.
+    // Example: for 7 nodes in a heap, 6 are created in < log(n). Of these 6, 4 are O(1)). 1 is O(log(n)).
+    // The entire operation is between O(n) and O(n*log(n)), and as a whole, closer to O(n) (we can show this mathematically too) 
+
     // place elem in heap at index (given as argument)
     heap[index] = elem;
 
@@ -193,6 +200,7 @@ public class MaxHeap {
     } else if (leftChild <= end && heap[leftChild] > heap[curr]) {
       swap(heap, leftChild, curr);
     }
+    // leaf nodes and nodes that don't require swapping just exit the function
   }
 
   // main method
