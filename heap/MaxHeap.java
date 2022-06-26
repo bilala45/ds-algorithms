@@ -29,17 +29,17 @@ public class MaxHeap {
     int parentInd = (int)Math.floor((end - 1)/2);
 
     // iterate while the value we want to insert is greater than its parent
-    // we also check to ensure we aren't out of array bounds
+    // also ensure we aren't out of the bounds of the array
     while (parentInd >= 0 && val > heap[parentInd]) {
       // swap child with parent element
       swap(heap, parentInd, childInd);
 
       // store child and recalculate parentInd
       childInd = parentInd;
-      parentInd = (int)Math.floor((parentInd - 1)/2);
+      parentInd = (int)Math.floor((childInd - 1)/2);
     }
 
-    display(heap);
+    display(this);
   }
 
   // helper method to swap elements in array
@@ -50,26 +50,79 @@ public class MaxHeap {
   }
 
   // helper method to display elements in array
-  private static void display(int[] heap) {
+  private static void display(MaxHeap displayHeap) {
+    int[] heapArr = displayHeap.heap;
+
     System.out.print("[");
-    for (int i = 0 ; i < heap.length - 1 ; i++) {
-      System.out.print(heap[i] + ", ");
+    for (int i = 0 ; i < displayHeap.end ; i++) {
+      System.out.print(heapArr[i] + ", ");
     }
-    System.out.print(heap[heap.length - 1]);
+    System.out.print(heapArr[displayHeap.end]);
     System.out.println("]");
   }
 
   // delete element in heap
-  public void delete(int val) {
+  public Integer delete() {
+    // check that heap is not empty
+    if (end != -1) {
+      // save value at root
+      int rootVal = heap[0];
+      // replace value at root with value at end to maintain complete binary tree
+      heap[0] = heap[end];
+      // decrement end to reflect deleted value
+      end--;
 
+      // track current index (start at root)
+      int curr = 0;
+
+      // set initial left and right child index
+      int leftChildInd = 2*curr + 1;
+      int rightChildInd = 2*curr + 2;
+
+      // left and right child
+      while (leftChildInd <= end && rightChildInd <= end) {
+        // satisfy heap invariant by replacing value at root with max value
+        // compare values of children, select larger child and compare with value at curr
+        if (heap[leftChildInd] >= heap[rightChildInd] && heap[leftChildInd] > heap[curr]) {
+          // swap curr and left child and set curr to left child
+          swap(heap, leftChildInd, curr);
+          curr = leftChildInd;
+        } else if (heap[rightChildInd] >= heap[leftChildInd] && heap[rightChildInd] > heap[curr]) {
+          // swap curr and left child and set curr to left child
+          swap(heap, rightChildInd, curr);
+          curr = rightChildInd;
+        } else {
+          return rootVal;
+        }
+
+        // calculate left and right child index from new curr index
+        leftChildInd = 2*curr + 1;
+        rightChildInd = 2*curr + 2;
+      }
+
+      // check if only left child is remaining
+      if (leftChildInd <= end && heap[leftChildInd] > heap[curr]) {
+        swap(heap, leftChildInd, curr);
+      }
+
+      // no children, or child values are less than curr value
+      return rootVal;
+    }
+
+    return null;
   }
 
   // main method
   public static void main(String[] args) {
     MaxHeap test = new MaxHeap();
-    test.insert(5);
-    test.insert(3);
-    test.insert(1);
     test.insert(10);
+    test.insert(20);
+    test.insert(30);
+    test.insert(25);
+    test.insert(5);
+    test.insert(40);
+    test.insert(35);
+    test.delete();
+    display(test);
   }
 }
