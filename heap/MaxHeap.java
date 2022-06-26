@@ -61,6 +61,16 @@ public class MaxHeap {
     System.out.println("]");
   }
 
+  // helper method to display elements in array
+  private static void displayArr(int[] arr) {
+    System.out.print("[");
+    for (int i = 0 ; i < arr.length - 1 ; i++) {
+      System.out.print(arr[i] + ", ");
+    }
+    System.out.print(arr[arr.length - 1]);
+    System.out.println("]");
+  }
+
   // delete element in heap
   public Integer delete() {
     // check that heap is not empty
@@ -112,6 +122,24 @@ public class MaxHeap {
     return null;
   }
 
+  // heap sort
+  public static int[] heapSort(MaxHeap inputHeap) {
+    // initialize array as size of heap
+    int[] heapArr = new int[inputHeap.end + 1];
+    // store end pointer for heap
+    int heapEnd = inputHeap.end;
+
+    // iterate through heap until heap is empty
+    while (heapEnd > -1) {
+      // call heap delete operation and assign to index after end of heap
+      heapArr[heapEnd] = inputHeap.delete();
+      heapEnd--;
+    }
+
+    displayArr(heapArr);
+    return heapArr;
+  }
+
   // main method
   public static void main(String[] args) {
     MaxHeap test = new MaxHeap();
@@ -122,7 +150,7 @@ public class MaxHeap {
     test.insert(5);
     test.insert(40);
     test.insert(35);
-    test.delete();
     display(test);
+    heapSort(test);
   }
 }
