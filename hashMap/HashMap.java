@@ -42,6 +42,25 @@ public class HashMap {
     return false;
   }
 
+  // delete value from hash map
+  public Integer delete(int key) {
+    // hash key to get mapping index
+    int index = hashFunction(key);
+
+    // hash key and then check if key is located in list at index
+    if (hashMap[index] != null) {
+      // retrieve index of key in list
+      int listIndex = hashMap[index].indexOf(key);
+
+      // indexOf returns -1 if value is not in list
+      // remove from list if value is in list
+      if (listIndex != -1) {
+        return hashMap[index].remove(listIndex);
+      }
+    }
+    return null;
+  }
+
   // main method
   public static void main(String[] args) {
     HashMap test = new HashMap();
@@ -51,6 +70,9 @@ public class HashMap {
     test.insert(23);
     System.out.println(test.search(13));
     System.out.println(test.search(28));
+    System.out.println(test.delete(5));
+    System.out.println(test.delete(242));
     System.out.println(test.search(5));
+    System.out.println(test.search(23));
   }
 }
