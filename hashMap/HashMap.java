@@ -30,11 +30,27 @@ public class HashMap {
     hashMap[index].add(key);
   }
 
+  // search value in hash map
+  public boolean search(int key) {
+    // hash key to get mapping index
+    int index = hashFunction(key);
+
+    // hash key and then check if key is located in list at index
+    if (hashMap[index] != null && hashMap[index].contains(key)) {
+      return true;
+    }
+    return false;
+  }
+
   // main method
   public static void main(String[] args) {
     HashMap test = new HashMap();
     test.insert(5);
     test.insert(28);
     test.insert(13);
+    test.insert(23);
+    System.out.println(test.search(13));
+    System.out.println(test.search(28));
+    System.out.println(test.search(5));
   }
 }
