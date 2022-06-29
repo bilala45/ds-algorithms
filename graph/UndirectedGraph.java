@@ -53,34 +53,37 @@ public class UndirectedGraph {
   // breadth first search
   public static void bfs(UndirectedGraph udGraph, int start) {
     // start is the starting vertex for our bfs search
-
     // reference to graph field in udGraph
     int[][] graph = udGraph.graph;
-    // initialize visited array to track vertices that have already been visited (and printed to the screen)
-    int[] visited = new int[graph.length];
-    // initialize queue to store adjacent vertices of current vertex
+
+    // initialize a boolean array to track vertices we've already visited
+    // the array is the same size as the number of vertices in our graph (each index in the array corresponds to a vertex)
+    // boolean array is initialized to false -> when we visit a node, we change value to true
+    boolean[] visited = new boolean[udGraph.vertices];
+    // initialize queue to store adjacent vertices of the current vertex
+    // toVisit keeps track of all the vertices we should be visiting in future iterations
     Queue<Integer> toVisit = new LinkedList<Integer>();
 
     // add start to toVisit queue
     toVisit.offer(start);
-    // print start and update value in visited list
-    System.out.print(start + " ");
-    visited[start] = start;
 
     // iterate through queue as long as queue is not empty
     while (toVisit.peek() != null) {
-      // dequeue from front of queue and store in curr
+      // dequeue from front of queue and store value in curr
       int curr = toVisit.poll();
+
+      // visit the current vertex (if we haven't already visited it)
+      if (!visited[curr]) {
+        System.out.print(curr + " ");
+        visited[curr] = true;
+      }
 
       // iterate through row in adjacency matrix
       for (int i = 0 ; i < udGraph.vertices ; i++) {
-        // enqueue, print, and update non-zero values in visited list
-        if (graph[curr][i] != 0 && visited[i] != i) {
-          // add start to toVisit queue
+        // enqueue adjacent vertices that we haven't visited yet
+        if (graph[curr][i] != 0 && !visited[i]) {
+          // add neighbor to queue
           toVisit.offer(i);
-          // print start and update value in visited list
-          System.out.print(i + " ");
-          visited[i] = i;
         }
       }
     }
