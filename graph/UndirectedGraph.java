@@ -1,5 +1,6 @@
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class UndirectedGraph {
 
@@ -90,18 +91,59 @@ public class UndirectedGraph {
     System.out.println("");
   }
 
+  // depth first search
+  public static void dfs(UndirectedGraph udGraph, int start) {
+    // reference to graph matrix
+    int[][] graph = udGraph.graph;
+    // boolean array to track visited vertices
+    boolean[] visited = new boolean[udGraph.vertices];
+    // initialize stack to store vertices that we need to visit
+    // stack is used because dfs returns back to the most recent vertex
+    // in dfs, we're trying to expand out as quickly as possible, so we don't fully explore surrounding neighbors except on the way back
+    Stack<Integer> toVisit = new Stack<>();
+
+    // push start to stack
+    toVisit.push(start);
+
+    // iterate as long as stack is non-empty
+    while (!toVisit.empty()) {
+      // pop off the stack - set popped vertex as our current vertex
+      int curr = toVisit.pop();
+      // visit current vertex and record visitation (only if we haven't already visited the vertex)
+      if (visited[curr] != true) {
+        System.out.println(curr);
+        visited[curr] = true;
+      }
+
+      // record current vertex's neighbors in stack
+      for (int i = 0 ; i < graph[curr].length ; i++) {
+        // add to stack if a neighbor is present and the neighbor vertex has NOT been visited yet
+        if (graph[curr][i] != 0 && visited[i] != true) {
+          // add neighbor to stack
+          toVisit.push(i);
+        }
+      }
+    }
+  }
+
   // main method
   public static void main(String[] args) {
     UndirectedGraph test = new UndirectedGraph(5);
     display(test);
-    int[] adj1 = {2, 3};
+    int[] adj0 = {1, 2, 3};
+    test.insert(0, adj0);
+
+    int[] adj1 = {0, 3};
     test.insert(1, adj1);
-    int[] adj2 = {1, 4};
+
+    int[] adj2 = {0, 3};
     test.insert(2, adj2);
-    int[] adj3 = {1, 4};
+
+    int[] adj3 = {1, 2, 4};
     test.insert(3, adj3);
+
     display(test);
 
-    bfs(test, 4);
+    dfs(test, 4);
   }
 }
