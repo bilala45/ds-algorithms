@@ -21,7 +21,16 @@ public class DisjointSet {
   // union (combines two sets)
   // accepts arguments for parents of setA and setB
   public void union(int setAParent, int setBParent) {
-
+    // determine larger set
+    if (sets[setAParent] < sets[setBParent]) {
+      // update setAParent with sum of values in set A and set B
+      sets[setAParent] = sets[setAParent] + sets[setBParent];
+      // store head of set B as index of set A's parent
+      sets[setBParent] = setAParent;
+    } else {
+      sets[setBParent] = sets[setAParent] + sets[setBParent];
+      sets[setAParent] = setBParent;
+    }
   }
 
   // find (returns parent of i)
@@ -41,9 +50,20 @@ public class DisjointSet {
     return curr;
   }
 
+  // display set
+  private static void displayDisjointSet(DisjointSet set) {
+    for (int i = 0 ; i < set.sets.length ; i++) {
+      System.out.print(set.sets[i] + " ");
+    }
+    System.out.println("");
+  }
+
   // main method
   public static void main(String[] args) {
     DisjointSet test = new DisjointSet(10);
-    System.out.println(find(test,2));
+    displayDisjointSet(test);
+    test.union(2, 4);
+    System.out.println(findParent(test,4));
+    displayDisjointSet(test);
   }
 }
