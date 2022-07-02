@@ -15,10 +15,19 @@ public class TwoThreeTree {
     // empty node constructor
     public Node() {}
 
-    // node constructor with data
+    // node constructor with data for both key fields
     public Node(int data1, int data2) {
       // assign arguments to fields
       this.data1 = data1;
+      this.data2 = data2;
+    }
+
+    // node constructor with data for single key field
+    public Node(int data1) {
+      this.data1 = data1;
+    }
+
+    public Node(int data2) {
       this.data2 = data2;
     }
   }
