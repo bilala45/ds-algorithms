@@ -27,6 +27,18 @@ public class UndirectedGraph {
     }
   }
 
+  // insert in graph with edge weights included
+  public void insertWeighted(int vertex, int[] adjacent, int[] weights) {
+    // ensure specified vertex is within the range of vertices
+    // check that lengths of adjacent and weights arguments are equal so weights correspond with edges
+    if (vertex < vertices && adjacent.length == weights.length) {
+      for (int i = 0 ; i < adjacent.length ; i++) {
+        // fill adjacency matrix with specified edge weights
+        graph[vertex][adjacent[i]] = graph[adjacent[i]][vertex] = weights[i];
+      }
+    }
+  }
+
   // display graph adjacency matrix
   public static void display(UndirectedGraph udGraph) {
     // store graph field in udGraph
@@ -130,20 +142,18 @@ public class UndirectedGraph {
   public static void main(String[] args) {
     UndirectedGraph test = new UndirectedGraph(5);
     display(test);
-    int[] adj0 = {1, 2, 3};
-    test.insert(0, adj0);
 
     int[] adj1 = {0, 3};
     test.insert(1, adj1);
 
-    int[] adj2 = {0, 3};
-    test.insert(2, adj2);
+    int[] adj0 = {1, 2, 3};
+    int[] weight0 = {10, 20, 30};
+    test.insertWeighted(0, adj0, weight0);
 
-    int[] adj3 = {1, 2, 4};
-    test.insert(3, adj3);
+    int[] adj2 = {0, 3};
+    int[] weight2 = {3, 6};
+    test.insertWeighted(2, adj2, weight2);
 
     display(test);
-
-    dfs(test, 4);
   }
 }
