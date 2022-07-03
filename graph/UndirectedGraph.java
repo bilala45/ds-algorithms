@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class UndirectedGraph {
 
-  // adjacency matrix to store graph
+  // (cost) adjacency matrix to store graph
   private int[][] graph;
   // vertices in graph
   private int vertices;
@@ -17,6 +17,7 @@ public class UndirectedGraph {
   }
 
   // insert in graph
+  // builds an adjacency matrix
   public void insert(int vertex, int[] adjacent) {
     if (vertex < vertices) {
       // iterate through values in adjacent matrix
@@ -28,6 +29,7 @@ public class UndirectedGraph {
   }
 
   // insert in graph with edge weights included
+  // builds a cost adjacency matrix
   public void insertWeighted(int vertex, int[] adjacent, int[] weights) {
     // ensure specified vertex is within the range of vertices
     // check that lengths of adjacent and weights arguments are equal so weights correspond with edges
@@ -63,6 +65,40 @@ public class UndirectedGraph {
     System.out.println("");
   }
 
+  // depth first search
+  public static void dfs(UndirectedGraph udGraph, int start) {
+    // reference to graph matrix
+    int[][] graph = udGraph.graph;
+    // boolean array to track visited vertices
+    boolean[] visited = new boolean[udGraph.vertices];
+    // initialize stack to store vertices that we need to visit
+    // stack is used because dfs returns back to the most recent vertex
+    // in dfs, we're trying to expand out as quickly as possible, so we don't fully explore surrounding neighbors except on the way back
+    Stack<Integer> toVisit = new Stack<>();
+
+    // push start to stack
+    toVisit.push(start);
+
+    // iterate as long as stack is non-empty
+    while (!toVisit.empty()) {
+      // pop off the stack - set popped vertex as our current vertex
+      int curr = toVisit.pop();
+      // visit current vertex and record visitation (only if we haven't already visited the vertex)
+      if (visited[curr] != true) {
+        System.out.println(curr);
+        visited[curr] = true;
+
+        // record current vertex's neighbors in stack
+        // we only need to record neighbours if we haven't visited that vertex yet since we've already recorded the neighbours of visited vertices
+        for (int i = 0 ; i < graph[curr].length ; i++) {
+          // add neighbour to stack if neighbor is present and neighbor vertex has NOT been visited yet
+          if (graph[curr][i] != 0 && visited[i] != true) {
+            toVisit.push(i);
+          }
+        }
+      }
+  }
+
   // breadth first search
   public static void bfs(UndirectedGraph udGraph, int start) {
     // start is the starting vertex for our bfs search
@@ -89,53 +125,18 @@ public class UndirectedGraph {
       if (!visited[curr]) {
         System.out.print(curr + " ");
         visited[curr] = true;
-      }
 
-      // iterate through row in adjacency matrix
-      for (int i = 0 ; i < udGraph.vertices ; i++) {
-        // enqueue adjacent vertices that we haven't visited yet
-        if (graph[curr][i] != 0 && !visited[i]) {
-          // add neighbor to queue
-          toVisit.offer(i);
+        // iterate through row in adjacency matrix
+        for (int i = 0 ; i < udGraph.vertices ; i++) {
+          // enqueue adjacent vertices that we haven't visited yet
+          if (graph[curr][i] != 0 && !visited[i]) {
+            // add neighbor to queue
+            toVisit.offer(i);
+          }
         }
       }
     }
     System.out.println("");
-  }
-
-  // depth first search
-  public static void dfs(UndirectedGraph udGraph, int start) {
-    // reference to graph matrix
-    int[][] graph = udGraph.graph;
-    // boolean array to track visited vertices
-    boolean[] visited = new boolean[udGraph.vertices];
-    // initialize stack to store vertices that we need to visit
-    // stack is used because dfs returns back to the most recent vertex
-    // in dfs, we're trying to expand out as quickly as possible, so we don't fully explore surrounding neighbors except on the way back
-    Stack<Integer> toVisit = new Stack<>();
-
-    // push start to stack
-    toVisit.push(start);
-
-    // iterate as long as stack is non-empty
-    while (!toVisit.empty()) {
-      // pop off the stack - set popped vertex as our current vertex
-      int curr = toVisit.pop();
-      // visit current vertex and record visitation (only if we haven't already visited the vertex)
-      if (visited[curr] != true) {
-        System.out.println(curr);
-        visited[curr] = true;
-      }
-
-      // record current vertex's neighbors in stack
-      for (int i = 0 ; i < graph[curr].length ; i++) {
-        // add to stack if a neighbor is present and the neighbor vertex has NOT been visited yet
-        if (graph[curr][i] != 0 && visited[i] != true) {
-          // add neighbor to stack
-          toVisit.push(i);
-        }
-      }
-    }
   }
 
   // main method
@@ -143,16 +144,15 @@ public class UndirectedGraph {
     UndirectedGraph test = new UndirectedGraph(5);
     display(test);
 
-    int[] adj1 = {0, 3};
-    test.insert(1, adj1);
-
     int[] adj0 = {1, 2, 3};
-    int[] weight0 = {10, 20, 30};
+    int[] weight0 = {10, 2, 30};
     test.insertWeighted(0, adj0, weight0);
 
-    int[] adj2 = {0, 3};
+    int[] adj2 = {1, 4};
     int[] weight2 = {3, 6};
     test.insertWeighted(2, adj2, weight2);
+
+    primsAlgo(test);
 
     display(test);
   }
