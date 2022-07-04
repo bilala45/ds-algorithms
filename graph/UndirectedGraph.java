@@ -12,9 +12,9 @@ public class Graph {
     private int weight, vertex;
 
     // constructor
-    public Edge(int weight, int vertex) {
-      this.weight = weight;
+    public Edge(int vertex, int weight) {
       this.vertex = vertex;
+      this.weight = weight;
     }
   }
 
@@ -32,26 +32,17 @@ public class Graph {
 
   // insert in graph
   // builds an adjacency list
-  public void insert(int vertex, int[] adjacent) {
-    if (vertex < vertices) {
-      // iterate through values in adjacent matrix
-      for (int i = 0 ; i < adjacent.length ; i++) {
-        // place a 1 at indices specified in adjacent list
-        graph[adjacent[i]][vertex] = graph[vertex][adjacent[i]] = 1;
+  public void insert(int start, int end, int weight) {
+    // check if vertex arguments are valid vertices in the graph
+    if (start < vertices && end < vertices) {
+      // Initialize list at vertex argument if list hasn't been initialized yet
+      if (graph[start] == null) {
+        graph[start] = new LinkedList<Edge>();
       }
-    }
-  }
-
-  // insert in graph with edge weights included
-  // builds a cost adjacency matrix
-  public void insertWeighted(int vertex, int[] adjacent, int[] weights) {
-    // ensure specified vertex is within the range of vertices
-    // check that lengths of adjacent and weights arguments are equal so weights correspond with edges
-    if (vertex < vertices && adjacent.length == weights.length) {
-      for (int i = 0 ; i < adjacent.length ; i++) {
-        // fill adjacency matrix with specified edge weights
-        graph[vertex][adjacent[i]] = graph[adjacent[i]][vertex] = weights[i];
-      }
+      // create edge
+      Edge insertEdge = new Edge(end, weight);
+      // add to end of list
+      graph[start].add(insertEdge);
     }
   }
 
