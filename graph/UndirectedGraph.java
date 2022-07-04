@@ -4,8 +4,22 @@ import java.util.Stack;
 
 public class UndirectedGraph {
 
+  // custom sub-class for edge in graph
+  public class Edge {
+    // edge weight
+    // connected vertex
+    private int weight, vertex;
+
+    // constructor
+    public Edge(int weight, int vertex) {
+      this.weight = weight;
+      this.vertex = vertex;
+    }
+  }
+
   // (cost) adjacency matrix to store graph
   private int[][] graph;
+
   // vertices in graph
   private int vertices;
 
