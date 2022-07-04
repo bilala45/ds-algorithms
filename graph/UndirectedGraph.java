@@ -1,8 +1,9 @@
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
-public class UndirectedGraph {
+public class Graph {
 
   // custom sub-class for edge in graph
   public class Edge {
@@ -17,21 +18,20 @@ public class UndirectedGraph {
     }
   }
 
-  // (cost) adjacency matrix to store graph
-  private int[][] graph;
-
   // vertices in graph
   private int vertices;
+  // array of linked lists (lists holds Edge objects)
+  private List<Edge>[] graph;
 
-  // constructor
-  public UndirectedGraph(int vertices) {
+  // constructor for Graph class
+  public Graph(int vertices) {
     this.vertices = vertices;
-    // initialize matrix with size of vertices argument
-    graph = new int[vertices][vertices];
+    // initialize array of linked lists with size of vertices argument
+    graph = new LinkedList[vertices];
   }
 
   // insert in graph
-  // builds an adjacency matrix
+  // builds an adjacency list
   public void insert(int vertex, int[] adjacent) {
     if (vertex < vertices) {
       // iterate through values in adjacent matrix
