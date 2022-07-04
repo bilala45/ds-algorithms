@@ -81,10 +81,11 @@ public class Graph {
   }
 
   // depth first search
-  public static void dfs(Graph graph, int start) {
+  public static boolean[] dfs(Graph graph, int start) {
     // reference to adjacency list storing graph
     LinkedList<Edge>[] adjList = graph.graph;
     // boolean array to track visited vertices
+    // return visited array to record visited vertices in dfs (for counting connected components)
     boolean[] visited = new boolean[graph.vertices];
     // initialize stack to store vertices that we need to visit
     // stack is used because dfs returns back to the most recent vertex
@@ -103,17 +104,21 @@ public class Graph {
         System.out.print(curr + " ");
         visited[curr] = true;
 
-        // record current vertex's neighbors in stack
-        // we only need to record neighbours if we haven't visited that vertex yet
-        for (Edge elem : adjList[curr]) {
-          // add neighbour to stack if neighbor vertex has NOT been visited yet
-          if (!visited[elem.vertex]) {
-            toVisit.push(elem.vertex);
+        // handles vertices with no neighbours
+        if (adjList[curr] != null) {
+          // record current vertex's neighbors in stack
+          // we only need to record neighbours if we haven't visited that vertex yet
+          for (Edge elem : adjList[curr]) {
+            // add neighbour to stack if neighbor vertex has NOT been visited yet
+            if (!visited[elem.vertex]) {
+              toVisit.push(elem.vertex);
+            }
           }
         }
       }
     }
     System.out.println("");
+    return visited;
   }
 
   // breadth first search
@@ -143,12 +148,15 @@ public class Graph {
         System.out.print(curr + " ");
         visited[curr] = true;
 
-        // iterate through linked list at adjacency list index
-        for (Edge elem : adjList[curr]) {
-          // enqueue adjacent vertices that we haven't visited yet
-          if (!visited[elem.vertex]) {
-            // add neighbor to queue
-            toVisit.offer(elem.vertex);
+        // handles vertices with no neighbours
+        if (adjList[curr] != null) {
+          // iterate through linked list at adjacency list index
+          for (Edge elem : adjList[curr]) {
+            // enqueue adjacent vertices that we haven't visited yet
+            if (!visited[elem.vertex]) {
+              // add neighbor to queue
+              toVisit.offer(elem.vertex);
+            }
           }
         }
       }
@@ -156,18 +164,68 @@ public class Graph {
     System.out.println("");
   }
 
+  // count connected components in graph
+  public static int numConnectedComponents(Graph graph) {
+    // track visited vertices with boolean array
+    boolean[] visited = new boolean[graph.vertices];
+    // track tags of vertices
+    int[] vertexTags = new int[graph.vertices];
+    // tag variable
+    int tag = 0;
+
+    // iterate through vertices in graph
+    for (int i = 0 ; i < graph.vertices ; i++) {
+      // call dfs if node has not been visited
+      if (!visited[i]) {
+        // increment tag
+        tag++;
+
+        // store results of dfs
+        boolean[] dfsVertices = dfs(graph, i);
+
+        // iterate through results from dfs
+        for (int j = 0 ; j < dfsVertices.length ; j++) {
+          // update index in visited to tag value if vertex was visited in dfs
+          if (dfsVertices[j] == true) {
+            visited[j] = true;
+            vertexTags[j] = tag;
+          }
+        }
+      }
+    }
+
+    // return number of tags
+    System.out.println("Tags: " + tag);
+    return tag;
+  }
+
   // main method
   public static void main(String[] args) {
     // graph with 5 vertices (0 - 4)
-    Graph test = new Graph(5);
-    test.insertEdge(0, 1, 1);
-    test.insertEdge(0, 2, 1);
-    test.insertEdge(1, 2, 1);
-    test.insertEdge(2, 4, 1);
-    test.insertEdge(2, 3, 1);
-    test.insertEdge(3, 4, 1);
+    Graph test = new Graph(18);
+    test.insertEdge(6, 7, 1);
+    test.insertEdge(6, 11, 1);
+    test.insertEdge(7, 11, 1);
+
+    test.insertEdge(17, 5, 1);
+    test.insertEdge(5, 1, 1);
+    test.insertEdge(5, 16, 1);
+
+    test.insertEdge(3, 9, 1);
+    test.insertEdge(9, 15, 1);
+    test.insertEdge(9, 2, 1);
+    test.insertEdge(15, 2, 1);
+    test.insertEdge(15, 10, 1);
+
+    test.insertEdge(8, 4, 1);
+    test.insertEdge(8, 0, 1);
+    test.insertEdge(4, 0, 1);
+    test.insertEdge(8, 14, 1);
+    test.insertEdge(14, 0, 1);
+    test.insertEdge(14, 13, 1);
+    test.insertEdge(13, 0, 1);
     display(test);
-    dfs(test, 0);
-    bfs(test, 0);
+
+    numConnectedComponents(test);
   }
 }
