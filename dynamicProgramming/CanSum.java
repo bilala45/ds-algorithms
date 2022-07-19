@@ -12,7 +12,7 @@ public class CanSum {
   public static boolean canSumNaive(int target, int[] nums) {
     // base cases
     // 0 num means valid solution
-    if (target == 0) {
+    if (target == 0) {up
       return true;
     }
     // negative value means invalid solution

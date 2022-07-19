@@ -79,15 +79,6 @@ public class HowSum {
     return 0;
   }
 
-  // display elements of ArrayList
-  private static void display(ArrayList<Integer> result) {
-    System.out.print("[ ");
-    for (int elem : result) {
-      System.out.print(elem + " ");
-    }
-    System.out.println("]");
-  }
-
   public static void main(String[] args) {
     System.out.println(howSumNaive(7, new int[] {2, 3}));
     System.out.println(howSumNaive(7, new int[] {5, 3, 4, 7}));
