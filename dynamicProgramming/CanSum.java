@@ -3,6 +3,11 @@ import java.util.HashMap;
 
 public class CanSum {
 
+  /* Complexity analysis
+   * Assume length of nums is n, and target is m
+   * Time complexity: O(n^m) (exponential)
+   * Space complexity: O(m) (linear)
+   */
   // naive approach
   public static boolean canSumNaive(int target, int[] nums) {
     // base cases
@@ -33,6 +38,17 @@ public class CanSum {
     return canSumMemoHelper(target, nums, memo);
   }
 
+  /* Complexity analysis
+   * Assume length of nums is n, and target is m
+   * Time complexity: O(m*n) (quadratic)
+   * Tree will have depth up to m (if 1 is in the nums array, 1 will be subtracted from target on each recursive call)
+   * Each recursive call will require iteration through the length of the nums array (n)
+   * We multiply these together to get m*n
+   *
+   * Space complexity: O(m) (linear)
+   * Tree will have depth up to m (if 1 is in the nums array, 1 will be subtracted from target on each recursive call)
+   * Max number of stack frames on call stack is proportional to depth of recursive tree
+   */
   // top-down (memoization)
   private static boolean canSumMemoHelper(int target, int[] nums, Map<Integer, Boolean> memo) {
     // check if target is cached
