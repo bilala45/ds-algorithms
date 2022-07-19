@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.HashMap;
+
 public class CanSum {
 
   // naive approach
@@ -25,8 +28,41 @@ public class CanSum {
     return false;
   }
 
+  public static boolean canSumMemo(int target, int[] nums) {
+    Map<Integer, Boolean> memo = new HashMap<>();
+    return canSumMemoHelper(target, nums, memo);
+  }
+
   // top-down (memoization)
-  public static boolean canSumMemo(int target, int[] nums, HashMap<Integer, Boolean> memo) {
+  private static boolean canSumMemoHelper(int target, int[] nums, Map<Integer, Boolean> memo) {
+    // check if target is cached
+    if (memo.get(target) != null) {
+      return memo.get(target);
+    }
+    // base cases
+    // 0 num means valid solution
+    if (target == 0) {
+      return true;
+    }
+    // negative value means invalid solution
+    if (target < 0) {
+      return false;
+    }
+
+    // apply each value in nums to target
+    for (int num : nums) {
+      // recursive call to target value with num subtracted
+      // return true for early exit if valid solution found
+      // don't return false if invalid solution is found because valid solution may be found later
+      if (canSumMemoHelper(target - num, nums, memo)) {
+        // cache true result for current target
+        memo.put(target, true);
+        return true;
+      }
+    }
+    // cache false result for current target
+    // return false at the end (no valid solution found)
+    memo.put(target, false);
     return false;
   }
 
@@ -41,5 +77,9 @@ public class CanSum {
     System.out.println(canSumNaive(7, new int[] {2, 4})); // false
     System.out.println(canSumNaive(8, new int[] {2, 3, 5})); // true
     System.out.println(canSumNaive(300, new int[] {7, 14})); // false
+
+    System.out.println(canSumMemo(7, new int[] {5, 3, 4, 7})); // true
+    System.out.println(canSumMemo(7, new int[] {2, 4})); // false
+    System.out.println(canSumMemo(300, new int[] {7, 14})); // false
   }
 }
