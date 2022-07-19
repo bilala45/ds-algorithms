@@ -10,9 +10,9 @@ public class FibonacciNums {
       return num;
     }
 
+    // sum previous two numbers
     return fibNaive(num - 1) + fibNaive(num - 2);
   }
-
 
   // top-down (memoization)
   public static int fibMemo(int num) {

@@ -1,22 +1,45 @@
 public class CanSum {
 
   // naive approach
-  public static int canSumNaive(int num) {
+  public static boolean canSumNaive(int target, int[] nums) {
+    // base cases
+    // 0 num means valid solution
+    if (target == 0) {
+      return true;
+    }
+    // negative value means invalid solution
+    if (target < 0) {
+      return false;
+    }
 
+    // apply each value in nums to target
+    for (int num : nums) {
+      // recursive call to target value with num subtracted
+      // return true for early exit if valid solution found
+      // don't return false if invalid solution is found because valid solution may be found later
+      if (canSumNaive(target - num, nums)) {
+        return true;
+      }
+    }
+    // return false at the end (no valid solution found)
+    return false;
   }
 
   // top-down (memoization)
-  public static int canSumMemo(int num) {
-
+  public static boolean canSumMemo(int target, int[] nums, HashMap<Integer, Boolean> memo) {
+    return false;
   }
 
   // bottom-up (tabulation)
-  public static int canSumTab(int num) {
-
+  public static boolean canSumTab(int num) {
+    return false;
   }
 
-
   public static void main(String[] args) {
-
+    System.out.println(canSumNaive(7, new int[] {2, 3})); // true
+    System.out.println(canSumNaive(7, new int[] {5, 3, 4, 7})); // true
+    System.out.println(canSumNaive(7, new int[] {2, 4})); // false
+    System.out.println(canSumNaive(8, new int[] {2, 3, 5})); // true
+    System.out.println(canSumNaive(300, new int[] {7, 14})); // false
   }
 }
