@@ -52,7 +52,7 @@ public class CanSum {
   // top-down (memoization)
   private static boolean canSumMemoHelper(int target, int[] nums, Map<Integer, Boolean> memo) {
     // check if target is cached
-    if (memo.get(target) != null) {
+    if (memo.containsKey(target)) {
       return memo.get(target);
     }
     // base cases

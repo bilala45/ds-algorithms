@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class HowSum {
 
@@ -30,9 +32,46 @@ public class HowSum {
     return null;
   }
 
+  public static ArrayList<Integer> howSumMemo(int target, int[] nums) {
+    Map<Integer, ArrayList<Integer>> memo = new HashMap<>();
+    return howSumMemoHelper(target, nums, memo);
+  }
+
   // top-down (memoization)
-  public static int howSumMemo(int target, int[] nums) {
-    return 0;
+  private static ArrayList<Integer> howSumMemoHelper(int target, int[] nums, Map<Integer, ArrayList<Integer>> memo) {
+    // check if target is cached in memo
+    // since some keys are associated with null, we use containsKey instead of checking with get()
+    // should use containsKey in general rather than checking against null
+    if (memo.containsKey(target)) {
+      return memo.get(target);
+    }
+    // base cases
+    // target == 0, return empty array (sum of elements in empty array is 0)
+    if (target == 0) {
+      return new ArrayList<Integer>(0);
+    }
+    // negative target, return null
+    if (target < 0) {
+      return null;
+    }
+
+    // iterate through nums array
+    // recursively call each element subtracted from target
+    for (int num : nums) {
+      int remainder = target - num;
+      // store result of recursive call in ArrayList
+      ArrayList<Integer> result = howSumMemoHelper(remainder, nums, memo);
+      if (result != null) {
+        // insert current target value in ArrayList
+        result.add(num);
+        // hash target with result ArrayList
+        memo.put(target, result);
+        return result;
+      }
+    }
+    // no return value
+    memo.put(target, null);
+    return null;
   }
 
   // bottom-up (tabulation)
@@ -54,10 +93,10 @@ public class HowSum {
     System.out.println(howSumNaive(7, new int[] {5, 3, 4, 7}));
     System.out.println(howSumNaive(7, new int[] {2, 4}));
     System.out.println(howSumNaive(8, new int[] {2, 3, 5}));
-    System.out.println(howSumNaive(100, new int[] {5, 7}));
+    System.out.println(howSumNaive(300, new int[] {7, 14}));
 
-    // System.out.println(howSumMemo(7, new int[] {5, 3, 4, 7}));
-    // System.out.println(howSumMemo(7, new int[] {2, 4}));
-    // System.out.println(howSumMemo(300, new int[] {7, 14}));
+    System.out.println(howSumMemo(7, new int[] {5, 3, 4, 7}));
+    System.out.println(howSumMemo(7, new int[] {2, 4}));
+    System.out.println(howSumMemo(300, new int[] {7, 14}));
   }
 }
