@@ -1,12 +1,12 @@
 import java.util.LinkedList;
 
-public class HashMap {
+public class ClosedHashMap {
 
   // array of linked lists to store data in hash map
   private LinkedList<Integer>[] hashMap;
 
   // constructor
-  public HashMap() {
+  public ClosedHashMap() {
     // initialize hash map of size 10
     hashMap = new LinkedList[10];
   }
@@ -63,7 +63,7 @@ public class HashMap {
 
   // main method
   public static void main(String[] args) {
-    HashMap test = new HashMap();
+    ClosedHashMap test = new ClosedHashMap();
     test.insert(5);
     test.insert(28);
     test.insert(13);
