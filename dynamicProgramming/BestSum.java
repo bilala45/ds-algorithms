@@ -80,7 +80,7 @@ public class BestSum {
     }
     // we can only return AFTER the for-loop has completed because every combination must be checked
     // if no combination works, shortestResult will remain null and be returned
-    memo.put(target, shortestResult);
+    memo.put(target, new ArrayList<Integer>(shortestResult));
     return shortestResult;
   }
 
